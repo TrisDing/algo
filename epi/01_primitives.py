@@ -3,84 +3,84 @@ import math
 import random
 import collections
 
+"""
+Bit-wise operators
+------------------
+6 & 4             # 0110 & 0100 = 0100 (4)                     AND
+1 | 2             # 0001 | 0010 = 0011 (3)                     OR
+15 ^ 1            # 00001111 ^ 00000001 = 00001110 (14)        XOR
+8 >> 1            # 00001000 >> 1 = 00000100 (4)               x >> y = x // 2**y
+1 << 10           # 000000000001 << 10 = 010000000000 (1024)   x << y = x *  2**y
+-16 >> 2          # 11110000 >> 2 = 11111100 (-4)              negative right shifting
+-16 << 2          # 11110000 << 2 = 11000000 (-64)             negative left shifting
+~0                # ~0000 = 1111 (-1)                          ~x = -x - 1
+
+Bit Operation Tricks
+--------------------
+x & 1             # Extract the last bit
+x |= 1            # Set the last bit
+x ^= 1            # Flip the last bit
+(x >> i) & 1      # Extract the ith bit
+x |= (1 << i)     # Set the ith bit
+x ^= (1 << i)     # Flip the ith bit
+x & x - 1         # Drop the lowest set bit of x
+x & ~(x - 1)      # Extract the lowest set bit of x
+
+Key methods for numeric types
+-----------------------------
+>>> abs(-34.5)
+>>> math.ceil(2.17)
+>>> math.floor(3.14)
+>>> min(-1, 3, 10)
+>>> max(-1, 4, 5)
+>>> pow(2.71, 3.14)
+
+Interconvert numbers and strings
+--------------------------------
+>>> str(42)
+>>> int('42')
+>>> str(3.14)
+>>> float('3.14')
+>>> float('inf')                   # Float positive infinity (+inf)
+>>> float('-inf')                  # Float negative infinity (-inf)
+>>> math.isclose(1e-09, 1e-09+1)   # comparing float point values
+
+Key methods in random
+---------------------
+>>> random.random()                        # Random float x, 0.0 <= x < 1.0
+>>> random.randrange(0, 101, 2)            # Even integer from 0 to 100
+>>> random.randint(1, 10)                  # Integer from 1 to 10, endpoints included
+>>> random.shuffle([1, 2, 3, 4, 5, 6, 7])  # shuffle a list
+>>> random.choice('abcdefghij')            # Choose a random element
+>>> random.sample([1, 2, 3, 4, 5],  3)     # Choose 3 elements
+>>> random.getrandbits(1)                  # Generate random bit (0/1)
+"""
+
 # debugging util
 def fb(num):
     return "{0:b}".format(num)
 
-# Numbers boundary
-# Integers in Python is unbound
-sys.maxsize    # 2**63 - 1 (64 bit machine)
-sys.float_info
+""" 4.0 COUNT BITS
 
-# Bit-wise operators
-6 & 4    # 0110 & 0100 = 0100 (4)                     AND
-1 | 2    # 0001 | 0010 = 0011 (3)                     OR
-15 ^ 1   # 00001111 ^ 00000001 = 00001110 (14)        XOR
-8 >> 1   # 00001000 >> 1 = 00000100 (4)               x >> y = x // 2**y
-1 << 10  # 000000000001 << 10 = 010000000000 (1024)   x << y = x *  2**y
--16 >> 2 # 11110000 >> 2 = 11111100 (-4)              negative shifting, convert to 2's complement
--16 << 2 # 11110000 << 2 = 11000000 (-64)             negative shifting, convert to 2's complement
-~0       # ~0000 = 1111 (-1)                          ~x = -x - 1
-
-# Tricks
-x, i = 0xFFFF, 1
-x & 1             # Extract the last bit
-x = x | 1         # Set the last bit
-x = x ^ 1         # Flip the last bit
-(x >> i) & 1      # Extract the ith bit
-x = x | (1 << i)  # Set the ith bit
-x = x ^ (1 << i)  # Flip the ith bit
-x & x - 1         # Drop the lowest set bit of x
-x & ~(x - 1)      # Extract the lowest set bit of x
-
-# Key methods for numeric types
-abs(-34.5)
-math.ceil(2.17)
-math.floor(3.14)
-min(-1, 3, 10)
-max(-1, 4, 5)
-pow(2.71, 3.14)  # same as **
-
-# Interconvert integers and strings
-str(42)
-int('42')
-str(3.14)
-float('3.14')
-
-# Float infinity
-float('inf')
-float('-inf')
-
-# comparing float point values
-math.isclose(1e-09, 1e-09+1)
-
-# Key methods in random
-random.random()                       # Random float x, 0.0 <= x < 1.0
-random.randrange(0, 101, 2)           # Even integer from 0 to 100
-random.randint(1, 10)                 # Integer from 1 to 10, endpoints included
-random.shuffle([1, 2, 3, 4, 5, 6, 7]) # shuffle a list
-random.choice('abcdefghij')           # Choose a random element
-random.sample([1, 2, 3, 4, 5],  3)    # Choose 3 elements
-random.getrandbits(1)                 # Generate random bit (0/1)
-
-# 4.0 Count Bits
+    Count the number of bits that are set to 1 in a nonnegative integer.
+"""
 def count_bits(x):
-    """
-    Count the number of bits that are set to 1
-    in a nonnegative integer.
-    Time complexity: O(n), where n is the word size
-    """
+    # Time complexity: O(n), where n is the word size
     num_bits = 0
     while x:
         num_bits += x & 1
         x >>= 1
     return num_bits
 
-# 4.1 COMPUTING THE PARITY OF A VERY LARGE NUMBER OF 64-BIT WORD
+""" 4.1 COMPUTING THE PARITY OF A WORD
+
+    The parity of a binary word is 1 if number of 1s in the word is odd;
+    otherwise, it is 0. For example, the parity of 1011 is 1, and the parity
+    of 10001000 is 0.
+"""
 def parity(x):
-    """
-    Time complexity: O(n), where n is the word size
-    """
+    # Brute-force
+    # Time complexity: O(n), where n is the word size
     num_bits = 0
     while x:
         num_bits += x & 1
@@ -88,31 +88,28 @@ def parity(x):
     return num_bits % 2
 
 def parity2(x):
-    """
-    Time complexity: O(n), where n is the word size
-    """
+    # Don't have to add them up, just XOR
+    # Time complexity: O(n), where n is the word size
     result = 0
     while x:
-        result ^= x & 1 # Don't have to add them up, just XOR
+        result ^= x & 1
         x >>= 1
     return result
 
 def parity3(x):
-    """
-    Time complexity: O(k), where k is the number of bit set to 1
-    """
+    # Drop the lowest set bit of x
+    # Time complexity: O(k), where k is the number of bit set to 1
     result = 0
     while x:
         result ^= 1
-        x &= x - 1 # Drop the lowest set bit of x
+        x &= x - 1
     return result
 
 def parity4(x):
-    """
-    For a very large 64-bit number, use 16-bit cache
-    Time complexity: O(n/L), where L is the width of the cache
-    """
-    # 8 bit example: 00101001 <(00),(01),(10),(11)>
+    # For a very large 64-bit number, use 16-bit cache
+    # Time complexity: O(n/L), where L is the width of the cache
+
+     # 8 bit cache example: 00101001 <(00),(01),(10),(11)>
     PRECOMPUTED_PARITY = {
         '00': 0,
         '10': 1,
@@ -122,15 +119,14 @@ def parity4(x):
     MASK_SIZE = 16
     BIT_MASK = 0xFFFF
     # break into 4 16-bit cache and use precomputed parity
-    return (PRECOMPUTED_PARITY[(x >> (3 * MASK_SIZE)) & BIT_MASK] ^
-            PRECOMPUTED_PARITY[(x >> (2 * MASK_SIZE)) & BIT_MASK] ^
-            PRECOMPUTED_PARITY[(x >> (1 * MASK_SIZE)) & BIT_MASK] ^
-            PRECOMPUTED_PARITY[(x >> (0 * MASK_SIZE)) & BIT_MASK])
+    return (PRECOMPUTED_PARITY[(x >> (3 * MASK_SIZE)) & BIT_MASK] ^ # 1st 16-bits
+            PRECOMPUTED_PARITY[(x >> (2 * MASK_SIZE)) & BIT_MASK] ^ # 2nd 16-bits
+            PRECOMPUTED_PARITY[(x >> (1 * MASK_SIZE)) & BIT_MASK] ^ # 3rd 16-bits
+            PRECOMPUTED_PARITY[(x >> (0 * MASK_SIZE)) & BIT_MASK])  # 4th 16-bits
 
 def parity5(x):
-    """
-    Time complexity: O(log n)
-    """
+    # God-like solution
+    # Time complexity: O(log n)
     x ^= x >> 32
     x ^= x >> 16
     x ^= x >> 8
@@ -139,22 +135,30 @@ def parity5(x):
     x ^= x >> 1
     return x & 0x1
 
-# 4.2 SWAP BITS
+""" 4.2 SWAP BITS
+
+    Take a 64-bit integer and swap the bits at indices i and j, assuming
+    i and j are both [0-63]. For example, the result of swapping the 8-bit
+    integer 73 (01001001) at indices 1 and 6 is 11 (00001011).
+"""
 def swap_bits(x, i, j):
-    """
-    Assuming: x = 64-bit integer, i and j = [0-63]
-    Time complexity: O(1)
-    """
-    if i != j and (x >> i & 1) != (x >> j & 1):
-        BIT_MASK = (1 << i) | (1 << j)
-        x ^= BIT_MASK # Flip the bit
+    # Time complexity: O(1)
+    # Extract the i-th and j-th bits, and see if they differ
+    if (x >> i) & 1 != (x >> j) & 1:
+        # i-th and j-th bits differ, swap them by flipping their values.
+        bit_mask = (1 << i) | (1 << j)
+        x ^= bit_mask # Flip the bit
     return x
 
-# 4.3 REVERSE BITS
+""" 4.3 REVERSE BITS
+
+    Take a 64-bit unsigned integer and return the 64-bit unsigned integer
+    consisting of the bits of the input in reverse order. For example, if the
+    input is (1110000000000001), the output should be (1000000000000111).
+"""
 def reverse_bits(x):
-    """
-    Time complexity: O(n)
-    """
+    # Brute-force
+    # Time complexity: O(n), where n is the word size
     result = 0
     while x:
         result |= (x & 1)
@@ -163,11 +167,10 @@ def reverse_bits(x):
     return result
 
 def reverse_bits2(x):
-    """
-    For a very large 64-bit number, use 16-bit cache
-    Time complexity: O(n/L), where L is the width of the cache
-    """
-    # 8 bit example: 00101001 <(00),(01),(10),(11)>
+    # For a very large 64-bit number, use 16-bit cache
+    # Time complexity: O(n/L), where L is the width of the cache
+
+    # 8-bit cache example: 00101001 <(00),(01),(10),(11)>
     PRECOMPUTED_REVERSE = {
         '00': '00',
         '10': '01',
@@ -181,54 +184,130 @@ def reverse_bits2(x):
             PRECOMPUTED_REVERSE[(x >> (2 * MASK_SIZE)) & BIT_MASK] << (1 * MASK_SIZE) | 
             PRECOMPUTED_REVERSE[(x >> (3 * MASK_SIZE)) & BIT_MASK] << (0 * MASK_SIZE))
 
-# 4.4 FIND A CLOSEST INTEGER WITH THE SAME WEIGHT
+""" 4.4 FIND A CLOSEST INTEGER WITH THE SAME WEIGHT
+
+    Define the weight of a nonnegative integer x to be the number of bits that 
+    are set to 1 in its binary representation. For example, since 92 in base-2
+    equals (01011100), the weight of 92 is 4.
+
+    Takes a nonnegative integer x and returns a number y which is not equal to
+    x, but has the same weight as x and their difference, |y-x|, is as small as
+    possible. You are assume x is not 0, or all 1s. For example, if x = 6, you
+    should return 5. You can assume the integer fits in 64 bits.
+"""
 def closest_int_same_bit_count(x):
-    """
-    Time complexity: O(n2)
-    """
+    # Brute-force (using count_bits in 4.0)
+    # Time complexity: O(n2)
     y = x - 1
-    while count_bits(y) != count_bits(x):
+    while y and count_bits(y) != count_bits(x):
         y -= 1
     return y
 
 def closest_int_same_bit_count2(x):
-    """
-    Swap 2 rightmost consecutive bits that differ
-    Time complexity: O(n)
-    """
+    # God-like solution: swap 2 rightmost consecutive bits that differ
+    # Time complexity: O(n)
     NUM_UNSINGED_BITS = 64
     for i in range(NUM_UNSINGED_BITS - 1):
+        # compare 2 consecutive bits
         if (x >> i) & 1 != (x >> (i + 1)) & 1:
-            x ^= (1 << i) | (1 << (i + 1)) # swap bit-i and bit-(i+1)
+            x ^= (1 << i) | (1 << (i + 1)) # swap ith bit and ith-1 bit
             return x
     # Raise error if all bits of x are 0 or 1.
     raise ValueError('All bits are 0 or 1')
 
-# 4.5 COMPUTE X*Y
-def multiply(x, y):
-    """
-    x, y are non negative integers
-    only allow to use bitwise operations
-    Time complexity: O(n2)
-    """
-    def add(a, b):
-        running_sum, carry_in, k, temp_a, temp_b = 0, 0, 1, a, b
-        while temp_a or temp_b:
-            ak, bk = a & k, b & k # extract k-th bit
-            carry_out = (ak & bk) | (ak & carry_in) | (bk & carry_in)
-            running_sum |= ak ^ bk ^ carry_in
-            carry_in, k, temp_a, temp_b = (carry_out << 1, k << 1, temp_a >> 1, temp_b >> 1)
-        return running_sum | carry_in
+""" 4.5 COMPUTE X * Y
 
+    Multiplies two nonnegative integers. The only operators allowed are:
+    * assignment
+    * the bitwise operators >>, <<, &, ~, ^ and
+    * equality checks and Boolean combinations thereof.
+"""
+def add(x, y):
+    ''' Half adder truth table
+
+        Input | Output
+        --------------
+        A   B   C   S
+        --------------
+        0   0   0   0
+        0   1   0   1
+        1   0   0   1
+        1   1   1   0
+    '''
+    
+    # Iterate until there is no carry  
+    while y:
+        # carry contains common set bits of x and y
+        carry = x & y
+        # sum of bits of x and y where at least one of the bits is not set
+        x = x ^ y
+        # carry is shifted by one so that adding it to x gives the required sum
+        y = carry << 1
+    return x
+
+def sub(x, y):
+    ''' Half subtractor truth table
+    
+        Input | Output
+        --------------
+        A   B   D   B
+        --------------
+        0   0   0   0
+        0   1   1   1
+        1   0   1   0
+        1   1   0   0
+    '''
+
+    # Iterate until there is no borrow 
+    while y: 
+        # borrow contains common set bits of y and unset bits of x 
+        borrow = (~x) & y
+        # subtraction of bits of x and y where at least one of the bits is not set
+        x = x ^ y
+        # Borrow is shifted by one so that subtracting it from x gives the required sum 
+        y = borrow << 1
+    return x
+
+def minus_one(x):
+    k = 1
+    # Flip all the set bits until we find 1
+    while not (x & k):
+        x ^= k
+        k = k << 1
+    # Flip the rightmost bit 1
+    x ^= k
+    return x
+
+def add2(a, b):
+    result, carry_in = 0, 0
+    temp_a, temp_b, kth = a, b, 1
+    while temp_a or temp_b:
+        # extract k-th bit of a and b
+        ak, bk = a & kth, b & kth
+        # add up the result
+        result |= ak ^ bk ^ carry_in
+        # any carry-out bit?
+        carry_out = (ak & bk) | (ak & carry_in) | (bk & carry_in)
+        # carry-out to be the next carry-in
+        carry_in = carry_out << 1
+        # move on to the next bit
+        temp_a, temp_b, kth = temp_a >> 1, temp_b >> 1, kth << 1
+    return result | carry_in
+
+def multiply(x, y):
+    # Initialize the result to 0 and iterate through the bits of x, adding
+    # (2^k)y to the result if the kth bit of x is 1
+    # Time complexity: O(2^n)
     running_sum = 0
-    while x: # Extract each bit of x
+    while x:
         if x & 1:
-            running_sum = add(running_sum, y)
-        x >>= 1
-        y <<= 1
+            running_sum = add2(running_sum, y)
+        x, y = x >> 1, y << 1
     return running_sum
 
-# 4.6 COMPUTE X/Y
+""" 4.6 COMPUTE X / Y
+
+"""
 def divide(x, y):
     """
     x, y are non-negative integers
