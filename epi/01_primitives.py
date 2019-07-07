@@ -6,54 +6,25 @@ import collections
 """
 Bit-wise operators
 ------------------
-6 & 4             # 0110 & 0100 = 0100 (4)                     AND
-1 | 2             # 0001 | 0010 = 0011 (3)                     OR
-15 ^ 1            # 00001111 ^ 00000001 = 00001110 (14)        XOR
-8 >> 1            # 00001000 >> 1 = 00000100 (4)               x >> y = x // 2**y
-1 << 10           # 000000000001 << 10 = 010000000000 (1024)   x << y = x *  2**y
--16 >> 2          # 11110000 >> 2 = 11111100 (-4)              negative right shifting
--16 << 2          # 11110000 << 2 = 11000000 (-64)             negative left shifting
-~0                # ~0000 = 1111 (-1)                          ~x = -x - 1
+6 & 4       # 0110 & 0100 = 0100 (4)                     AND
+1 | 2       # 0001 | 0010 = 0011 (3)                     OR
+15 ^ 1      # 00001111 ^ 00000001 = 00001110 (14)        XOR
+8 >> 1      # 00001000 >> 1 = 00000100 (4)               x >> y = x // 2**y
+1 << 10     # 000000000001 << 10 = 010000000000 (1024)   x << y = x *  2**y
+-16 >> 2    # 11110000 >> 2 = 11111100 (-4)              negative right shifting
+-16 << 2    # 11110000 << 2 = 11000000 (-64)             negative left shifting
+~0          # ~0000 = 1111 (-1)                          ~x = -x - 1
 
 Bit Operation Tricks
 --------------------
 x & 1             # Extract the last bit
+(x >> k) & 1      # Extract the Kth bit
 x |= 1            # Set the last bit
+x |= (1 << k)     # Set the Kth bit
 x ^= 1            # Flip the last bit
-(x >> i) & 1      # Extract the ith bit
-x |= (1 << i)     # Set the ith bit
-x ^= (1 << i)     # Flip the ith bit
+x ^= (1 << k)     # Flip the Kth bit
 x & x - 1         # Drop the lowest set bit of x
 x & ~(x - 1)      # Extract the lowest set bit of x
-
-Key methods for numeric types
------------------------------
->>> abs(-34.5)
->>> math.ceil(2.17)
->>> math.floor(3.14)
->>> min(-1, 3, 10)
->>> max(-1, 4, 5)
->>> pow(2.71, 3.14)
-
-Interconvert numbers and strings
---------------------------------
->>> str(42)
->>> int('42')
->>> str(3.14)
->>> float('3.14')
->>> float('inf')                   # Float positive infinity (+inf)
->>> float('-inf')                  # Float negative infinity (-inf)
->>> math.isclose(1e-09, 1e-09+1)   # comparing float point values
-
-Key methods in random
----------------------
->>> random.random()                        # Random float x, 0.0 <= x < 1.0
->>> random.randrange(0, 101, 2)            # Even integer from 0 to 100
->>> random.randint(1, 10)                  # Integer from 1 to 10, endpoints included
->>> random.shuffle([1, 2, 3, 4, 5, 6, 7])  # shuffle a list
->>> random.choice('abcdefghij')            # Choose a random element
->>> random.sample([1, 2, 3, 4, 5],  3)     # Choose 3 elements
->>> random.getrandbits(1)                  # Generate random bit (0/1)
 """
 
 # debugging util
@@ -158,7 +129,7 @@ def swap_bits(x, i, j):
 """
 def reverse_bits(x):
     # Brute-force
-    # Time complexity: O(n), where n is the word size
+    # Time complexity: O(n)
     result = 0
     while x:
         result |= (x & 1)
@@ -210,7 +181,7 @@ def closest_int_same_bit_count2(x):
     for i in range(NUM_UNSINGED_BITS - 1):
         # compare 2 consecutive bits
         if (x >> i) & 1 != (x >> (i + 1)) & 1:
-            x ^= (1 << i) | (1 << (i + 1)) # swap ith bit and ith-1 bit
+            x ^= (1 << i) | (1 << (i + 1)) # swap ith bit and (i-1)th bit
             return x
     # Raise error if all bits of x are 0 or 1.
     raise ValueError('All bits are 0 or 1')
@@ -233,19 +204,22 @@ def add(x, y):
         0   1   0   1
         1   0   0   1
         1   1   1   0
+
+        Carry = A & B
+        Sum = A ^ B
     '''
     
     # Iterate until there is no carry  
     while y:
-        # carry contains common set bits of x and y
+        # Carry contains common set bits of x and y
         carry = x & y
-        # sum of bits of x and y where at least one of the bits is not set
+        # Sum of bits of x and y where at least one of the bits is not set
         x = x ^ y
-        # carry is shifted by one so that adding it to x gives the required sum
+        # Carry is shifted by 1 so that adding it to x gives the sum
         y = carry << 1
     return x
 
-def sub(x, y):
+def substract(x, y):
     ''' Half subtractor truth table
     
         Input | Output
@@ -256,48 +230,51 @@ def sub(x, y):
         0   1   1   1
         1   0   1   0
         1   1   0   0
+
+        Borrow = (~A) & B
+        Diff = A ^ B
     '''
 
     # Iterate until there is no borrow 
     while y: 
-        # borrow contains common set bits of y and unset bits of x 
+        # Borrow contains common set bits of y and unset bits of x 
         borrow = (~x) & y
-        # subtraction of bits of x and y where at least one of the bits is not set
+        # Subtraction of bits of x and y where at least one of the bits is not set
         x = x ^ y
-        # Borrow is shifted by one so that subtracting it from x gives the required sum 
+        # Borrow is shifted by 1 so that subtracting it from x gives the diff 
         y = borrow << 1
     return x
 
 def minus_one(x):
     k = 1
-    # Flip all the set bits until we find 1
+    # Flip all the bits until we find 1
     while not (x & k):
         x ^= k
         k = k << 1
-    # Flip the rightmost bit 1
+    # Finally, flip back the Kth bit
     x ^= k
     return x
 
 def add2(a, b):
     result, carry_in = 0, 0
-    temp_a, temp_b, kth = a, b, 1
-    while temp_a or temp_b:
-        # extract k-th bit of a and b
-        ak, bk = a & kth, b & kth
+    ta, tb, k = a, b, 1
+    while ta or tb:
+        # extract the Kth bit of a and b
+        ak, bk = a & k, b & k
         # add up the result
         result |= ak ^ bk ^ carry_in
         # any carry-out bit?
         carry_out = (ak & bk) | (ak & carry_in) | (bk & carry_in)
-        # carry-out to be the next carry-in
+        # carry-out is the next carry-in
         carry_in = carry_out << 1
         # move on to the next bit
-        temp_a, temp_b, kth = temp_a >> 1, temp_b >> 1, kth << 1
+        ta, tb, k = ta >> 1, tb >> 1, k << 1
     return result | carry_in
 
 def multiply(x, y):
     # Initialize the result to 0 and iterate through the bits of x, adding
-    # (2^k)y to the result if the kth bit of x is 1
-    # Time complexity: O(2^n)
+    # (2**k)y to the result if the Kth bit of x is 1
+    # Time complexity: O(2**n)
     running_sum = 0
     while x:
         if x & 1:
@@ -307,34 +284,29 @@ def multiply(x, y):
 
 """ 4.6 COMPUTE X / Y
 
+    Given two positive integers, compute their quotient, using only the
+    addition, substraction and shifting operators.
 """
 def divide(x, y):
-    """
-    x, y are non-negative integers
-    only allow to use addition, substraction and shifting
-    """
-    print(fb(x), fb(y))
+    # Time complexity: O(n), assuming individual shift and add operations take
+    # o(1) time.
     result, power = 0, 32
     y_power = y << power
-    print("y_power =", fb(y_power))
     while x >= y:
-        print("x =", fb(x))
         while y_power > x:
-            print("shifting y_power")
             y_power >>= 1
             power -= 1
         result += 1 << power
         x -= y_power
-        print("result =", fb(result))
     return result
 
-# 4.7 COMPUTE X^Y
+""" 4.7 COMPUTE X ** Y
+
+    Take a double x and an integer y and returns x**y. You can ignore the
+    overflow and underflow.
+"""
 def pow(x, y):
-    """
-    x is double, y is integer
-    ignore overflow and underflow
-    Time complexity: O(n)
-    """
+    # Time complexity: O(n)
     result, power = 1.0, y
     if y < 0:
         x, power = 1.0 / x, -power
@@ -344,71 +316,86 @@ def pow(x, y):
         x, power = x * x, power >> 1
     return result
 
-# 4.8 REVERSE BITS
+""" 4.8 REVERSE BITS
+
+    Take an integer and return the integer corresponding to the digits of the
+    input written in reverse order. For example, the reverse of 42 is 24, and
+    the reverse of -314 is -413. You may not convert the integer to string.
+"""
 def reverse(x):
-    """
-    Time complexity: O(n)
-    """
+    # Time complexity: O(n)
     result, remaining_x = 0, abs(x)
     while remaining_x:
         result = result * 10 + remaining_x % 10
         remaining_x //= 10
     return -result if x < 0 else result
 
-# 4.9 CHECK PALINDROME
+""" 4.9 CHECK IF A DECIMAL INTEGER IS A PALINDROME
+
+    A palindromic string is one which reads the same forwards and backwards,
+    e.g., "redivider". You are to write a programe which determines if the
+    decimal representation of an integer is a palindromic string. For example,
+    your program should return true for the inputs 0, 1, 7, 11, 121, 333 and
+    214747412, and false for the inputs -1, 12, 100, and 2147483647.
+"""
 def is_palindrome_number(x):
-    """
-    Time complexity: O(n)
-    """
+    # Using reverse() from 4.8
+    # Time complexity: O(n)
     if x <= 0:
         return x == 0
-    reverse_x, remaining_x = 0, abs(x)
-    while remaining_x:
-        reverse_x = reverse_x * 10 + remaining_x % 10
-        remaining_x //= 10
-    return reverse_x == x
+
+    return reverse(x) == x
 
 def is_palindrome_number2(x):
-    """
-    Time complexity: O(n)
-    """
+    # Time complexity: O(n)
     if x <= 0:
         return x == 0
-    num_digits = math.floor(math.log10(x)) + 1
-    msd_mask = 10**(num_digits - 1)
-    for i in range(num_digits // 2):
+    
+    n = math.floor(math.log10(x)) + 1 # get number of digits
+    msd_mask = 10**(n - 1)
+    for _ in range(n // 2):
         if x // msd_mask != x % 10:
             return False
-        x %= msd_mask # Remove the most significant digit of x
-        x //= 10 # Remove the least significant digit of x
-        msd_mask //= 100
-        i = i # no meaning
-    return True
+        x %= msd_mask      # Remove the most significant digit of x
+        x //= 10           # Remove the least significant digit of x
+        msd_mask //= 100   # adjust the most significant digit mask
+    return True 
 
-# 4.10 GENERATE UNIFORM RANDOM NUMBERS
+""" 4.10 GENERATE UNIFORM RANDOM NUMBERS
+
+    How would you implement a random number generator that generates a random
+    integer i between a and b, inclusive, given a random number generator that 
+    produces zero or one with equal probability? All values in [a,b] should be 
+    equally likely.
+"""
 def uniform_random(lower_bound, upper_bound):
-    """
-    Time complexity: O(log(b - a + 1))
-    """
-    possibilities = upper_bound - lower_bound + 1
+    # Time complexity: O(log(b - a + 1))
+    p = upper_bound - lower_bound + 1
     while True:
         result, i = 0, 0
-        while (1 << i) < possibilities:
+        while (1 << i) < p:
             result = (result << 1) | random.getrandbits(1)
             i += 1
-        if result < possibilities:
+        if result < p:
             break
     return result + lower_bound
 
-# 4.11 RECTANGLE INTERSECTION
+""" 4.11 RECTANGLE INTERSECTION
+    
+    The problem is concerned with rectangles whose sides are parallel to the
+    X-axis and Y-axis. Write a program which tests if two rectangles have a
+    nonempty intersection. If intersection is nonempty, return the rectangle
+    formed by their intersection.
+"""
 Rectangle = collections.namedtuple('Rectangle', ('x', 'y', 'width', 'height'))
 
+def is_intersect(R1, R2):
+    return (R1.x + R1.width  >= R2.x and 
+            R2.x + R2.width  >= R1.x and
+            R1.y + R1.height >= R2.y and
+            R2.y + R2.height >= R1.y)
+
 def intersect_rectangle(R1, R2):
-    def is_intersect(R1, R2):
-        return (R1.x + R1.width  >= R2.x and 
-                R2.x + R2.width  >= R1.x and
-                R1.y + R1.height >= R2.y and
-                R2.y + R2.height >= R1.y)
     if not is_intersect(R1, R2):
         return Rectangle(0, 0, -1, -1) #  no intersection
     return Rectangle(
@@ -416,7 +403,3 @@ def intersect_rectangle(R1, R2):
         max(R1.y, R2.y),
         min(R1.x + R1.width , R2.x + R2.width ) - max(R1.x, R2.x),
         min(R1.y + R1.height, R2.y + R2.height) - max(R1.y, R2.y))
-
-R1 = Rectangle(0, 0, 2, 2)
-R2 = Rectangle(2, 2, 2, 2)
-print(intersect_rectangle(R1, R2))
