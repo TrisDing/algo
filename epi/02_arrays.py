@@ -1,71 +1,54 @@
-import copy
-import bisect
+"""
+Basic Concepts
+--------------
+* Arrays are list, which is a mutable sequence type (tuples are immutable sequence type)
+* list is dynamically-resized, there is no upper bound
+* Values can be deleted and inserted at arbitrary locations
 
-# Arrays in Python are list type (tuples are immutable lists)
-# list is dynamically-resized, there is no upper bound
-# Values can be deleted and inserted at arbitrary locations
+Big O of array operations
+-------------------------
+Retrieving  O(1)
+Updating    O(1)
+Inseration  O(n)
+Deletion    O(n-i)
 
-# Big O of simple operations
-# Retrieving  O(1)
-# Updating    O(1)
-# Inseration  O(n)
-# Deletion    O(n-i)
+List Methods
+------------
+>>> a.append(x)         # Add an item to the end of the list. Equivalent to a[len(a):] = [x].
+>>> a.extend(iterable)  # Extend the list by appending all the items from the iterable. Equivalent to a[len(a):] = iterable. 
+>>> a.insert(i, x)      # Insert an item at a given position. a.insert(0, x) inserts at the front of the list, and a.insert(len(a), x) is equivalent to a.append(x).
+>>> a.remove(x)         # Remove the first item from the list whose value is equal to x. It raises a ValueError if there is no such item.
+>>> a.pop([i])          # Remove the item at the given position in the list, and return it. If no index is specified, a.pop() removes and returns the last item in the list.
+>>> a.clear()           # Remove all items from the list. Equivalent to del a[:].
+>>> a.count(x)          # Return the number of times x appears in the list.
+>>> a.reverse()         # Reverse the elements of the list in place.
+>>> a.copy()            # Return a shallow copy of the list. Equivalent to a[:].
+>>> a.index(x[, start[, end]])       # Return zero-based index in the list of the first item whose value is equal to x. Raises a ValueError if there is no such item.
+>>> a.sort(key=None, reverse=False)  # Sort the items of the list in place (the arguments can be used for sort customization).
 
-# Initialization
-A = [3, 4, 5, 6, 7]
-B = [1] + [0] * 5   # [1, 0, 0, 0, 0, 0]
-C = list(range(10)) # [0, 1, 2, 3, 4, 5, 6, 7, 9]
-D = [[1, 2], [3, 4, 5], [6]]
+Common Sequence Operations
+--------------------------
+x in s          # True if an item of s is equal to x, else False
+x not in s      # False if an item of s is equal to x, else True
+s + t           # the concatenation of s and t
+s * n or n * s  # equivalent to adding s to itself n times
+s[i]            # ith item of s, origin 0
+s[i:j]          # slice of s from i to j
+s[i:j:k]        # slice of s from i to j with step k
+len(s)          # length of s
+min(s)          # smallest item of s
+max(s)          # largest item of s
+reversed(s)     # return a reverse iterator
+sorted(s)       # return a new sorted list from the items in iterable
 
-# Basic Operations
-len(A)
-A.append(42)
-A.remove(3)
-A.insert(3, 28)
-3 in A      # check if a value is present in an array
-B = A       # different reference, same array
-B = list(A) # different reference, different array
-
-C = copy.copy(A)     # A shallow copy constructs a new compound object and then (to the extent possible) inserts references into it to the objects found in the original.
-D = copy.deepcopy(A) # A deep copy constructs a new compound object and then, recursively, inserts copies into it of the objects found in the original.
-
-# Key Methods of Array
-min(A)
-max(A)
-
-bisect.bisect(A, 6)        # binary search for sorted lists
-bisect.bisect_left(A, 6)   # return index of the left-most element found
-bisect.bisect_right(A, 6)  # return index of the right-most element found + 1
-
-A.reverse()   # in place
-reversed(A)   # return a interator
-A.sort()      # in place
-sorted(A)     # returns a copy
-del A[0]      # delete the i-th element
-del A[1:2]    # removes the slice  
-
-# Slicing
-A = [1, 6, 3, 4, 5, 2, 7]
-A[2:4]        # [3, 4]
-A[2:]         # [3, 4, 5, 2, 7]
-A[:4]         # [1, 6, 3, 4]
-A[:-1]        # [1, 6, 3, 4, 5, 2]
-A[-3:]        # [5, 2, 7]
-A[-3:-1]      # [5, 2]
-A[5:1:-2]     # [2, 4]
-A[::-1]       # [7, 2, 5, 4, 3, 6, 1] reverse list
-A[2:] + A[:2] # [3, 4, 5, 2, 7, 1, 6] rotate list
-
-# list comprehension
+List Comprehensions
+-------------------
 [x**2 for x in range(6)]               # [0, 1, 4, 9, 16, 25]
 [x**2 for x in range(6) if x % 2 == 0] # [0, 4, 16]
 
-A = [1, 3, 5]
-B = ['a', 'b']
-[(x, y) for x in A for y in B]  # [(1, 'a'), (1, 'b'), ((3, 'a'), (3, 'b'), (5, 'a'), (5, 'b')]
-
 M = [['a', 'b', 'c'], ['d', 'e']]
 [x for row in M for x in row]   # ['a', 'b', 'c', 'd', 'e']
+"""
 
 # 5.0 Even Odd
 def even_odd(A):
