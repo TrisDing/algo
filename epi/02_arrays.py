@@ -50,43 +50,32 @@ M = [['a', 'b', 'c'], ['d', 'e']]
 [x for row in M for x in row]   # ['a', 'b', 'c', 'd', 'e']
 """
 
-# 5.0 Even Odd
-def even_odd(A):
-    """
-    Time complexity: O(n), where n is the array size
-    Space complexity: O(n)
-    """
-    if len(A) == 0:
-        return []
-    evens, odds = [], []
-    for n in A:
-        if n % 2 == 0:
-            evens.append(n)
-        else:
-            odds.append(n)
-    return evens + odds
+""" 5.0 Even Odd
 
-def even_odd_1(A):
-    """
-    Not allow to allocate additional storage
-    Time complexity: O(n), where n is the array size
-    Space complexity: O(1)
-    """
+    Given an array of integers, reorder its entries so that the even entries
+    appear first, without allocating additional storage.
+"""
+def even_odd(A):
+    # Time complexity: O(n), Space complexity: O(n)
     i, j = 0, len(A) - 1
-    while(i < j):
+    while i < j:
         if A[i] % 2 == 0:
             i += 1
         else:
             A[i], A[j] = A[j], A[i]
             j -= 1
+    return A
 
-# 5.1 THE DUTCH NATIONAL FLAG PROBLEM
-def dutch_flag_partition(A, k):
-    """
-    Time complexity: O(n), where n is the array size
-    Space complexity: O(n)
-    """
-    pivot = A[k]
+""" 5.1 THE DUTCH NATIONAL FLAG PROBLEM
+
+    Write a program that takes an array A and an index i into A, and rearrange
+    the elements such that all elements less than A[i] (the pivot) appear first,
+    followed by elements equal to the pivot, followed by elements greater than
+    the pivot.
+"""
+def dutch_flag_partition(A, p):
+    # Time complexity: O(n), Space complexity: O(n)
+    pivot = A[p]
     smaller, equal, larger = [], [], []
     for i in range(len(A)):
         if A[i] < pivot:
@@ -97,12 +86,9 @@ def dutch_flag_partition(A, k):
             larger.append(A[i])
     return smaller + equal + larger
 
-def dutch_flag_partition2(A, k):
-    """
-    Time complexity: O(n2), where n is the array size
-    Space complexity: O(1)
-    """
-    pivot = A[k]
+def dutch_flag_partition2(A, p):
+    # Time complexity: O(n2), Space complexity: O(1)
+    pivot = A[p]
     # First pass: group elements smaller than pivot
     for i in range(len(A)):
         # look for a smaller element
@@ -120,33 +106,29 @@ def dutch_flag_partition2(A, k):
                 break
     return A
 
-def dutch_flag_partition3(A, k):
-    """
-    Time complexity: O(n), where n is the array size
-    Space complexity: O(1)
-    """
-    pivot = A[k]
+def dutch_flag_partition3(A, p):
+    # Time complexity: O(n), Space complexity: O(1)
+    pivot = A[p]
     # First pass: group elements smaller than pivot
     smaller = 0
     for i in range(len(A)):
+        print(A)
         if A[i] < pivot:
             A[i], A[smaller] = A[smaller], A[i]
             smaller += 1
     # Second pass: group elements larger than pivot
     larger = len(A) - 1
     for i in reversed(range(len(A))):
+        print(A)
         if A[i] > pivot:
             A[i], A[larger] = A[larger], A[i]
             larger -= 1
     return A
 
-def dutch_flag_partition4(A, k):
-    """
-    Time complexity: O(n), where n is the array size
-    Space complexity: O(1)
-    """
-    pivot = A[k]
-    # keep the folloing invariants during partitiong:
+def dutch_flag_partition4(A, p):
+    # Time complexity: O(n), Space complexity: O(1)
+    pivot = A[p]
+    # keep the following invariants during partitioning:
     # bottom group: A[:smaller]
     # middle group: A[smaller:equal]
     # unclassified group: A[equal:larger]
