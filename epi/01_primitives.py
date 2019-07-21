@@ -150,14 +150,14 @@ def reverse_bits2(x):
     }
     MASK_SIZE = 16
     BIT_MASK = 0xFFFF
-    return (PRECOMPUTED_REVERSE[(x >> (0 * MASK_SIZE)) & BIT_MASK] << (3 * MASK_SIZE) | 
-            PRECOMPUTED_REVERSE[(x >> (1 * MASK_SIZE)) & BIT_MASK] << (2 * MASK_SIZE) | 
-            PRECOMPUTED_REVERSE[(x >> (2 * MASK_SIZE)) & BIT_MASK] << (1 * MASK_SIZE) | 
+    return (PRECOMPUTED_REVERSE[(x >> (0 * MASK_SIZE)) & BIT_MASK] << (3 * MASK_SIZE) |
+            PRECOMPUTED_REVERSE[(x >> (1 * MASK_SIZE)) & BIT_MASK] << (2 * MASK_SIZE) |
+            PRECOMPUTED_REVERSE[(x >> (2 * MASK_SIZE)) & BIT_MASK] << (1 * MASK_SIZE) |
             PRECOMPUTED_REVERSE[(x >> (3 * MASK_SIZE)) & BIT_MASK] << (0 * MASK_SIZE))
 
 """ 4.4 FIND A CLOSEST INTEGER WITH THE SAME WEIGHT
 
-    Define the weight of a nonnegative integer x to be the number of bits that 
+    Define the weight of a nonnegative integer x to be the number of bits that
     are set to 1 in its binary representation. For example, since 92 in base-2
     equals (01011100), the weight of 92 is 4.
 
@@ -208,8 +208,8 @@ def add(x, y):
         Carry = A & B
         Sum = A ^ B
     '''
-    
-    # Iterate until there is no carry  
+
+    # Iterate until there is no carry
     while y:
         # Carry contains common set bits of x and y
         carry = x & y
@@ -221,7 +221,7 @@ def add(x, y):
 
 def substract(x, y):
     ''' Half subtractor truth table
-    
+
         Input | Output
         --------------
         A   B   D   B
@@ -235,13 +235,13 @@ def substract(x, y):
         Diff = A ^ B
     '''
 
-    # Iterate until there is no borrow 
-    while y: 
-        # Borrow contains common set bits of y and unset bits of x 
+    # Iterate until there is no borrow
+    while y:
+        # Borrow contains common set bits of y and unset bits of x
         borrow = (~x) & y
         # Subtraction of bits of x and y where at least one of the bits is not set
         x = x ^ y
-        # Borrow is shifted by 1 so that subtracting it from x gives the diff 
+        # Borrow is shifted by 1 so that subtracting it from x gives the diff
         y = borrow << 1
     return x
 
@@ -333,7 +333,7 @@ def reverse(x):
 """ 4.9 CHECK IF A DECIMAL INTEGER IS A PALINDROME
 
     A palindromic string is one which reads the same forwards and backwards,
-    e.g., "redivider". You are to write a programe which determines if the
+    e.g., "redivider". You are to write a program which determines if the
     decimal representation of an integer is a palindromic string. For example,
     your program should return true for the inputs 0, 1, 7, 11, 121, 333 and
     214747412, and false for the inputs -1, 12, 100, and 2147483647.
@@ -350,7 +350,7 @@ def is_palindrome_number2(x):
     # Time complexity: O(n)
     if x <= 0:
         return x == 0
-    
+
     n = math.floor(math.log10(x)) + 1 # get number of digits
     msd_mask = 10**(n - 1)
     for _ in range(n // 2):
@@ -359,13 +359,13 @@ def is_palindrome_number2(x):
         x %= msd_mask      # Remove the most significant digit of x
         x //= 10           # Remove the least significant digit of x
         msd_mask //= 100   # adjust the most significant digit mask
-    return True 
+    return True
 
 """ 4.10 GENERATE UNIFORM RANDOM NUMBERS
 
     How would you implement a random number generator that generates a random
-    integer i between a and b, inclusive, given a random number generator that 
-    produces zero or one with equal probability? All values in [a,b] should be 
+    integer i between a and b, inclusive, given a random number generator that
+    produces zero or one with equal probability? All values in [a,b] should be
     equally likely.
 """
 def uniform_random(lower_bound, upper_bound):
@@ -381,7 +381,7 @@ def uniform_random(lower_bound, upper_bound):
     return result + lower_bound
 
 """ 4.11 RECTANGLE INTERSECTION
-    
+
     The problem is concerned with rectangles whose sides are parallel to the
     X-axis and Y-axis. Write a program which tests if two rectangles have a
     nonempty intersection. If intersection is nonempty, return the rectangle
@@ -390,7 +390,7 @@ def uniform_random(lower_bound, upper_bound):
 Rectangle = collections.namedtuple('Rectangle', ('x', 'y', 'width', 'height'))
 
 def is_intersect(R1, R2):
-    return (R1.x + R1.width  >= R2.x and 
+    return (R1.x + R1.width  >= R2.x and
             R2.x + R2.width  >= R1.x and
             R1.y + R1.height >= R2.y and
             R2.y + R2.height >= R1.y)
