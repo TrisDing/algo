@@ -25,7 +25,7 @@ Ellipsis
 int, float, complex   # Number Types
 iter, next, yield     # Iterator Types
 list, tuple, range    # Sequence Types
-str                   # Text Sequance Types
+str                   # Text Sequence Types
 bytes, bytearray      # Binary Sequence Types
 set, frozenset        # Set Types
 dict                  # Map Types
@@ -36,13 +36,13 @@ dict                  # Map Types
 1                     # int
 1.34                  # float
 0b1010                # binary
-100                   # decimal 
+100                   # decimal
 0o310                 # octal
 0x12c                 # hexadecimal
 
 "string"              # string
 'c'                   # char
-"""multiline"""       # multiline str
+"""multi-line"""      # multi-line str
 u"\u00dcnic\u00f6de"  # unicode
 r"raw \n string"      # raw string
 
@@ -66,7 +66,7 @@ type(())              # <class 'tuple'>
 type({''})            # <class 'set'>
 ```
 
-### Comparisions
+### Comparisons
 ```py
 x < y                 # strictly less than
 x <= y                # less than or equal
@@ -147,7 +147,7 @@ def least_difference(a, b, c):
         second number
     c: int
         third number
-    
+
     Returns
     -------
     y: the smallest difference.
@@ -221,7 +221,7 @@ sorted(names, key=lambda name: name.lower())  # Names sorted case insensitive
 ```py
 print('line-1', 'line-2', sep='\n')
 
-print('The story of {0}, {1}, and {other}.'.format('Bill', 'Manfred', other='Georg'))
+print('The story of {0}, {1}, and {other}.'.format('Bill', 'Manfred', other='George'))
 
 for x in range(1, 11):
     print('{0:2d} {1:3d} {2:4d}'.format(x, x*x, x*x*x))
@@ -333,12 +333,12 @@ bool("asf")  # all strings are treated as true, except the empty string ""
 bool("")     # empty string is false
 
 # python version of cond ? x : y
-outcome = 'failed' if grade < 60 else 'passed' 
+outcome = 'failed' if grade < 60 else 'passed'
 ```
 
 ## 4. Lists
 
-### 
+###
 ```py
 primes = [3, 5, 2, 7]
 
@@ -480,7 +480,7 @@ i = 0
 while i < 10:
     print(i, end=' ')
     i += 1
-# 0 1 2 3 4 5 6 7 8 9 
+# 0 1 2 3 4 5 6 7 8 9
 ```
 
 ### List comprehensions
@@ -555,7 +555,7 @@ year, month, day = datestr.split('-')
 # unicode characters in string literals
 ' 👏 '.join([word.upper() for word in claim.split()]) # 'PLUTO 👏 IS 👏 A 👏 PLANET!'
 
-pos = 9 
+pos = 9
 planet + ", you'll always be the " + pos + "th planet to me."  # TypeError: can only concatenate str (not "int") to str
 planet + ", you'll always be the " + str(pos) + "th planet to me."
 
