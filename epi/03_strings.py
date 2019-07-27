@@ -1,4 +1,5 @@
 from functools import reduce
+from itertools import groupby
 import string
 
 """
@@ -284,3 +285,157 @@ def look_and_say(n):
         return iter(''.join(next_s), n - 1)
 
     return iter('1', n)
+
+def look_and_say2(n):
+    s = '1'
+    for _ in range(n - 1):
+        s = ''.join(str(len(list(group))) + key for key, group in groupby(s))
+    return s
+
+""" 6.9 CONVERT FROM ROMAN TO DECIMAL
+
+    Write a program which takes as input a valid Roman number string s and returns
+    the integer corresponding to. For example, the strings "XXXXXIIIIIIIII",
+    "LVIIII" and "LIX" are valid Roman number string representing 59. The shortest
+    valid complex Roman number string corresponding to the integer 59 is "LIX"
+"""
+def roman_to_integer(s):
+    T = { 'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'M':1000 }
+
+    return reduce(lambda val, i: val + (-T[s[i]]) if T[s[i]] < T[s[i+1]] else T[s[i]],
+        reversed(range(len(s) - 1)), T[s[-1]])
+
+""" 6.10 COMPUTE ALL VALID IP ADDRESS
+
+    Write a program that determines where to add periods to a decimal string so
+    that the resulting string is a valid IP address. There maybe more than one
+    valid IP address corresponding to a string, in which ase you should print
+    all possibilities.
+"""
+def valid_ip_address(s):
+    if len(s) < 4 or len(s) > 12:
+        return None
+
+    def is_valid_part(s):
+        # '00', '000', '01', etc. are not valid, but '0' is valid.
+        return len(s) == 1 or (s[0] != '0' and int(s) <= 255)
+
+    result, parts = [], [None] * 4
+    for i in range(1, min(len(s), 4)):
+        parts[0] = s[:i]
+        if is_valid_part(parts[0]):
+            for j in range(1, min(len(s) - i, 4)):
+                parts[1] = s[i:i+j]
+                if is_valid_part(parts[1]):
+                    for k in range(1, min(len(s) - i - j, 4)):
+                        parts[2] = s[i+j:i+j+k]
+                        parts[3] = s[i+j+k:]
+                        if is_valid_part(parts[2]) and is_valid_part(parts[3]):
+                            result.append('.'.join(parts))
+    return result
+
+""" 6.11 WRITE A STRING SINUSOIDALLY
+
+    Define the snake string of s to be the left-right top-to-bottom sequence in
+    which characters appear when s is written in sinusoidal fashion. For example,
+    the snake string for "Hello_World!" is "e lHloWrdlo!". Write a program which
+    takes as input a string s and returns the snake string of s.
+"""
+def snake_string(s):
+    top, middle, bottom = [], [], []
+    direction = [0, 1, 0, -1] * (len(s) // 4)
+    for i in range(len(s)):
+        if direction[i] > 0:
+            top.append(s[i])
+        elif direction[i] == 0:
+            middle.append(s[i])
+        elif direction[i] < 0:
+            bottom.append(s[i])
+        print(top, middle, bottom)
+    return ''.join(top) + ''.join(middle) + ''.join(bottom)
+
+def snake_string2(s):
+    result = []
+    for i in range(1, len(s), 4):
+        result.append(s[i]) # top, s[1], s[5], s[9], ...
+    for i in range(0, len(s), 2):
+        result.append(s[i]) # middle: s[0], s[2], s[4], ...
+    for i in range(3, len(s), 4):
+        result.append(s[i]) # bottom: s[3], s[7], s[11], ...
+    return ''.join(result)
+
+def snake_string3(s):
+    return s[1::4] + s[::2] + s[3::4]
+
+""" 6.12 IMPLEMENT RUN-LENGTH ENCODING
+
+    Implement run-length encoding and decoding functions. Assume the string to
+    be encoded consists of letters of the alphabet with no digits, and the string
+    to be decoded is a valid encoding.
+"""
+def encode(s):
+    result = []
+    count, i = 1, 0
+    while i < len(s):
+        if i < len(s) - 1 and s[i] == s[i+1]:
+            count += 1
+        else:
+            result.append(str(count) + s[i])
+            count = 1
+        i += 1
+    return ''.join(result)
+
+def decode(s):
+    result = []
+    count = 0
+    for c in s:
+        if c.isdigit():
+            count = int(c)
+        else:
+            result.append(c * count)
+            count = 0
+    return ''.join(result)
+
+""" 6.13 FIND THE FIRST OCCURRENCE OF A SUBSTRING
+
+    Given two string s(the search string) and t(the text), find the first
+    occurrence of s in t.
+"""
+def search(t, s):
+    if len(s) > len(t):
+        return -1
+
+    search_idx, i = 0, 0
+    for i in range(len(t)):
+        search_idx = search_idx + 1 if t[i] == s[search_idx] else 0
+        if search_idx == len(s) - 1:
+            return i - search_idx + 1
+    return -1
+
+def rabin_karp(t, s):
+    if len(s) > len(t):
+        return -1
+
+    BASE = 26
+    # Hash codes for the substring of t and s
+    t_hash = reduce(lambda h, c: h * BASE + ord(c), t[:len(s)], 0)
+    s_hash = reduce(lambda h, c: h * BASE + ord(c), s, 0)
+    power_s = BASE**max(len(s) - 1, 0) # BASE^|s-1|.
+
+    print(t_hash, s_hash, power_s)
+
+    for i in range(len(s), len(t)):
+        # Checks the two substrings are actually equal or not, to protect
+        # against hash collision.
+        if t_hash == s_hash and t[i - len(s):i] == s:
+            return i - len(s) # Found a match.
+
+        # Uses rolling hash to compute the hash code.
+        t_hash -= ord(t[i - len(s)]) * power_s
+        t_hash = t_hash * BASE + ord(t[i])
+
+    # Tries to match s and t[-len(s):].
+    if t_hash == s_hash and t[-len(s):] == s:
+        return len(t) - len(s)
+
+    return -1 # s is not a substring of t.
