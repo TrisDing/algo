@@ -12,48 +12,47 @@ class LinkedList:
         add = self.add
         for elem in reversed(iterable):
             add(elem)
-    
+
     def add(self, data):
         """ O(1) """
         node = Node(data)
         node.next = self.head
         self.head = node
-    
+
     def size(self):
         """ O(n) """
-        curr = self.head
+        p = self.head
         count = 0
-        while curr:
+        while p:
             count += 1
-            curr = curr.next
+            p = p.next
         return count
 
     def find(self, data):
         """ O(n) """
-        curr = self.head
-        while curr:
-            if curr.data == data:
-                return curr
-            curr = curr.next
+        p = self.head
+        while p:
+            if p.data == data:
+                return p
+            p = p.next
 
     def remove(self, data):
         """ O(n) """
-        curr = self.head
-        if curr.data == data:
+        p = self.head
+        if p.data == data:
             self.head = self.head.next
             return self.head
-        while curr and curr.next:
-            if curr.next.data == data:
-                curr.next = curr.next.next
-                return curr
-            curr = curr.next
+        while p and p.next:
+            if p.next.data == data:
+                p.next = p.next.next
+                return p
+            p = p.next
 
     def __str__(self):
         result = []
-        curr = self.head
-        while curr:
-            result.append(str(curr))
-            curr = curr.next
+        p = self.head
+        while p:
+            result.append(str(p))
+            p = p.next
         result.append('#')
         return ''.join(result)
-        

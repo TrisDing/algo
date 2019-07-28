@@ -9,8 +9,8 @@ Bit-wise operators
 6 & 4       # 0110 & 0100 = 0100 (4)                     AND
 1 | 2       # 0001 | 0010 = 0011 (3)                     OR
 15 ^ 1      # 00001111 ^ 00000001 = 00001110 (14)        XOR
-8 >> 1      # 00001000 >> 1 = 00000100 (4)               x >> y = x // 2**y
-1 << 10     # 000000000001 << 10 = 010000000000 (1024)   x << y = x *  2**y
+8 >> 1      # 00001000 >> 1 = 00000100 (4)               x >> y = x // 2^y
+1 << 10     # 000000000001 << 10 = 010000000000 (1024)   x << y = x *  2^y
 -16 >> 2    # 11110000 >> 2 = 11111100 (-4)              negative right shifting
 -16 << 2    # 11110000 << 2 = 11000000 (-64)             negative left shifting
 ~0          # ~0000 = 1111 (-1)                          ~x = -x - 1
@@ -273,8 +273,8 @@ def add2(a, b):
 
 def multiply(x, y):
     # Initialize the result to 0 and iterate through the bits of x, adding
-    # (2**k)y to the result if the Kth bit of x is 1
-    # Time complexity: O(2**n)
+    # (2^k)y to the result if the Kth bit of x is 1
+    # Time complexity: O(2^n)
     running_sum = 0
     while x:
         if x & 1:
@@ -300,9 +300,9 @@ def divide(x, y):
         x -= y_power
     return result
 
-""" 4.7 COMPUTE X ** Y
+""" 4.7 COMPUTE X ^ Y
 
-    Take a double x and an integer y and returns x**y. You can ignore the
+    Take a double x and an integer y and returns x^y. You can ignore the
     overflow and underflow.
 """
 def pow(x, y):

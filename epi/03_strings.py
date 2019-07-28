@@ -204,6 +204,7 @@ def test_palindrome(s):
     return True
 
 def test_palindrome2(s):
+    # Time complexity: O(n), Space complexity: O(1)
     return all(a == b for a, b in zip(
         map(str.lower, filter(str.isalnum, s)),
         map(str.lower, filter(str.isalnum, reversed(s)))))
@@ -215,6 +216,8 @@ def test_palindrome2(s):
     We do not need to keep the original string.
 """
 def reverse_words(s):
+    # Time complexity: O(n), Space complexity: O(1)
+
     # First, reverse the whole string.
     s.reverse()
 
@@ -244,6 +247,7 @@ def reverse_words(s):
     sequences do not have to be legal words or phrases.
 """
 def phone_mnemonic(phone):
+    # Time complexity: O(4^n * n), Space complexity: O(1)
     MAPPING = ('0', '1', 'ABC', 'DEF', 'GHI', 'JKL', 'MNO', 'PQR', 'TUV', 'WXYZ')
     def iter(digit):
         if digit == len(phone):
@@ -268,6 +272,7 @@ def phone_mnemonic(phone):
     312211,13112221,1113213211>
 """
 def look_and_say(n):
+    # Time complexity: O(n * 2^n), Space complexity: O(1)
     if n < 1:
         return None
 
@@ -420,7 +425,7 @@ def rabin_karp(t, s):
     # Hash codes for the substring of t and s
     t_hash = reduce(lambda h, c: h * BASE + ord(c), t[:len(s)], 0)
     s_hash = reduce(lambda h, c: h * BASE + ord(c), s, 0)
-    power_s = BASE**max(len(s) - 1, 0) # BASE^|s-1|.
+    power_s = BASE ** max(len(s) - 1, 0) # BASE^|s-1|.
 
     print(t_hash, s_hash, power_s)
 
