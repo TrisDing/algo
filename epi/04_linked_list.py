@@ -7,9 +7,10 @@ class ListNode:
         return str(self.data) + '->'
 
 def search_list(L, key):
-    while L and L.data != key:
-        L = L.next
-    return L
+    p = L
+    while p and p.data != key:
+        p = p.next
+    return p
 
 def insert_after(node, new_node):
     new_node.next = node.next
@@ -19,16 +20,16 @@ def delete_after(node):
     node.next = node.next.next
 
 def create_list(iterable = ()):
-    L = ListNode() # dummy
+    dummy_head = ListNode() # dummy
     for elem in reversed(iterable):
-        insert_after(L, ListNode(elem))
-    return L.next
+        insert_after(dummy_head, ListNode(elem))
+    return dummy_head.next
 
 def print_list(L, threadshold=20):
-    result = []
-    while L and len(result) < threadshold:
-        result.append(str(L.data) + '->')
-        L = L.next
+    result, p = [], L
+    while p and len(result) < threadshold:
+        result.append(str(p.data) + '->')
+        p = p.next
     result.append('#')
     print(''.join(result))
 
@@ -188,6 +189,7 @@ def get_cycle_root(L):
     if there exists a node that is common to both lists.
 """
 def overlap_no_cycle(L1, L2):
+    # Time complexity: O(n), Space complexity: O(1)
     len1, len2 = list_len(L1), list_len(L2)
     if len1 > len2:
         L1, L2 = L2, L1 # L2 is always the longer list
@@ -207,6 +209,8 @@ def overlap_no_cycle(L1, L2):
     cycle.
 """
 def overlap_list(L1, L2):
+    # Time complexity: O(n), Space complexity: O(1)
+
     # store the start of cycle if any.
     root1, root2 = get_cycle_root(L1), get_cycle_root(L2)
 
@@ -241,10 +245,96 @@ def overlap_list(L1, L2):
     # unique, we can return any node on the cycle.
     return L1 if L1 is L2 else root1
 
-L1 = create_list([1,2])
-L2 = create_list([3,4,5,6])
-make_cycle_at(L2, 2)
-make_overlap_at(L1, L2, 2)
-print_list(L1)
-print_list(L2)
-print_list(overlap_list(L1, L2))
+""" 7.6 DELETE A NODE FROM A SINGLY LINKED LIST
+
+    Write a program which deletes a node in a singly linked list. The input node
+    is guaranteed not to be the tail node. Assume the node-to-delete is not tail.
+"""
+def delete_from_list(node_to_delete):
+    # Time complexity: O(1)
+    node_to_delete.data = node_to_delete.next.data
+    node_to_delete.next = node_to_delete.next.next
+
+""" 7.7 REMOVE THE Kth LAST ELEMENT FROM A LIST
+
+    Given a singly linked list and an integer k, write a program to remove the
+    Kth last element from the list. Your algorithm cannot use more than a few
+    words of storage, regardless of the length of the list. In particular, you
+    cannot assume that it is possible to record the length of the list.
+"""
+def remove_kth_last(L, k):
+    p = q = L
+    for _ in range(1, k):
+        p = p.next
+
+    while p and p.next:
+        p, q = p.next, q.next
+
+    delete_from_list(q)
+
+""" 7.8 REMOVE DUPLICATES FROM A SORTED LIST
+
+    Write a program that takes as input a singly linked list of integers in
+    sorted order, and removes duplicates from it. The list should be sorted.
+"""
+def remove_duplicates(L):
+    if not L or not L.next:
+        return L # length < 2, no duplicates
+
+    q, p = L, L.next
+    while p:
+        if p.data == q.data:
+            q.next = p.next
+        else:
+            q = p
+        p = p.next
+
+""" 7.9 IMPLEMENT CYCLIC RIGHT SHIFT FROM SINGLY LINKED LIST
+
+    Write a program that takes as input a singly linked list and a nonnegative
+    integer k, and returns the list cyclically shifted to the right by k.
+"""
+def right_shift(L, k):
+    if not L:
+        return L
+
+    n = list_len(L)
+    steps = k if k < n else k % n
+    # Make Cycle
+    tail = L
+    while tail.next:
+        tail = tail.next
+    tail.next = L
+
+    # find new head and tail
+    new_tail = L
+    for _ in range(1, n - steps):
+        new_tail = new_tail.next
+
+    L, new_tail.next = new_tail.next, None
+    return L
+
+""" 7.10 IMPLEMENT EVEN-ODD MERGE
+
+    Write a program that computes the even-odd merge. Linked list nodes are
+    numbered starting at 0
+"""
+def even_odd_merge(L):
+    if not L:
+        return L
+
+    evens, odds = ListNode('EVENS'), ListNode('ODDS')
+    n = list_len(L)
+    p, pe, po = L, evens, odds
+    for i in range(n):
+        if i % 2 == 0:
+            pe.next = p
+            pe = pe.next
+        else:
+            po.next = p
+            po = po.next
+        p = p.next
+
+    po.next = None
+    pe.next = odds.next
+    return evens.next
