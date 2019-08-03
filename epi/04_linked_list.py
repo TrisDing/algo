@@ -251,7 +251,7 @@ def overlap_list(L1, L2):
     is guaranteed not to be the tail node. Assume the node-to-delete is not tail.
 """
 def delete_from_list(node_to_delete):
-    # Time complexity: O(1)
+    # Time complexity: O(1), no additional space required
     node_to_delete.data = node_to_delete.next.data
     node_to_delete.next = node_to_delete.next.next
 
@@ -263,6 +263,7 @@ def delete_from_list(node_to_delete):
     cannot assume that it is possible to record the length of the list.
 """
 def remove_kth_last(L, k):
+    # Time complexity: O(n), Space complexity: O(1)
     p = q = L
     for _ in range(1, k):
         p = p.next
@@ -278,6 +279,7 @@ def remove_kth_last(L, k):
     sorted order, and removes duplicates from it. The list should be sorted.
 """
 def remove_duplicates(L):
+    # Time complexity: O(n), Space complexity: O(1)
     if not L or not L.next:
         return L # length < 2, no duplicates
 
@@ -295,6 +297,7 @@ def remove_duplicates(L):
     integer k, and returns the list cyclically shifted to the right by k.
 """
 def right_shift(L, k):
+    # Time complexity: O(n), Space complexity: O(1)
     if not L:
         return L
 
@@ -320,21 +323,120 @@ def right_shift(L, k):
     numbered starting at 0
 """
 def even_odd_merge(L):
+    # Time complexity: O(n), Space complexity: O(1)
     if not L:
         return L
 
     evens, odds = ListNode('EVENS'), ListNode('ODDS')
     n = list_len(L)
-    p, pe, po = L, evens, odds
+    p, p_equal, po = L, evens, odds
     for i in range(n):
         if i % 2 == 0:
-            pe.next = p
-            pe = pe.next
+            p_equal.next = p
+            p_equal = p_equal.next
         else:
             po.next = p
             po = po.next
         p = p.next
 
     po.next = None
-    pe.next = odds.next
+    p_equal.next = odds.next
     return evens.next
+
+""" 7.11 TEST WHETHER A SINGLY LINED LIST IS PALINDROMIC
+
+    Write a program that tests whether a singly linked list a palindromic
+"""
+def is_palindrome(L):
+    # Time complexity: O(n), Space complexity: O(1)
+
+    # finds the second half of L.
+    slow = fast = L
+    while fast and fast.next:
+        slow, fast = slow.next, fast.next.next
+
+    # Compare the first half and the reversed second half lists.
+    p1, p2 = L, reverse_list(slow)
+    while p1 and p2:
+        if p1.data != p2.data:
+            return False
+        p1, p2 = p1.next, p2.next
+
+    return True
+
+""" 7.12 IMPLEMENT LIST PIVOTING
+
+    Implement a function which takes as input a singly linked list and an integer
+    k and performs a pivot of the list with respect to k. The relative ordering
+    of nodes that appear before k, and after k, must remain unchanged; the same
+    must hold for nodes holding keys equal to k.
+"""
+def list_pivoting(L, x):
+    # Time complexity: O(n), Space complexity: O(1)
+    if not L:
+        return L
+
+    smaller = p_small = ListNode(0)
+    equal = p_equal = ListNode(0)
+    larger = p_large = ListNode(0)
+
+    p = L
+    while p:
+        if p.data < x:
+            p_small.next = p
+            p_small = p_small.next
+        elif p.data == x:
+            p_equal.next = p
+            p_equal = p_equal.next
+        else: # p.data > x
+            p_large.next = p
+            p_large = p_large.next
+        p = p.next
+
+    # connect
+    p_large.next = None
+    p_equal.next = larger.next
+    p_small.next = equal.next
+
+    return smaller.next
+
+""" 7.13 ADD LIST-BASED INTEGERS
+
+    Write a program which takes two singly linked lists of digits, and returns
+    the list corresponding to the sum of the integers they represent. The least
+    significant digit comes first.
+"""
+def add_two_numbers(L1, L2):
+    p1, p2 = L1, L2
+    data, carry = 0, 0
+    while p1 and p2:
+        data = p1.data + p2.data + carry
+        carry = data // 10
+        p1.data = p2.data = (data % 10)
+        p1, p2 = p1.next, p2.next
+
+    if p1 is None and p2 is None:
+        if carry:
+            last = get_last_node(L1) # or L2
+            last.next = ListNode(1)
+        return L1
+
+    if p1 is None:
+        p2.data += carry
+        return L2
+
+    # p2 is None
+    p1.data += carry
+    return L1
+
+def add_two_numbers2(L1, L2):
+    # Time complexity: O(n+m), Space complexity: O(max(n,m))
+    placer = dummy_head = ListNode()
+    carry = 0
+    while L1 or L2 or carry:
+        val = carry + (L1.data if L1 else 0) + (L2.data if L2 else 0)
+        L1 = L1.next if L1 else None
+        L2 = L2.next if L2 else None
+        placer.next = ListNode(val % 10)
+        carry, placer = val // 10, placer.next
+    return dummy_head.next
