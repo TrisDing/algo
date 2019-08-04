@@ -69,7 +69,7 @@ def evaluate_rpn(expr):
             stack.append(int(token))
     return stack[-1]
 
-def evaluate_rpn_2(expr):
+def evaluate_rpn2(expr):
     DELIMITER = ','
     OPERATORS = {
         '+': lambda y, x: x + y,
@@ -105,7 +105,7 @@ def is_well_formatted(expr):
             stack.append(expr[i])
     return len(stack) == 0
 
-def is_well_formatted_2(expr):
+def is_well_formatted2(expr):
     MAPPING = {
         '{': '}',
         '(': ')',
