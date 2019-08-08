@@ -90,10 +90,11 @@ def parity4(x):
     MASK_SIZE = 16
     BIT_MASK = 0xFFFF
     # break into 4 16-bit cache and use precomputed parity
-    return (PRECOMPUTED_PARITY[(x >> (3 * MASK_SIZE)) & BIT_MASK] ^ # 1st 16-bits
-            PRECOMPUTED_PARITY[(x >> (2 * MASK_SIZE)) & BIT_MASK] ^ # 2nd 16-bits
-            PRECOMPUTED_PARITY[(x >> (1 * MASK_SIZE)) & BIT_MASK] ^ # 3rd 16-bits
-            PRECOMPUTED_PARITY[(x >> (0 * MASK_SIZE)) & BIT_MASK])  # 4th 16-bits
+    return \
+        (PRECOMPUTED_PARITY[(x >> (3 * MASK_SIZE)) & BIT_MASK] ^ # 1st 16-bits
+         PRECOMPUTED_PARITY[(x >> (2 * MASK_SIZE)) & BIT_MASK] ^ # 2nd 16-bits
+         PRECOMPUTED_PARITY[(x >> (1 * MASK_SIZE)) & BIT_MASK] ^ # 3rd 16-bits
+         PRECOMPUTED_PARITY[(x >> (0 * MASK_SIZE)) & BIT_MASK])  # 4th 16-bits
 
 def parity5(x):
     # God-like solution
@@ -150,10 +151,14 @@ def reverse_bits2(x):
     }
     MASK_SIZE = 16
     BIT_MASK = 0xFFFF
-    return (PRECOMPUTED_REVERSE[(x >> (0 * MASK_SIZE)) & BIT_MASK] << (3 * MASK_SIZE) |
-            PRECOMPUTED_REVERSE[(x >> (1 * MASK_SIZE)) & BIT_MASK] << (2 * MASK_SIZE) |
-            PRECOMPUTED_REVERSE[(x >> (2 * MASK_SIZE)) & BIT_MASK] << (1 * MASK_SIZE) |
-            PRECOMPUTED_REVERSE[(x >> (3 * MASK_SIZE)) & BIT_MASK] << (0 * MASK_SIZE))
+    return (PRECOMPUTED_REVERSE[(x >> (0 * MASK_SIZE)) & BIT_MASK] \
+                << (3 * MASK_SIZE) |
+            PRECOMPUTED_REVERSE[(x >> (1 * MASK_SIZE)) & BIT_MASK] \
+                << (2 * MASK_SIZE) |
+            PRECOMPUTED_REVERSE[(x >> (2 * MASK_SIZE)) & BIT_MASK] \
+                << (1 * MASK_SIZE) |
+            PRECOMPUTED_REVERSE[(x >> (3 * MASK_SIZE)) & BIT_MASK] \
+                << (0 * MASK_SIZE))
 
 """ 4.4 FIND A CLOSEST INTEGER WITH THE SAME WEIGHT
 
@@ -239,7 +244,7 @@ def substract(x, y):
     while y:
         # Borrow contains common set bits of y and unset bits of x
         borrow = (~x) & y
-        # Subtraction of bits of x and y where at least one of the bits is not set
+        # Subtract bits of x from y where at least one of the bits is not set
         x = x ^ y
         # Borrow is shifted by 1 so that subtracting it from x gives the diff
         y = borrow << 1

@@ -83,18 +83,19 @@ def string_to_int(s):
 """ 6.2 BASE CONVERSION
 
     Write a program that performs base conversion. The input is a string, an
-    integer b1, and another integer b2. The string represents an integer in base
-    b1. The output should be the string representing the integer in base b2.
-    Assume b1 >= 2, b2 <= 16. Use "A" to represent 10, "B" to represent 11,...,
-    and "F" to represent 15.
+    integer b1, and another integer b2. The string represents an integer in
+    base b1. The output should be the string representing the integer in base
+    b2. Assume b1 >= 2, b2 <= 16. Use "A" to represent 10, "B" to represent
+    11,..., and "F" to represent 15.
 """
 def convert_base(s, b1, b2):
     # Time complexity: O(n), Space complexity: O(1)
     signed = True if s[0] == '-' else False
     s = s[s[0] == '-':]
 
-    total = reduce(lambda res, tup: res + string.hexdigits.index(tup[1].lower()) *
-        (b1 ** (len(s) - tup[0] - 1)), enumerate(s), 0)
+    total = reduce(lambda res, tup: \
+                    res + string.hexdigits.index(tup[1].lower()) * \
+                        (b1 ** (len(s) - tup[0] - 1)), enumerate(s), 0)
 
     result = []
     for i in range(len(s)):
@@ -108,17 +109,22 @@ def convert_base2(s, b1, b2):
     # Time complexity: O(n), Space complexity: O(1)
     def construct_from_base(num, base):
         return ('' if num == 0 else
-            construct_from_base(num // base, base) + string.hexdigits[num % base].upper())
+            construct_from_base(num // base, base) + \
+                string.hexdigits[num % base].upper())
 
     signed = s[0] == '-'
-    num = reduce(lambda x, c: x * b1 + string.hexdigits.index(c.lower()), s[signed:], 0)
-    return ('-' if signed else '') + ('0' if num == 0 else construct_from_base(num, b2))
+    num = reduce(lambda x, c: \
+            x * b1 + string.hexdigits.index(c.lower()), \
+s[signed:], 0)
+    return ('-' if signed else '') + \
+           ('0' if num == 0 else construct_from_base(num, b2))
 
 """ 6.3 COMPUTE THE SPREADSHEET COLUMN ENCODING
 
-    Implement a function that converts a spreadsheet column id to the corresponding
-    integer, with "A" corresponding to 1. For example, you should return 4 for "D",
-    27 for "AA", 702 for "ZZ", etc. How would you test your code?
+    Implement a function that converts a spreadsheet column id to the
+    corresponding integer, with "A" corresponding to 1. For example, you should
+    return 4 for "D", 27 for "AA", 702 for "ZZ", etc. How would you test your
+    code?
 """
 def decode_spreadsheet_column(column):
     # Time complexity: O(n), Space complexity: O(1)
@@ -136,13 +142,13 @@ def decode_spreadsheet_column2(column):
 
 """ 6.4 REPLACE AND REMOVE
 
-    Write a program which takes as input an array of characters, and removes each
-    'b' and replaces each 'a' by two 'd's, Specifically, along with the array,
-    you are provided an integer-valued size. Size donates the number of entries
-    of array that the operation is to be applied to. You do not have to worry
-    about preserving subsequent entries. For example, if the array is <a,b,a,c,_>
-    and the size is 4, then you can return <d,d,d,d,c>. You can assume there is
-    enough space in the array to hold the final result.
+    Write a program which takes as input an array of characters, and removes
+    each 'b' and replaces each 'a' by two 'd's, Specifically, along with the
+    array, you are provided an integer-valued size. Size donates the number of
+    entries of array that the operation is to be applied to. You do not have to
+    worry about preserving subsequent entries. For example, if the array is
+    [a, b, a, c, _] and the size is 4, then you can return [d,d,d,d,c]. You can
+    assume there is enough space in the array to hold the final result.
 """
 def replace_and_remove(size, s):
     # Time complexity: O(n), Space complexity: O(n)
@@ -248,7 +254,7 @@ def reverse_words(s):
 """
 def phone_mnemonic(phone):
     # Time complexity: O(4^n * n), Space complexity: O(1)
-    MAPPING = ('0', '1', 'ABC', 'DEF', 'GHI', 'JKL', 'MNO', 'PQR', 'TUV', 'WXYZ')
+    MAP = ('0', '1', 'ABC', 'DEF', 'GHI', 'JKL', 'MNO', 'PQR', 'TUV', 'WXYZ')
     def iter(digit):
         if digit == len(phone):
             # All digits are processed, so add partial to mnemonics.
@@ -256,7 +262,7 @@ def phone_mnemonic(phone):
             mnemonics.append(''.join(partial))
         else:
             # Try all possible characters for this digit.
-            for c in MAPPING[int(phone[digit])]:
+            for c in MAP[int(phone[digit])]:
                 partial[digit] = c
                 iter(digit + 1)
 
@@ -266,10 +272,10 @@ def phone_mnemonic(phone):
 
 """ 6.8 THE LOOK-AND-SAY PROBLEM
 
-    Write a program that takes as input an integer n and returns the nth integer
-    in the look-and-say sequence. Return the result as a string. For example,
-    the first eight numbers in the look-and-say sequence are <1,11,21,1211,111221,
-    312211,13112221,1113213211>
+    Write a program that takes as input an integer n and returns the nth
+    integer in the look-and-say sequence. Return the result as a string.
+    For example, the first eight numbers in the look-and-say sequence are
+    [1, 11, 21, 1211, 111221, 312211, 13112221, 1113213211]
 """
 def look_and_say(n):
     # Time complexity: O(n * 2^n), Space complexity: O(1)
@@ -299,16 +305,18 @@ def look_and_say2(n):
 
 """ 6.9 CONVERT FROM ROMAN TO DECIMAL
 
-    Write a program which takes as input a valid Roman number string s and returns
-    the integer corresponding to. For example, the strings "XXXXXIIIIIIIII",
-    "LVIIII" and "LIX" are valid Roman number string representing 59. The shortest
-    valid complex Roman number string corresponding to the integer 59 is "LIX"
+    Write a program which takes as input a valid Roman number string s and
+    returns the integer corresponding to. For example, the strings
+    "XXXXXIIIIIIIII", "LVIIII" and "LIX" are valid Roman number string
+    representing 59. The shortest valid complex Roman number string
+    corresponding to the integer 59 is "LIX"
 """
 def roman_to_integer(s):
     T = { 'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'M':1000 }
 
-    return reduce(lambda val, i: val + (-T[s[i]]) if T[s[i]] < T[s[i+1]] else T[s[i]],
-        reversed(range(len(s) - 1)), T[s[-1]])
+    return reduce(lambda val, i: \
+            val + (-T[s[i]]) if T[s[i]] < T[s[i+1]] else T[s[i]], \
+            reversed(range(len(s) - 1)), T[s[-1]])
 
 """ 6.10 COMPUTE ALL VALID IP ADDRESS
 
@@ -342,9 +350,9 @@ def valid_ip_address(s):
 """ 6.11 WRITE A STRING SINUSOIDALLY
 
     Define the snake string of s to be the left-right top-to-bottom sequence in
-    which characters appear when s is written in sinusoidal fashion. For example,
-    the snake string for "Hello_World!" is "e lHloWrdlo!". Write a program which
-    takes as input a string s and returns the snake string of s.
+    which characters appear when s is written in sinusoidal fashion. For
+    example, the snake string for "Hello_World!" is "e lHloWrdlo!". Write a
+    program which takes as input a string s and returns the snake string of s.
 """
 def snake_string(s):
     top, middle, bottom = [], [], []
@@ -375,8 +383,8 @@ def snake_string3(s):
 """ 6.12 IMPLEMENT RUN-LENGTH ENCODING
 
     Implement run-length encoding and decoding functions. Assume the string to
-    be encoded consists of letters of the alphabet with no digits, and the string
-    to be decoded is a valid encoding.
+    be encoded consists of letters of the alphabet with no digits, and the
+    string to be decoded is a valid encoding.
 """
 def encode(s):
     result = []

@@ -7,7 +7,7 @@ import collections
 """
 Basic Concepts
 --------------
-* Arrays are list, which is a mutable sequence type (tuples are immutable sequence)
+* Arrays are lists, lists are mutable sequences, tuples are immutable sequences
 * list is dynamically-resized, there is no upper bound
 * Values can be deleted and inserted at arbitrary locations
 
@@ -27,8 +27,8 @@ List Methods
 # Equivalent to a[len(a):] = iterable.
 >>> a.extend(iterable)
 
-# Insert an item at a given position. a.insert(0, x) inserts at the front of the
-# list, and a.insert(len(a), x) is equivalent to a.append(x).
+# Insert an item at a given position. a.insert(0, x) inserts at the front of
+# the list, and a.insert(len(a), x) is equivalent to a.append(x).
 >>> a.insert(i, x)
 
 # Remove the first item from the list whose value is equal to x. It raises a
@@ -55,7 +55,8 @@ List Methods
 # x. Raises a ValueError if there is no such item.
 >>> a.index(x[, start[, end]])
 
-# Sort the items of the list in place (the arguments can be used for sort customization).
+# Sort the items of the list in place (the arguments can be used for sort
+# customization).
 >>> a.sort(key=None, reverse=False)
 
 Common Sequence Operations
@@ -254,7 +255,8 @@ def product(A, B):
             result[i + j + 1] %= 10
 
     # remove the leading zero
-    result = result[next((i for i, x in enumerate(result) if x != 0), len(result)):] or [0]
+    result = result[next((i for i, x in enumerate(result) if x != 0), \
+                len(result)):] or [0]
     return [sign * result[0]] + result[1:]
 
 """ 5.4 ADVANCING THROUGH AN ARRAY
@@ -276,10 +278,10 @@ def can_reach_end(A):
 """ 5.5 DELETE DUPLICATES FROM A SORTED ARRAY
 
     Write a program which takes as input a sorted array and updates it so that
-    all duplicates have been removed and the remaining elements have been shifted
-    left to fill the emptied indices. Return the number of valid elements. Many
-    languages have library functions for performing this operation you cannot use
-    these functions.
+    all duplicates have been removed and the remaining elements have been
+    shifted left to fill the emptied indices. Return the number of valid
+    elements. Many languages have library functions for performing this
+    operation you cannot use these functions.
 """
 def delete_duplicates(A):
     # Time complexity: O(n), Space complexity: O(n)
@@ -434,8 +436,8 @@ def generate_primes3(n):
         if is_prime[i]:
             p = 2 * i + 3
             primes.append(p)
-            # Sieving from p^2, where p^2 = (4i^2 + 12i + 9). The index in is_prime
-            # is (2i^2 + 6i + 3) because is_prime[i] represents 2i + 3
+            # Sieving from p^2, where p^2 = (4i^2 + 12i + 9). The index in
+            # is_prime is (2i^2 + 6i + 3) because is_prime[i] represents 2i + 3
             for j in range(2 * i**2 + 6 * i + 3, size, p):
                 is_prime[j] = False
     return primes
@@ -443,10 +445,10 @@ def generate_primes3(n):
 """ 5.10 PERMUTE THE ELEMENTS OF AN ARRAY
 
     A permutation can be specified by an array P, where P[i] represents the
-    location of the element at i in the permutation. A permutation can be applied
-    to an array to reorder the array. For example, the permutation <2,0,1,3>
-    applied to A = <a,b,c,d> yield the array <b,c,a,d>. Given an array A of n
-    elements and a permutation P, apply P to A.
+    location of the element at i in the permutation. A permutation can be
+    applied to an array to reorder the array. For example, the permutation
+    <2,0,1,3> applied to A = <a,b,c,d> yield the array <b,c,a,d>. Given an
+    array A of n elements and a permutation P, apply P to A.
 """
 def apply_permutation(A, P):
     # Time complexity: O(n), Space complexity: O(n)
@@ -502,7 +504,8 @@ def apply_permutation3(A, P):
     Write a program that takes an input a permutation, and returns the next
     permutation under dictionary ordering. If the permutation is the last
     permutation, return the empty array. For example, the input is <1,0,3,2>
-    your function should return <1,2,0,3>. If the input is <3,2,1,0>, return <>.
+    your function should return <1,2,0,3>. If the input is <3,2,1,0>, return
+    <>.
 """
 def next_permutation(P):
     # Time complexity: O(n), Space complexity: O(1)
@@ -516,9 +519,9 @@ def next_permutation(P):
         return [] # P is the last permutation
 
     # Swap the smallest entry after inversion_point that is greater than
-    # P[inversion_point]. Since entries in P are decreasing after inversion_point,
-    # if we search in reverse order, the first entry that is greater than
-    # P[inversion_point] is the entry to swap with.
+    # P[inversion_point]. Since entries in P are decreasing after
+    # inversion_point, if we search in reverse order, the first entry that is
+    # greater than P[inversion_point] is the entry to swap with.
     for i in reversed(range(inversion_point + 1, len(P))):
         if P[i] > P[inversion_point]:
             P[inversion_point], P[i] = P[i], P[inversion_point]
@@ -532,9 +535,10 @@ def next_permutation(P):
 
 """ 5.12 SAMPLE OFFLINE DATA
 
-    Implement an algorithm that takes as input an array of distinct elements and
-    a size, and returns a subset of the given size of the array elements. All
-    subsets should be equally likely. Return the result in input array itself.
+    Implement an algorithm that takes as input an array of distinct elements
+    and a size, and returns a subset of the given size of the array elements.
+    All subsets should be equally likely. Return the result in input array
+    itself.
 """
 def random_sampling(A, k):
     # Time complexity: O(k), Space complexity: O(1)
@@ -547,8 +551,8 @@ def random_sampling(A, k):
 
 """ 5.13 SAMPLE ONLINE DATA
 
-    Design a program that takes as input a size k, and reads packets, continiously
-    maintaining a uniform random subset of k of the read packets.
+    Design a program that takes as input a size k, and reads packets,
+    continiously maintaining a uniform random subset of k of the read packets.
 """
 def online_random_sampling(stream, k):
     # Assumption: there are at least k elements in the stream.
@@ -572,9 +576,10 @@ def online_random_sampling(stream, k):
 
 """ 5.14 COMPUTE A RANDOM PERMUTATION
 
-    Design an algorithm that creates uniformly random permutations of {0,1,...,
-    n-1}. You are given a random number generator that returns integers in the
-    set {0,1,...,n-1} with equal probability; use as few calls to it as possible.
+    Design an algorithm that creates uniformly random permutations of
+    {0, 1, ..., n-1}. You are given a random number generator that returns
+    integers in the set {0, 1, ..., n-1} with equal probability; use as few
+    calls to it as possible.
 """
 def compute_random_permutation(n):
     # Time complexity: O(n), Space complexity: no additional space required
@@ -587,9 +592,10 @@ def compute_random_permutation(n):
     Write a program that takes as input a positive integer n and a size k <= n,
     and returns a size-k subset of {0,1,2,...,n-1}. The subset should be
     represented as an array. All subsets should be equally likely and, in
-    addition, all permutations of elements of the array should be equally likely.
-    You may assume you have a function which takes as input a nonnegative integer
-    t and returns an integer in the set {0,1,...,t-1} with uniform probability.
+    addition, all permutations of elements of the array should be equally
+    likely. You may assume you have a function which takes as input a
+    nonnegative integer t and returns an integer in the set {0,1,...,t-1} with
+    uniform probability.
 """
 def random_subset(n, k):
     # Time complexity: O(k), Space complexity: O(k)
@@ -722,8 +728,8 @@ def spiral_ordering2(matrix):
 
 """ 5.19 ROTATE A 2D ARRAY
 
-    Write a function that takes as input an n X n 2D array, and rotates the array
-    by 90 degrees clockwise.
+    Write a function that takes as input an n X n 2D array, and rotates the
+    array by 90 degrees clockwise.
 """
 def rotate_ninety(matrix):
     # Time complexity: O(n2), Space complexity: O(1)

@@ -75,8 +75,9 @@ def make_overlap_at(L1, L2, k):
 
 """ 7.1 MERGE TWO SORTED  LISTS
 
-    Write a program that takes two lists, assumed to be sorted, and returns their
-    merge. The only field your program can change in a node is its next field.
+    Write a program that takes two lists, assumed to be sorted, and returns
+    their merge. The only field your program can change in a node is its next
+    field.
 """
 def merge_sorted_lists(L1, L2):
     L = ListNode() # dummy node
@@ -110,8 +111,8 @@ def merge_sorted_lists2(L1, L2):
 
     Write a program which takes a singly linked list L and two integers start
     and finish as arguments, and reverses the order of the nodes from the start
-    node to the finish node, inclusive. The numbering begins at 1. Do not allocate
-    new nodes.
+    node to the finish node, inclusive. The numbering begins at 1. Do not
+    allocate new nodes.
 """
 def reverse_list(L):
     p, prev = L, None
@@ -129,7 +130,8 @@ def reverse_list_between(L, start, finish):
     p = sublist_head.next
     for _ in range(finish - start):
         temp = p.next
-        p.next, temp.next, sublist_head.next = temp.next, sublist_head.next, temp
+        p.next, temp.next, sublist_head.next = \
+            temp.next, sublist_head.next, temp
 
     return dummy_head.next
 
@@ -185,8 +187,8 @@ def get_cycle_root(L):
 
 """ 7.4 TEST FOR OVERLAPPING LISTS - LISTS ARE CYCLE-FREE
 
-    Write a program that takes two cycle-free singly linked list, and determines
-    if there exists a node that is common to both lists.
+    Write a program that takes two cycle-free singly linked list, and
+    determines if there exists a node that is common to both lists.
 """
 def overlap_no_cycle(L1, L2):
     # Time complexity: O(n), Space complexity: O(1)
@@ -247,8 +249,9 @@ def overlap_list(L1, L2):
 
 """ 7.6 DELETE A NODE FROM A SINGLY LINKED LIST
 
-    Write a program which deletes a node in a singly linked list. The input node
-    is guaranteed not to be the tail node. Assume the node-to-delete is not tail.
+    Write a program which deletes a node in a singly linked list. The input
+    node is guaranteed not to be the tail node. Assume the node-to-delete is
+    not tail.
 """
 def delete_from_list(node_to_delete):
     # Time complexity: O(1), no additional space required
@@ -366,10 +369,10 @@ def is_palindrome(L):
 
 """ 7.12 IMPLEMENT LIST PIVOTING
 
-    Implement a function which takes as input a singly linked list and an integer
-    k and performs a pivot of the list with respect to k. The relative ordering
-    of nodes that appear before k, and after k, must remain unchanged; the same
-    must hold for nodes holding keys equal to k.
+    Implement a function which takes as input a singly linked list and an
+    integer k and performs a pivot of the list with respect to k. The relative
+    ordering of nodes that appear before k, and after k, must remain unchanged;
+    the same must hold for nodes holding keys equal to k.
 """
 def list_pivoting(L, x):
     # Time complexity: O(n), Space complexity: O(1)

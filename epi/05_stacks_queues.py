@@ -27,7 +27,8 @@ Queue uses the collection.deque class
     The max method should return the maximum value stored in the stack.
 """
 class Stack:
-    ElementWithCachedMax = collections.namedtuple('ElementWithCachedMax', ('element', 'max'))
+    ElementWithCachedMax = \
+        collections.namedtuple('ElementWithCachedMax', ('element', 'max'))
 
     def __init__(self):
         self.stack = []
@@ -46,8 +47,9 @@ class Stack:
         return self.stack.pop().element
 
     def push(self, x):
-        self.stack.append(
-            self.ElementWithCachedMax(x, x if self.is_empty() else max(x, self.max())))
+        self.stack.append( \
+            self.ElementWithCachedMax(x, \
+                x if self.is_empty() else max(x, self.max())))
 
 """ 8.2 EVALUATE RPN EXPRESSIONS
 
@@ -136,7 +138,8 @@ def shortest_pathname(path):
     if path[0] == '/':
         path_names.append['/']
 
-    valid_tokens = [token for token in path.split('/') if token not in ['.', '']]
+    valid_tokens = \
+        [token for token in path.split('/') if token not in ['.', '']]
 
     for token in valid_tokens:
         if token == '..':
@@ -159,7 +162,8 @@ def shortest_pathname(path):
     specified by it's height.
 """
 def examine_buildings_with_sunset(sequence):
-    BuildingWithHeight = collections.namedtuple('BuildingWithHeight', ('id', 'height'))
+    BuildingWithHeight = \
+        collections.namedtuple('BuildingWithHeight', ('id', 'height'))
     candidates = []
     for idx, height in enumerate(sequence):
         while candidates and height >= candidates[-1].height:
@@ -212,7 +216,8 @@ class Queue:
     def resize(self):
         self.entries = self.entries[self.head:] + self.entries[:self.head]
         self.head, self.tail = 0, self.num_elements
-        self.entries += [None] * (len(self.entries) * Queue.SCALE_FACTOR - len(self.entries))
+        self.entries += \
+            [None] * (len(self.entries) * Queue.SCALE_FACTOR - len(self.entries))
 
     def enqueue(self, x):
         if self.size() == len(self.entries): # need to resize
@@ -234,8 +239,8 @@ class Queue:
 
 """ 8.8 IMPLEMENT A QUEUE WITH MAX API
 
-    Implement a queue with enqueue, dequeue, and max operators. The max operation
-    returns the maximum element currently stored in the queue
+    Implement a queue with enqueue, dequeue, and max operators. The max
+    operation returns the maximum element currently stored in the queue
 """
 class QueueWithMax:
     def __init__(self):
