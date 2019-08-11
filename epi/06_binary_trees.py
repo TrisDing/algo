@@ -6,42 +6,33 @@ class BinaryTreeNode:
         self.left = left
         self.right = right
 
-class BinaryTreeNode2:
-    def __init__(self, data, left=None, right=None, parent=None):
-        self.data = data
-        self.left = left
-        self.right = right
-        self.parent = parent
-
 def preorder_traversal(root):
     """ Depth-first pre order traversal
         node -> node.left -> node.right
     """
-    result = []
-
     def traverse(node):
         if not node:
             return
-        result.append(node.data)
+        result.append(node)
         traverse(node.left)
         traverse(node.right)
 
+    result = []
     traverse(root)
     return result
 
-def inorder_traversal(root):
+def in_order_traversal(root):
     """ Depth-first in order traversal
         node.left -> node -> node.right
     """
-    result = []
-
     def traverse(node):
         if not node:
             return
         traverse(node.left)
-        result.append(node.data)
+        result.append(node)
         traverse(node.right)
 
+    result = []
     traverse(root)
     return result
 
@@ -49,15 +40,14 @@ def postorder_traversal(root):
     """ Depth-first post order traversal
         node.left -> node.right -> node
     """
-    result = []
-
     def traverse(node):
         if not node:
             return
         traverse(node.left)
         traverse(node.right)
-        result.append(node.data)
+        result.append(node)
 
+    result = []
     traverse(root)
     return result
 
@@ -69,7 +59,7 @@ def level_order_traversal(root):
     queue.append(root)
     while queue:
         node = queue.popleft()
-        result.append(node.data)
+        result.append(node)
         if node.left:
             queue.append(node.left)
         if node.right:
@@ -85,13 +75,48 @@ def create_tree_level_order(iterable = ()):
         return node
     return insert(None, 0)
 
-def cherry_pick(root, k):
-    if k == 0:
-        return root
-    cherry_pick(root.left, k - 1)
-    cherry_pick(root.right, k - 1)
+def simple_tree():
+    nodes = [0,1,2,3,4,5,6,7,8,9]
+    tree = create_tree_level_order(nodes)
+    print_tree(tree)
+    tree_traversal(tree)
+    return tree
 
-def print_tree(root):
+def hard_tree():
+    _ = None
+    nodes = \
+        [314] + \
+        [6, 6] + \
+        [271, 561, 2, 271] + \
+        [28, 0, _, 3, _, 1, _, 28] + \
+        [_, _, _, _, _, _, 17, _, _, _, 401, 257, _, _, _, _] + \
+        [_]*21 + [641, _, _, _, _, _, _, _, _, _, _]
+    tree = create_tree_level_order(nodes)
+    print_tree(tree, True)
+    tree_traversal(tree)
+    return tree
+
+def cherry_pick(root, k, traversal_function=in_order_traversal):
+    nodes = traversal_function(root)
+    return nodes[k]
+
+def assign_parent(root, parent=None):
+    if not root:
+        return
+    root.parent = parent
+    assign_parent(root.left, root)
+    assign_parent(root.right, root)
+
+def tree_data(nodes):
+    return list(map(lambda node: node.data, nodes))
+
+def tree_traversal(root):
+    print("Pre Order  ", tree_data(preorder_traversal(root)))
+    print("In Order   ", tree_data(in_order_traversal(root)))
+    print("Post Order ", tree_data(postorder_traversal(root)))
+    print("Level Order", tree_data(level_order_traversal(root)))
+
+def print_tree(root, index=False):
     """ Pretty-print the binary tree.
         https://pypi.org/project/binarytree/
     """
@@ -153,7 +178,7 @@ def print_tree(root):
         # Return the new box, its width and its root repr positions
         return new_box, len(new_box[0]), new_root_start, new_root_end
 
-    lines = build_tree_string(root, 0)[0]
+    lines = build_tree_string(root, 0, index)[0]
     print('\n' + '\n'.join((line.rstrip() for line in lines)))
 
 """ 9.1 TEST IF A BINARY TREE IS HEIGHT BALANCED
@@ -273,16 +298,16 @@ def lca2(node1, node2):
     Design an algorithm to compute the sum of the binary numbers represented by
     the root-to-leaf paths.
 """
-def sum_root_to_leaf(tree, partial_sum=0):
-    if not tree:
+def sum_root_to_leaf(root, partial_sum=0):
+    if not root:
         return 0
 
-    partial_sum = partial_sum * 2 + tree.data
-    if not tree.left and not tree.right:
+    partial_sum = partial_sum * 2 + root.data
+    if not root.left and not root.right:
         return partial_sum
     # Non-leaf.
-    return sum_root_to_leaf(tree.left, partial_sum) + \
-           sum_root_to_leaf(tree.right, partial_sum)
+    return sum_root_to_leaf(root.left, partial_sum) + \
+           sum_root_to_leaf(root.right, partial_sum)
 
 """ 9.6 FIND A ROOT TO LEAF PATH WITH SPECIFIED SUM
 
@@ -306,7 +331,7 @@ def has_path_sum(root, total):
     traversal of the tree. Do not use recursion. Node do not contain parent
     references.
 """
-def inorder_traversal2(root):
+def in_order_traversal2(root):
     result, stack = [], []
     while root or stack:
         if root:
@@ -318,7 +343,7 @@ def inorder_traversal2(root):
             root = root.right # moving right
     return result
 
-""" 9.7 IMPLEMENT AN PRE-ORDER TRAVERSAL WITHOUT RECURSION
+""" 9.8 IMPLEMENT AN PRE-ORDER TRAVERSAL WITHOUT RECURSION
 
     Write a program which takes as input a binary tree and performs an pre-order
     traversal of the tree. Do not use recursion. Node do not contain parent
@@ -345,14 +370,88 @@ def preorder_traversal3(root):
             path += [node.right, node.left]
     return result
 
+""" 9.9 COMPUTE THE KTH NODE IN AN IN-ORDER TRAVERSAL
 
-_ = None
-nodes = \
-[314] + \
-[6, 6] + \
-[271, 561, 2, 271] + \
-[28, 0, _, 3, _, 1, _, 28] + \
-[_, _, _, _, _, _, 17, _, _, _, 401, 257, _, _, _, _] + \
-[_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, 641, _, _, _, _, _, _, _, _, _, _]
-tree = create_tree_level_order(nodes)
-print_tree(tree)
+    Write a program that efficiently computes the kth node appearing in an
+    in-order traversal. Assume that each node stores the number of nodes in
+    the subtree rooted at that node.
+"""
+def find_kth_node(root, k):
+    while root:
+        left_size = root.left.data if root.left else 0
+        if left_size + 1 < k: # kth node must be in the right subtree
+            root = root.right
+        elif left_size + 1 == k: # found kth node
+            return root
+        else: # kth node must be in the left subtree
+            root = root.left
+    return None # not found
+
+""" 9.10 COMPUTE THE SUCCESSOR
+
+    Design an althorithem that computes the successor of a node in a binary tree.
+    Assume that each node stores its parent
+"""
+def find_successor(node):
+    if not node:
+        return None
+
+    if node.right: # node has right subtree
+        node = node.right
+        # successor is the left-most node
+        while node.left:
+            node = node.left
+        return node
+
+    # Find the closest ancestor whose left subtree contains node
+    while node.parent and node.parent.right is node:
+        node = node.parent
+
+    # A return value of None means node does not have successor
+    # For example, node is the rightmost node in the tree
+    return node.parent
+
+""" 9.11 IMPLEMENT AN IN-ORDER TRAVERSAL WITH O(1) SPACE
+
+    Write a nonrecursive program for computing the in-order traversal sequence
+    for a binary tree. Assume nodes have parent fields.
+"""
+def in_order_traversal3(root):
+    result, prev = [], None
+    while root:
+        if prev is root.parent:
+            # we came down from its parent node
+            if root.left:
+                next = root.left # move left
+            else:
+                result.append(root.data) # done with left, visit root
+                next = root.right or root.parent # move right or move up
+        elif prev is root.left:
+            # we came up from its left node
+            result.append(root.data) # done with left, visit root
+            next = root.right or root.parent # move right or move up
+        else:
+            # we came up from its right node
+            next = root.parent # done with left, root and right, move up
+        prev, root = root, next
+    return result
+
+""" 9.14 RECONSTRUCT A BINARY TREE FROM TRAVERSAL DATA
+
+    Given an in-order traversal sequence and a preorder traversal sequence of a
+    binary tree write a program to reconstruct the tree. Assume each node has
+    a unique key.
+"""
+def reconstruct_tree(inorder, preorder):
+    if not inorder or not preorder:
+        return None
+    root = BinaryTreeNode(preorder[0])
+    index = inorder.index(preorder[0])
+    root.left = reconstruct_tree(inorder[:index], preorder[1:index + 1])
+    root.right = reconstruct_tree(inorder[index + 1:], preorder[index + 1:])
+    return root
+
+tree = simple_tree()
+inorder = [7, 3, 8, 1, 9, 4, 0, 5, 2, 6]
+preorder = [0, 1, 3, 7, 8, 4, 9, 2, 5, 6]
+print_tree(reconstruct_tree(inorder, preorder))
