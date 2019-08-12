@@ -76,13 +76,20 @@ def create_tree_level_order(iterable = ()):
     return insert(None, 0)
 
 def simple_tree():
-    nodes = [0,1,2,3,4,5,6,7,8,9]
+    nodes = [1,2,3,4,5,6,7,8,9,10]
     tree = create_tree_level_order(nodes)
     print_tree(tree)
     tree_traversal(tree)
     return tree
 
-def hard_tree():
+def perfect_tree():
+    nodes = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+    tree = create_tree_level_order(nodes)
+    print_tree(tree)
+    tree_traversal(tree)
+    return tree
+
+def random_tree():
     _ = None
     nodes = \
         [314] + \
@@ -107,14 +114,11 @@ def assign_parent(root, parent=None):
     assign_parent(root.left, root)
     assign_parent(root.right, root)
 
-def tree_data(nodes):
-    return list(map(lambda node: node.data, nodes))
-
 def tree_traversal(root):
-    print("Pre Order  ", tree_data(preorder_traversal(root)))
-    print("In Order   ", tree_data(in_order_traversal(root)))
-    print("Post Order ", tree_data(postorder_traversal(root)))
-    print("Level Order", tree_data(level_order_traversal(root)))
+    print("Pre Order  ", [node.data for node in preorder_traversal(root)])
+    print("In Order   ", [node.data for node in in_order_traversal(root)])
+    print("Post Order ", [node.data for node in postorder_traversal(root)])
+    print("Level Order", [node.data for node in level_order_traversal(root)])
 
 def print_tree(root, index=False):
     """ Pretty-print the binary tree.
@@ -362,7 +366,7 @@ def preorder_traversal2(root):
     return result
 
 def preorder_traversal3(root):
-    path, result = [tree], []
+    path, result = [root], []
     while path:
         node = path.pop()
         if node:
@@ -436,7 +440,7 @@ def in_order_traversal3(root):
         prev, root = root, next
     return result
 
-""" 9.14 RECONSTRUCT A BINARY TREE FROM TRAVERSAL DATA
+""" 9.12 RECONSTRUCT A BINARY TREE FROM TRAVERSAL DATA
 
     Given an in-order traversal sequence and a preorder traversal sequence of a
     binary tree write a program to reconstruct the tree. Assume each node has
@@ -451,7 +455,131 @@ def reconstruct_tree(inorder, preorder):
     root.right = reconstruct_tree(inorder[index + 1:], preorder[index + 1:])
     return root
 
-tree = simple_tree()
-inorder = [7, 3, 8, 1, 9, 4, 0, 5, 2, 6]
-preorder = [0, 1, 3, 7, 8, 4, 9, 2, 5, 6]
-print_tree(reconstruct_tree(inorder, preorder))
+def reconstruct_tree2(inorder, preorder):
+    node_to_inorder_index = { data: i for i, data in enumerate(inorder) }
+
+    # Builds the subtree with preorder[preorder_start:preorder_end] and
+    # inorder[inorder_start, inorder_end].
+    def construct(preorder_start, preorder_end, inorder_start, inorder_end):
+        if preorder_end <= preorder_start or inorder_end <= inorder_start:
+            return None
+
+        root_inorder_index = node_to_inorder_index[preorder[preorder_start]]
+        left_subtree_size = root_inorder_index - inorder_start
+        return BinaryTreeNode(
+            preorder[preorder_start],
+            # Recursively builds the left subtree.
+            construct(preorder_start + 1, preorder_start + 1 + left_subtree_size,
+                inorder_start, root_inorder_index),
+            # Recursively builds the right subtree.
+            construct(preorder_start + 1 + left_subtree_size, preorder_end,
+                root_inorder_index + 1, inorder_end))
+
+    return construct(0, len(preorder), 0, len(inorder))
+
+""" 9.13 RECONSTRUCT A BINARY TREE FROM A PREORDER TRAVERSAL WITH MARKERS
+
+    Design an algorithm for reconstructing a binary tree from a preorder
+    traversal visit sequence that use null to mark empty children.
+"""
+def reconstruct_tree_marker(preorder):
+    def construct(queue):
+        data = queue.popleft() if queue else None
+        if data is not None:
+            root = BinaryTreeNode(data)
+            root.left = construct(queue)
+            root.right = construct(queue)
+            return root
+
+    queue = collections.deque(preorder)
+    return construct(queue)
+
+def reconstruct_tree_marker2(preorder):
+    def construct(preorder_iter):
+        subtree_key = next(preorder_iter)
+        if subtree_key is None:
+            return None
+
+        # Note that construct updates preorder_iter.
+        # So the order of following two calls are critical.
+        left_subtree = construct(preorder_iter)
+        right_subtree = construct(preorder_iter)
+        return BinaryTreeNode(subtree_key, left_subtree, right_subtree)
+
+    return construct(iter(preorder))
+
+""" 9.14 FROM A LINKED LIST FORM THE LEAVES OF A BINARY TREE
+
+    Given a binary tree, compute a linked list from the leaves of the binary
+    tree. The leaves should appear in left-to-right order.
+"""
+def leaf_nodes(root):
+    if not root:
+        return []
+    if not root.left and not root.right:
+        return [root]
+    return leaf_nodes(root.left) + leaf_nodes(root.right)
+
+""" 9.15 COMPUTE THE EXTERIOR OF A BINARY TREE
+
+    The exterior of a binary tree is: the nodes from the root to the leftmost
+    leaf, followed by the leaves in left-to-right order, followed by the nodes
+    from the rightmost leaf to the root. Write a program that computes the
+    exterior of a binary tree.
+"""
+def exterior_nodes(root):
+    left_edge, node = [], root
+    while node:
+        left_edge.append(node)
+        node = node.left
+
+    right_edge, node = [], root
+    while node:
+        right_edge.append(node)
+        node = node.right
+
+    leaf_edge = leaf_nodes(root)
+
+    return left_edge + leaf_edge[1:-1] + list(reversed(right_edge[1:]))
+
+def exterior_nodes2(root):
+    def is_leaf(node):
+        return not node.left and not node.right
+
+    # Computes the nodes from the root to the leftmost leaf
+    # followed by all the leaves in the subtree.
+    def left_and_leaves(subtree, is_boundary):
+        if not subtree:
+            return []
+        return (([subtree] if is_boundary or is_leaf(subtree) else []) + \
+                left_and_leaves(subtree.left, is_boundary) + \
+                left_and_leaves(subtree.right, is_boundary and not subtree.left))
+
+    def right_and_leaves(subtree, is_boundary):
+        if not subtree:
+            return []
+        return (right_and_leaves(subtree.left, is_boundary and not subtree.right) + \
+                right_and_leaves(subtree.right, is_boundary) + \
+                ([subtree] if is_boundary or is_leaf(subtree) else []))
+
+    return ([root] + \
+            left_and_leaves(root.left, True) + \
+            right_and_leaves(root.right, True) \
+            if root else [])
+
+""" 9.16 COMPUTE THE RIGHT SIBLING TREE
+
+    Write a program that takes a prefect binary tree, and sets each node's
+    level-next field to the node on its right, if one exists.
+"""
+def assign_right_sibling(root):
+    def assign_next(node):
+        while node and node.left:
+            node.left.next = node.right
+            node.right.next = node.next and node.next.left
+            node = node.next
+
+    root.next = None # initialize the "next" field
+    while root and root.left:
+        assign_next(root)
+        root = root.left
