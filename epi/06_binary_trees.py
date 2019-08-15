@@ -1,5 +1,70 @@
 import collections
 
+"""
+Binary Tree
+-----------
+Node A is Root
+Node A has 2 children: Node B and Node C
+Node B is Node A's left child
+Node C is Node A's right child
+Node A is Node B and Node C's parent
+Node H and Node I are a Leaf Nodes
+Node A is Node H's ancestor
+Node I is Node A's decedent
+
+                         Height  Depth  Level
+        __A__      ---->   4       0      1
+       /     \
+    __B       C    ---->   3       1      2
+   /   \     / \
+  D     E   F   G  ---->   2       2      3
+ / \
+H   I              ---->   1       3      4
+
+Binary tree: a tree has a root node and every node has at most 2 children
+
+Full Binary Tree: a tree in which every node has either 0 or 2 children
+
+Perfect Binary Tree: a full binary tree in which all leaves are at the same
+    depth, and in which every parent has 2 children
+
+Complete Binary Tree: a binary tree in which every level, except possibly the
+    last, is completely filled, and all nodes in the last level are as far left
+    as possible.
+
+         __A__
+        /     \
+       B       C
+      / \     / \
+     D   E   F   G
+    /
+   H
+
+[_,A,B,C,D,E,F,G,H]
+
+A complete binary tree has 2^k nodes at every depth k < n and between 2^n and
+2^n+1 - 1 nodes altogether. It can be efficiently implemented as an array,
+where a node at index i has children at indexes 2i and 2i+1 and a parent at
+index i/2, with 1-based indexing.
+
+Below are not Complete Binary Trees
+
+      __A__              __A__                   ______A______
+     /     \            /     \                 /             \
+    B       C          B       C             __B__           __C__
+   / \                / \     / \           /     \         /     \
+  D   E              D   E   F   G         D       E       F       G
+ / \   \              \       \           / \     / \     / \     / \
+F   G   H              H       I         H   I   J   K   L   M   N   O
+
+Binary Tree Traversal
+---------------------
+Depth-first Preorder Traversal: root -> left subtree -> right subtree
+Depth-first In order Traversal: left subtree -> root -> right subtree
+Depth-first Postorder Traversal:  left subtree -> right subtree -> root
+Breadth-first Level Order Traversal: top to bottom, left to right
+"""
+
 class BinaryTreeNode:
     def __init__(self, data, left=None, right=None):
         self.data = data
@@ -7,9 +72,6 @@ class BinaryTreeNode:
         self.right = right
 
 def preorder_traversal(root):
-    """ Depth-first pre order traversal
-        node -> node.left -> node.right
-    """
     def traverse(node):
         if not node:
             return
@@ -22,9 +84,6 @@ def preorder_traversal(root):
     return result
 
 def in_order_traversal(root):
-    """ Depth-first in order traversal
-        node.left -> node -> node.right
-    """
     def traverse(node):
         if not node:
             return
@@ -37,9 +96,6 @@ def in_order_traversal(root):
     return result
 
 def postorder_traversal(root):
-    """ Depth-first post order traversal
-        node.left -> node.right -> node
-    """
     def traverse(node):
         if not node:
             return
@@ -52,9 +108,6 @@ def postorder_traversal(root):
     return result
 
 def level_order_traversal(root):
-    """ Breadth-first traversal (level order)
-        top to bottom, left to right
-    """
     result, queue = [], collections.deque()
     queue.append(root)
     while queue:
