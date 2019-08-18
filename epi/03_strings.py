@@ -1,8 +1,5 @@
-from functools import reduce
-from itertools import groupby
-import string
+""" Strings
 
-"""
 String Constants
 ----------------
 >>> string.digits      # The string '0123456789'.
@@ -43,6 +40,10 @@ Useful
 >>> functools.reduce(func, iter, [initial_value])
 """
 
+import functools
+import itertools
+import string
+
 """ 6.0 IS PALINDROM
 
     A palindrom string is one which reads the same when it is reversed. Rather
@@ -77,7 +78,7 @@ def int_to_string(x):
 
 def string_to_int(s):
     # Time complexity: O(n), Space complexity: O(1)
-    return reduce(lambda res, c: res * 10 + string.digits.index(c),
+    return functools.reduce(lambda res, c: res * 10 + string.digits.index(c),
         s[s[0] == '-':], 0) * (-1 if s[0] == '-' else 1)
 
 """ 6.2 BASE CONVERSION
@@ -93,9 +94,9 @@ def convert_base(s, b1, b2):
     signed = True if s[0] == '-' else False
     s = s[s[0] == '-':]
 
-    total = reduce(lambda res, tup: \
-                    res + string.hexdigits.index(tup[1].lower()) * \
-                        (b1 ** (len(s) - tup[0] - 1)), enumerate(s), 0)
+    total = functools.reduce(lambda res, tup: \
+                res + string.hexdigits.index(tup[1].lower()) * \
+                    (b1 ** (len(s) - tup[0] - 1)), enumerate(s), 0)
 
     result = []
     for i in range(len(s)):
@@ -113,7 +114,7 @@ def convert_base2(s, b1, b2):
                 string.hexdigits[num % base].upper())
 
     signed = s[0] == '-'
-    num = reduce(lambda x, c: \
+    num = functools.reduce(lambda x, c: \
             x * b1 + string.hexdigits.index(c.lower()), \
 s[signed:], 0)
     return ('-' if signed else '') + \
@@ -138,7 +139,8 @@ def decode_spreadsheet_column(column):
 
 def decode_spreadsheet_column2(column):
     # Time complexity: O(n), Space complexity: O(1)
-    return reduce(lambda res, c: res * 26 + ord(c) - ord('A') + 1, column, 0)
+    return functools.reduce(lambda res, c: \
+            res * 26 + ord(c) - ord('A') + 1, column, 0)
 
 """ 6.4 REPLACE AND REMOVE
 
@@ -300,7 +302,8 @@ def look_and_say(n):
 def look_and_say2(n):
     s = '1'
     for _ in range(n - 1):
-        s = ''.join(str(len(list(group))) + key for key, group in groupby(s))
+        s = ''.join(str(len(list(group))) + \
+            key for key, group in itertools.groupby(s))
     return s
 
 """ 6.9 CONVERT FROM ROMAN TO DECIMAL
@@ -314,7 +317,7 @@ def look_and_say2(n):
 def roman_to_integer(s):
     T = { 'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'M':1000 }
 
-    return reduce(lambda val, i: \
+    return functools.reduce(lambda val, i: \
             val + (-T[s[i]]) if T[s[i]] < T[s[i+1]] else T[s[i]], \
             reversed(range(len(s) - 1)), T[s[-1]])
 
@@ -431,8 +434,8 @@ def rabin_karp(t, s):
 
     BASE = 26
     # Hash codes for the substring of t and s
-    t_hash = reduce(lambda h, c: h * BASE + ord(c), t[:len(s)], 0)
-    s_hash = reduce(lambda h, c: h * BASE + ord(c), s, 0)
+    t_hash = functools.reduce(lambda h, c: h * BASE + ord(c), t[:len(s)], 0)
+    s_hash = functools.reduce(lambda h, c: h * BASE + ord(c), s, 0)
     power_s = BASE ** max(len(s) - 1, 0) # BASE^|s-1|.
 
     print(t_hash, s_hash, power_s)

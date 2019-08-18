@@ -1,10 +1,5 @@
-import random
-import itertools
-import bisect
-import math
-import collections
+""" Arrays
 
-"""
 Basic Concepts
 --------------
 * Arrays are lists, lists are mutable sequences, tuples are immutable sequences
@@ -103,7 +98,12 @@ List Comprehensions
 >>> [num for elem in vec for num in elem]
 """
 
-# debugging utils
+import random
+import itertools
+import bisect
+import math
+import collections
+
 def print_block(block):
     for row in block:
         print(' '.join([str(elem) for elem in row]))

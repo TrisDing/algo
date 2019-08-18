@@ -1,9 +1,5 @@
-import sys
-import math
-import random
-import collections
+""" Primitives
 
-"""
 Bit-wise operators
 ------------------
 6 & 4       # 0110 & 0100 = 0100 (4)                     AND
@@ -27,8 +23,12 @@ x & x - 1         # Drop the lowest set bit of x
 x & ~(x - 1)      # Extract the lowest set bit of x
 """
 
-# debugging util
-def fb(num):
+import sys
+import math
+import random
+import collections
+
+def format_binary(num):
     return "{0:b}".format(num)
 
 """ 4.0 COUNT BITS

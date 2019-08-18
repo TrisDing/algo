@@ -1,16 +1,7 @@
-import collections
+""" Binary Trees
 
-"""
-Binary Tree
------------
-Node A is Root
-Node A has 2 children: Node B and Node C
-Node B is Node A's left child
-Node C is Node A's right child
-Node A is Node B and Node C's parent
-Node H and Node I are a Leaf Nodes
-Node A is Node H's ancestor
-Node I is Node A's decedent
+A binary tree is either empty, or a root node r together with a left binary
+tree and a right binary tree.
 
                          Height  Depth  Level
         __A__      ---->   4       0      1
@@ -21,24 +12,36 @@ Node I is Node A's decedent
  / \
 H   I              ---->   1       3      4
 
-Binary tree: a tree has a root node and every node has at most 2 children
+Node A is Root
+Node A has 2 children: Node B and Node C
+Node B is Node A's left child
+Node C is Node A's right child
+Node A is Node B and Node C's parent
+Node H and Node I are a Leaf Nodes
+Node A is Node H's ancestor
+Node I is Node A's decedent
 
-Full Binary Tree: a tree in which every node has either 0 or 2 children
+Binary tree:
+A tree has a root node and every node has at most 2 children
 
-Perfect Binary Tree: a full binary tree in which all leaves are at the same
-    depth, and in which every parent has 2 children
+Full Binary Tree:
+A tree in which every node has either 0 or 2 children
 
-Complete Binary Tree: a binary tree in which every level, except possibly the
-    last, is completely filled, and all nodes in the last level are as far left
-    as possible.
+Perfect Binary Tree:
+A full binary tree in which all leaves are at the same depth, and in which
+every parent has 2 children
 
-         __A__
-        /     \
-       B       C
-      / \     / \
-     D   E   F   G
-    /
-   H
+Complete Binary Tree:
+A binary tree in which every level, except possibly the last, is completely
+filled, and all nodes in the last level are as far left as possible.
+
+      __A__
+     /     \
+    B       C
+   / \     / \
+  D   E   F   G
+ /
+H
 
 [_,A,B,C,D,E,F,G,H]
 
@@ -57,13 +60,14 @@ Below are not Complete Binary Trees
  / \   \              \       \           / \     / \     / \     / \
 F   G   H              H       I         H   I   J   K   L   M   N   O
 
-Binary Tree Traversal
----------------------
+Binary Tree Traversal:
 Depth-first Preorder Traversal: root -> left subtree -> right subtree
 Depth-first In order Traversal: left subtree -> root -> right subtree
 Depth-first Postorder Traversal:  left subtree -> right subtree -> root
 Breadth-first Level Order Traversal: top to bottom, left to right
 """
+
+import collections
 
 class BinaryTreeNode:
     def __init__(self, data, left=None, right=None):

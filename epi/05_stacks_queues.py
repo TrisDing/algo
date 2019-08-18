@@ -1,6 +1,5 @@
-import collections
+""" Stacks and Queues
 
-"""
 Stack: First In Last Out (FILO)
 Queue: First In First Out (FIFO)
 
@@ -20,6 +19,8 @@ Queue uses the collection.deque class
 >>> queue[-1]        # peek back
 >>> queue.popleft()  # pop
 """
+
+import collections
 
 """ 8.1 IMPLEMENT A STACK WITH MAX API
 
