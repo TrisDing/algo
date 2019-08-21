@@ -60,7 +60,8 @@ Below are not Complete Binary Trees
  / \   \              \       \           / \     / \     / \     / \
 F   G   H              H       I         H   I   J   K   L   M   N   O
 
-Binary Tree Traversal:
+Binary Tree Traversal
+---------------------
 Depth-first Preorder Traversal: root -> left subtree -> right subtree
 Depth-first In order Traversal: left subtree -> root -> right subtree
 Depth-first Postorder Traversal:  left subtree -> right subtree -> root
