@@ -3,7 +3,7 @@
 A list implements an ordered collection of values, which may include repetitions.
 
 Singly linked list:
-L -> 2 -> 3 -> 5 -> 4 -> x
+L -> 2 -> 3 -> 5 -> 4 -> EOL
 
 2 is linked list head
 4 is linked list tail

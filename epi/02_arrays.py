@@ -170,14 +170,12 @@ def dutch_flag_partition3(A, p):
     # First pass: group elements smaller than pivot
     smaller = 0
     for i in range(len(A)):
-        print(A)
         if A[i] < pivot:
             A[i], A[smaller] = A[smaller], A[i]
             smaller += 1
     # Second pass: group elements larger than pivot
     larger = len(A) - 1
     for i in reversed(range(len(A))):
-        print(A)
         if A[i] > pivot:
             A[i], A[larger] = A[larger], A[i]
             larger -= 1
@@ -208,7 +206,7 @@ def dutch_flag_partition4(A, p):
 
     Write a program which takes as input as array of digits encoding a
     nonnegative decimal integer D and updates the array to represent the integer
-    D+1, for example, if the input is <1,2,9> then you should update the array
+    D + 1, for example, if the input is <1,2,9> then you should update the array
     to <1,3,0>.
 """
 def plus_one(A):

@@ -80,13 +80,14 @@ def parity4(x):
     # For a very large 64-bit number, use 16-bit cache
     # Time complexity: O(n/L), where L is the width of the cache
 
-     # 8 bit cache example: 00101001 <(00),(01),(10),(11)>
+    # An 8-bit cache example: 00101001 <(00),(01),(10),(11)>
     PRECOMPUTED_PARITY = {
         '00': 0,
         '10': 1,
         '01': 1,
         '11': 0,
     }
+
     MASK_SIZE = 16
     BIT_MASK = 0xFFFF
     # break into 4 16-bit cache and use precomputed parity
@@ -142,7 +143,7 @@ def reverse_bits2(x):
     # For a very large 64-bit number, use 16-bit cache
     # Time complexity: O(n/L), where L is the width of the cache
 
-    # 8-bit cache example: 00101001 <(00),(01),(10),(11)>
+    # An 8-bit cache example: 00101001 <(00),(01),(10),(11)>
     PRECOMPUTED_REVERSE = {
         '00': '00',
         '10': '01',

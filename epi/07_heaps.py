@@ -197,7 +197,8 @@ def top_k(k, stream):
     min_heap.sort(reverse=True)
     return [s for (length, s) in min_heap]
 
-def top_k_py(k, stream):
+def top_k2(k, stream):
+    # python native heapq implementation
     return heapq.nlargest(k, stream, len)
 
 """ 10.1 MERGE SORTED FILES
@@ -224,13 +225,16 @@ def merge_sorted_arrays(*arrays):
     return result
 
 def merge_sorted_arrays_py(*arrays):
+    # python native heapq implementation
     return [x for x in heapq.merge(*arrays)]
 
 """ 10.2 SORT AN INCREASING-DECREASING ARRAY
 
-    Design an efficient algorithm for sorting a k-increasing-decreasing array
+    Design an efficient algorithm for sorting a k-increasing-decreasing array.
+    For example: [1, 5, 10, 8, 6, 4, 2, 3, 5, 7, 9, 11, 8, 5].
 """
 def sort_incresing_decreasing_array(A):
+    # Time complexity: O(N*logK)
     sub_arrays = []
     D = 1  # direction: 1 = increasing, 0 = decreasing
     startpos = 0
@@ -241,10 +245,9 @@ def sort_incresing_decreasing_array(A):
             sub_arrays.append(A[startpos:i] if D > 0 else A[i-1:startpos-1:-1])
             D *= -1
             startpos = i
-    # print(sub_arrays)
     return [x for x in heapq.merge(*sub_arrays)]
 
-def sort_incresing_decreasing_array_py(A):
+def sort_incresing_decreasing_array2(A):
     class Monotonic:
         def __init__(self):
             self._last = float('-inf')
