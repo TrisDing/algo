@@ -261,3 +261,141 @@ def sort_incresing_decreasing_array2(A):
         list(group)[::-1 if is_decreasing else 1]
         for is_decreasing, group in itertools.groupby(A, Monotonic())
     ])
+
+""" 10.3 SORT AN ALMOST-SORTED ARRAY
+
+    Write a program which takes as input a very long sequence of numbers and
+    prints the numbers in sorted order. Each number is at most k away from its
+    currently sorted positions. For example, no number in the sequence
+    [3,-1,2,6,4,5,8] is more than 2 away from its final sorted position.
+"""
+def sort_almost_sorted_array(sequence, k):
+    # Time complexity: O(N*logK). Space complexity: O(N)
+    min_heap = []
+    # Adds the first k elements into min_heap. Stop if there are fewer than k
+    # elements.
+    for x in itertools.islice(sequence, k):
+        heapq.heappush(min_heap, x)
+
+    result = []
+    # For every new element, add it to min_heap and extract the smallest.
+    for x in sequence[k:]:
+        smallest = heapq.heappushpop(min_heap, x)
+        result.append(smallest)
+
+    # sequence is exhausted, iteratively extracts the remaining elements.
+    while min_heap:
+        smallest = heapq.heappop(min_heap)
+        result.append(smallest)
+
+    return result
+
+""" 10.4 COMPUTE THE k CLOSEST STARS
+
+    Consider a coordinate system for the Milky Way, in which Earth is at (0,0,0).
+    Model stars as points, and assume distances are in light year. The Milky Way
+    consists of approximately 10**12 stars, and their coordinates are stored in
+    a file. How would you compute the k stars which are closet to Earth?
+"""
+class Star:
+    def __init__(self, x, y, z):
+        self.x, self.y, self.z = x, y, z
+
+    @property
+    def distance(self):
+        return math.sqrt(self.x**2 + self.y**2 + self.z**2)
+
+    def __it__(self, rhs):
+        return self.distance < rhs.distance
+
+def find_clostest_k_stars(stars, k):
+    # Time complexity: O(N*logK). Space complexity: O(k).
+
+    # max_heap to store the closest k stars seen so far.
+    max_heap = []
+
+    for star in stars:
+        # Add each star to the max-heap. If the max-heap size exceeds k, remove
+        # the maximum element from the max-heap.
+        # As python has only min-heap, insert tuple (negative of distance, star)
+        # to sort in reversed distance order.
+        heapq.heappush(max_heap, (-star.distance, star))
+        if len(max_heap) == k + 1:
+            heapq.heappop(max_heap)
+
+    # Iteratively extrace from the max-heap, which yields the stars sorted
+    # according from furthest to closest.
+    return [s[1] for s in heapq.nlargest(k, max_heap)]
+
+""" 10.5 COMPUTE THE MEDIAN OF ONLINE DATA
+
+    You want to compute the running median of a sequence of numbers. The
+    sequence is presented to you in a streaming fashion - you cannot back up
+    to read an earlier value, and you need to output the median after reading
+    in each new element. For example, if the input is 1,0,3,5,2,0,1 the output
+    is 1,0.5,1,2,2,1.5,1
+"""
+def online_median(sequence):
+    # Time complexity: O(logN).
+    min_heap = [] # min_heap stores the larger half seen so far.
+    max_heap = [] # max_heap stores the smallest half seen so far.
+    result = [] # the medians
+
+    for x in sequence:
+        heapq.heappush(max_heap, -heapq.heappushpop(min_heap, x))
+        # Ensure min_heap and max_heap have equal number of elements if an even
+        # number of elements is read; otherwise, min_heap must have one more
+        # element than max_heap.
+        if len(max_heap) > len(min_heap):
+            heapq.heappush(min_heap, -heapq.heappop(max_heap))
+
+        result.append(0.5 * (min_heap[0] + (-max_heap[0]))
+            if len(min_heap) == len(max_heap) else min_heap[0])
+
+    return result
+
+""" 10.6 COMPUTE THE K LARGEST ELEMENTS IN A MAX-HEAP
+
+    Given a max-heap, represented as an array A, design an algorithm that
+    computes the largest element stored in the max-heap. You cannot modify the
+    heap. For example, if the heap's array representation is [561, 314, 401, 28,
+    156, 359, 271, 11, 3], the four largest elements are 561, 314, 401, and 359.
+"""
+def k_largest(A, k):
+    max_heap = []
+
+    result = []
+    for x in A:
+        heapq.heappush(max_heap, -x)
+
+    for _ in range(k):
+        result.append(-heapq.heappop(max_heap))
+
+    return result
+
+def k_largest_in_binary_heap(A, k):
+    # Time complexity: O(K*logK). Space complexity: O(k).
+    if k <= 0:
+        return []
+
+    # Stores the (-value, index)-pair in candidate_max_help. This heap is
+    # ordered by the value field. Uses the negative of value to get the effect
+    # of a max heap.
+    max_heap = []
+
+    # The largest element in A is at index 0.
+    max_heap.append((-A[0], 0))
+    result = []
+    for _ in range(k):
+        pos = max_heap[0][1]
+        result.append(-heapq.heappop(max_heap)[0])
+
+        leftpos = 2 * pos + 1
+        if leftpos < len(A):
+            heapq.heappush(max_heap, (-A[leftpos], leftpos))
+
+        rightpos = 2 * pos + 2
+        if rightpos < len(A):
+            heapq.heappush(max_heap, (-A[rightpos], rightpos))
+
+    return result
