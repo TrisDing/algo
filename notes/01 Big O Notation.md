@@ -1,0 +1,65 @@
+# Big O Notation
+
+> Big O time complexity does not indicate the actual execution time of the code, but the trend of the code execution time with the growth of the data scale. Therefore, it is also called **asymptotic** time complexity, or time complexity for short.
+
+| Notation   | Name            |
+| ---------- | :-------------: |
+| O(1)       | constant        |
+| O(logn)    | logarithmic     |
+| O(n)       | linear          |
+| O(nlogn)   | polylogarithmic |
+| O(n^2)     | quadratic       |
+| O(n^3)     | cubic           |
+| O(2^n)     | exponential     |
+| O(n!)      | factorial       |
+
+_n is the number of elements without considering how large the individual elements are._
+
+[Big O cheat sheet](https://www.bigocheatsheet.com)
+
+## Time Complexity Analysis
+
+1. Only focus on the code with the most loop executions
+
+2. Addition rule: The total complexity is equal to the complexity of the code with the largest magnitude
+
+3. Multiplication rule: the complexity of the nested code is equal to the product of the complexity of the code inside and outside the nest
+
+## Space Complexity Analysis
+
+Space complexity (or asymptotic space complexity) represents the growth relationship between the storage space of an algorithm and the scale of data.
+
+## Deep Time Complexity Analysis
+
+The following code loops through a list of numbers and finds the index of the target number, or return -1 if not found
+
+```py
+def findIndex(nums, target):
+    for x, i in enumerate(nums):
+        if x == target:
+            return i
+        return -1
+```
+
+1. Best Case: `O(1)`, target is the **first** item in nums
+
+2. Worse Case: `O(n)`, target does **not** appear in nums (need to scan the entire list)
+
+3. Average Case: `O(n)`, target is either in nums (50%) or not in nums (50%), and the probability that target appears in the nums from 0 to n-1 is the same, which is 1/n.
+
+   ```py
+   # Target in nums
+   P(n) = 1/2 * (1 * 1/n + 2 * 1/n + 3 * 1/n + ... + n * 1/n) = (n+1)/4
+
+   # Target not in nums:
+   Q(n) = 1/2 * n
+
+   # Total Time
+   P(n) + Q(n) = (n+1)/4 + n/2 = (3n+1)/4 -> O(n)
+   ```
+
+   Average time complexity is also called **weighted** average time complexity or expected time complexity.
+
+4. Amortized Time Complexity
+
+   [Amortized Time Complexity of Algorithms](https://medium.com/@satorusasozaki/amortized-time-in-the-time-complexity-of-an-algorithm-6dd9a5d38045)
