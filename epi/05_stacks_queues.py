@@ -1,24 +1,4 @@
-""" Stacks and Queues
-
-Stack: First In Last Out (FILO)
-Queue: First In First Out (FIFO)
-
-Stack Libraries
----------------
-Stack uses the build-in list-type
->>> stack.append(e)  # push
->>> stack[-1]        # peek
->>> stack.pop()      # pop
->>> len(stack)       # len
-
-Queue Libraries
----------------
-Queue uses the collection.deque class
->>> queue.append(e)  # push
->>> queue[0]         # peek front
->>> queue[-1]        # peek back
->>> queue.popleft()  # pop
-"""
+""" Stacks and Queues """
 
 import collections
 

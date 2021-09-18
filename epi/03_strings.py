@@ -1,44 +1,4 @@
-""" Strings
-
-String Constants
-----------------
->>> string.digits      # The string '0123456789'.
->>> string.hexdigits   # The string '0123456789abcdefABCDEF'.
->>> string.octdigits   # The string '01234567'
-
-Key Operators
--------------
->>> s[3]
->>> len(s)
->>> s + t
->>> s * 3
->>> s[2:4]
->>> s in t
->>> s.strip([chars])
->>> s.startswith(prefix)
->>> s.endswith(prefix)
->>> s.slipt(delimiter)
->>> s.lower()
->>> s.upper()
->>> 'Name {name}, Rank {rank}'.format(name='Archimedes', rank=3)
-
-Useful
-------
-# Given a string representing one Unicode character, return an integer
-# representing the Unicode code point of that character. For example,
-# ord('a') returns the integer 97
->>> ord(c)
-
-# Return the string representing a character whose Unicode code point is
-# the integer i. For example, chr(97) returns the string 'a'
->>> chr(i)
-
-# functools.reduce() takes the first two elements A and B returned by the
-# iterator and calculates func(A, B). It then requests the third element, C,
-# calculates func(func(A, B), C), combines this result with the fourth element
-# returned, and continues until the iterable is exhausted.
->>> functools.reduce(func, iter, [initial_value])
-"""
+""" Strings """
 
 import functools
 import itertools

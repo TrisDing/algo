@@ -1,23 +1,4 @@
-""" Linked Lists
-
-A list implements an ordered collection of values, which may include repetitions.
-
-Singly linked list:
-L -> 2 -> 3 -> 5 -> 4 -> EOL
-
-2 is linked list head
-4 is linked list tail
-2's next is 3, 3's next is 5 and 5's next is 4, and 4's next is None
-L sometimes is used as a "dummy" head
-
-Doubly linked list:
-L -> x <- 2 <-> 3 <-> 5 <-> 4 -> x
-
-2's prev is None, 2's next is 3
-3's prev is 2   , 3's next is 5
-4's prev is 3   , 5's next is 4
-4's prev is 5   , 4's next is None
-"""
+""" Linked Lists """
 
 class ListNode:
     def __init__(self, data = 0, next = None):

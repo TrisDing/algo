@@ -1,27 +1,4 @@
-""" Primitives
-
-Bit-wise operators
-------------------
-6 & 4       # 0110 & 0100 = 0100 (4)                     AND
-1 | 2       # 0001 | 0010 = 0011 (3)                     OR
-15 ^ 1      # 00001111 ^ 00000001 = 00001110 (14)        XOR
-8 >> 1      # 00001000 >> 1 = 00000100 (4)               x >> y = x // 2^y
-1 << 10     # 000000000001 << 10 = 010000000000 (1024)   x << y = x *  2^y
--16 >> 2    # 11110000 >> 2 = 11111100 (-4)              negative right shifting
--16 << 2    # 11110000 << 2 = 11000000 (-64)             negative left shifting
-~0          # ~0000 = 1111 (-1)                          ~x = -x - 1
-
-Bit Operation Tricks
---------------------
-x & 1             # Extract the last bit
-(x >> k) & 1      # Extract the Kth bit
-x |= 1            # Set the last bit
-x |= (1 << k)     # Set the Kth bit
-x ^= 1            # Flip the last bit
-x ^= (1 << k)     # Flip the Kth bit
-x & x - 1         # Drop the lowest set bit of x
-x & ~(x - 1)      # Extract the lowest set bit of x
-"""
+""" Primitives """
 
 import sys
 import math
