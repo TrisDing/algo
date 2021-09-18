@@ -1,0 +1,144 @@
+# Array
+
+> Array is a linear table data structure. It uses a group of contiguous memory space to store a group of data of the same type.
+
+- Array is best for **random access** (using an address finding formula)
+- Array is not efficient for **insertion** and **deletion** (needs to move elements to keep continuity)
+
+| Operation  | Time Complexity |
+| ---------- | :-------------: |
+| Access     | O(1)            |
+| Search     | O(1)            |
+| Insertion  | O(n)            |
+| Deletion   | O(n)            |
+
+## Common Sequence Operations
+
+Python sequence includes list, tuple, range, etc. Arrays are lists, lists are **mutable** sequences, tuples are **immutable** sequences.
+
+```py
+x in s             # True if an item of s is equal to x, else False
+x not in s         # False if an item of s is equal to x, else True
+s + t              # the concatenation of s and t
+s * n or n * s     # equivalent to adding s to itself n times
+s[i]               # ith item of s, origin 0
+s[i:j]             # slice of s from i to j
+s[i:j:k]           # slice of s from i to j with step k
+len(s)             # length of s
+min(s)             # smallest item of s
+max(s)             # largest item of s
+reversed(s)        # return a reverse iterator
+sorted(s)          # return a new sorted list from the items in iterable
+```
+
+## List Operations
+
+```py
+a.append(x)        # appends x to the end of the sequence (same as s[len(s):len(s)] = [x])
+a.extend(iterable) # extends s with the contents of t (same as s += t)
+a.insert(i, x)     # inserts x into s at the index given by i (same as s[i:i] = [x])
+a.remove(x)        # remove the first item from s where s[i] is equal to x
+a.pop([i])         # retrieves the item at i and also removes it from s
+a.clear()          # removes all items from s (same as del s[:])
+a.count(x)         # total number of occurrences of x in s
+a.reverse()        # reverses the items of s in place
+a.copy()           # creates a shallow copy of s (same as s[:])
+a.index(x[, start[, end]]) # index of the first occurrence of x in s
+a.sort(key=None, reverse=False) # Sort the items of the list in place
+```
+
+## Coding Techniques
+
+```py
+# List comprehension
+vec = [-4, -2, 0, 2, 4]
+[x*2 for x in vec] # [-8, -4, 0, 4, 8]
+[x for x in vec if x >= 0] # [0, 2, 4]
+[abs(x) for x in vec] # [4, 2, 0, 2, 4]
+
+# Create a list of 2-tuples (number, square)
+[(x, x**2) for x in range(4)] # [(0, 0), (1, 1), (2, 4), (3, 9)]
+
+# Flatten a 2-D list
+vec = [[1,2,3], [4,5,6], [7,8,9]]
+[num for elem in vec for num in elem]
+
+# String formatter
+'Hello {name}'.format(name='World')
+
+# Useful functions
+filter(lambda x: x % 2 != 0, [1, 2, 3, 4, 5, 6]) # [1, 3, 5]
+map(lambda x: x * x, [1, 2, 3, 4, 5]) # [1, 4, 9, 16, 25]
+map(lambda x, y: x + y, [1, 2, 3], [4, 5, 6]) # [5, 7, 9]
+any((False, False, True)) # True
+all((False, True, True)) # False
+sum([1, 2, 3, 4, 5]) # 15
+functools.reduce(lambda x, y: x+y, [1, 2, 3, 4, 5]) # calculates ((((1+2)+3)+4)+5) = 15
+```
+
+## Common Patterns
+
+1. Print Pairs
+
+   ```py
+   nums = [1,2,3,4]
+   n = len(nums)
+   for i in range(n-1):
+       for j in range(i+1, n):
+           print((nums[i], nums[j])) # [(1, 2), (1, 3), (1, 4), (2, 3), (2, 4), (3, 4)]
+   ```
+
+2. Traverse backwards
+
+   ```py
+   nums = [1,2,3,4]
+   n = len(nums)
+   for i in range(n-1, -1, -1):
+       print(nums[i]) # [4,3,2,1]
+   ```
+
+3. Two Pointers
+
+   ```py
+   nums = [1,2,3,4,5,6,7,8,9]
+   n = len(nums)
+   i, j = 0, n-1
+   while i <= j:
+       print(nums[i], nums[j]) # [(1, 9), (2, 8), (3, 7), (4, 6), (5, 5)]
+       while i <= j and nums[i+1] == nums[i]: i += 1 # skip duplicates
+       while i <= j and nums[j-1] == nums[j]: j -= 1 # skip duplicates
+       i += 1
+       j -= 1
+   ```
+
+4. Sliding windows of size k
+
+   ```py
+   nums, k = [1,2,3,4,5,6], 3
+   n = len(nums)
+   windows = [nums[i:i+k] for i in range(n-k+1)]
+   print(windows) # [[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 6]]
+   ```
+
+5. Rotate array by k times (right shift)
+
+   ```py
+   nums, k = [1,2,3,4,5,6,7], 3
+   n = len(nums)
+   res = [0] * n
+   for i in range(n):
+       res[(i+k)%n] = nums[i]
+   print(res) # [5,6,7,1,2,3,4]
+   ```
+
+## Leetcode Problems
+
+- [283. Move Zeroes](https://leetcode.com/problems/move-zeroes/)
+- [26. Remove Duplicates from Sorted Array ](https://leetcode.com/problems/remove-duplicates-from-sorted-array/)
+- [66. Plus One](https://leetcode.com/problems/plus-one/)
+- [1. Two Sum](https://leetcode.com/problems/two-sum/)
+- [88. Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/)
+- [189. Rotate Array](https://leetcode.com/problems/rotate-array/)
+- [344. Reverse String](https://leetcode.com/problems/reverse-string/)
+- [15. 3Sum](https://leetcode.com/problems/3sum/)
+- [11. Container With Most Water](https://leetcode.com/problems/container-with-most-water/)
