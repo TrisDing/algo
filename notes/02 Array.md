@@ -2,8 +2,8 @@
 
 > Array is a linear table data structure. It uses a group of contiguous memory space to store a group of data of the same type.
 
-- Array is best for **random access** (using an address finding formula)
-- Array is not efficient for **insertion** and **deletion** (needs to move elements to keep continuity)
+- Array is best for **random access** (using the address finding formula)
+- Array is not efficient for **insertion** and **deletion** (needs to move the elements to keep continuity)
 
 | Operation  | Time Complexity |
 | ---------- | :-------------: |
@@ -12,7 +12,19 @@
 | Insertion  | O(n)            |
 | Deletion   | O(n)            |
 
-## Common Sequence Operations
+_How to improve Insertion?_
+
+If the array is sorted or we have to keep the element order, we have no choice but to move the existing elements when inserting new element. Otherwise, we can copy the new value to the desired position and insert a new element with the old value in the end of the array. This way, insertion will become `O(1)`.
+
+_How to improve Deletion?_
+
+We can first mark the element as "deleted", so that each delete operation does not trigger element relocation. When the array has no more space to store data, we trigger a real delete operation, which greatly reduces the data movement caused by the delete operation. This is the same concept of the Java garbage collection.
+
+_Dynamic Array_
+
+Dynamic Array or containers such as Java’s [ArrayList](https://github.com/openjdk/jdk/blob/master/src/java.base/share/classes/java/util/ArrayList.java) or Python’s List are dynamically resized, when the array is full, it will try to allocate a new x1.5 or x2 size memory and copy all the values from the existing array to the new one.
+
+## Sequence Operations
 
 Python sequence includes list, tuple, range, etc. Arrays are lists, lists are **mutable** sequences, tuples are **immutable** sequences.
 
@@ -43,7 +55,7 @@ a.clear()          # removes all items from s (same as del s[:])
 a.count(x)         # total number of occurrences of x in s
 a.reverse()        # reverses the items of s in place
 a.copy()           # creates a shallow copy of s (same as s[:])
-a.index(x[, start[, end]]) # index of the first occurrence of x in s
+a.index(x[, start[, end]])      # index of the first occurrence of x in s
 a.sort(key=None, reverse=False) # Sort the items of the list in place
 ```
 
@@ -76,60 +88,55 @@ sum([1, 2, 3, 4, 5]) # 15
 functools.reduce(lambda x, y: x+y, [1, 2, 3, 4, 5]) # calculates ((((1+2)+3)+4)+5) = 15
 ```
 
-## Common Patterns
+## Algorithms
 
-1. Print Pairs
+### Print Pairs
+```py
+nums = [1,2,3,4]
+n = len(nums)
+for i in range(n-1):
+    for j in range(i+1, n):
+        print((nums[i], nums[j])) # [(1, 2), (1, 3), (1, 4), (2, 3), (2, 4), (3, 4)]
+```
 
-   ```py
-   nums = [1,2,3,4]
-   n = len(nums)
-   for i in range(n-1):
-       for j in range(i+1, n):
-           print((nums[i], nums[j])) # [(1, 2), (1, 3), (1, 4), (2, 3), (2, 4), (3, 4)]
-   ```
+### Traverse backwards
+```py
+nums = [1,2,3,4]
+n = len(nums)
+for i in range(n-1, -1, -1):
+    print(nums[i]) # [4,3,2,1]
+```
 
-2. Traverse backwards
+### Two Pointers
+```py
+nums = [1,2,3,4,5,6,7,8,9]
+n = len(nums)
+i, j = 0, n-1
+while i <= j:
+    print(nums[i], nums[j]) # [(1, 9), (2, 8), (3, 7), (4, 6), (5, 5)]
+    while i <= j and nums[i+1] == nums[i]: i += 1 # skip duplicates
+    while i <= j and nums[j-1] == nums[j]: j -= 1 # skip duplicates
+    i += 1
+    j -= 1
+```
 
-   ```py
-   nums = [1,2,3,4]
-   n = len(nums)
-   for i in range(n-1, -1, -1):
-       print(nums[i]) # [4,3,2,1]
-   ```
+### Sliding windows of size k
+```py
+nums, k = [1,2,3,4,5,6], 3
+n = len(nums)
+windows = [nums[i:i+k] for i in range(n-k+1)]
+print(windows) # [[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 6]]
+```
 
-3. Two Pointers
-
-   ```py
-   nums = [1,2,3,4,5,6,7,8,9]
-   n = len(nums)
-   i, j = 0, n-1
-   while i <= j:
-       print(nums[i], nums[j]) # [(1, 9), (2, 8), (3, 7), (4, 6), (5, 5)]
-       while i <= j and nums[i+1] == nums[i]: i += 1 # skip duplicates
-       while i <= j and nums[j-1] == nums[j]: j -= 1 # skip duplicates
-       i += 1
-       j -= 1
-   ```
-
-4. Sliding windows of size k
-
-   ```py
-   nums, k = [1,2,3,4,5,6], 3
-   n = len(nums)
-   windows = [nums[i:i+k] for i in range(n-k+1)]
-   print(windows) # [[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 6]]
-   ```
-
-5. Rotate array by k times (right shift)
-
-   ```py
-   nums, k = [1,2,3,4,5,6,7], 3
-   n = len(nums)
-   res = [0] * n
-   for i in range(n):
-       res[(i+k)%n] = nums[i]
-   print(res) # [5,6,7,1,2,3,4]
-   ```
+### Rotate array by k times (right shift)
+```py
+nums, k = [1,2,3,4,5,6,7], 3
+n = len(nums)
+res = [0] * n
+for i in range(n):
+    res[(i+k)%n] = nums[i]
+print(res) # [5,6,7,1,2,3,4]
+```
 
 ## Leetcode Problems
 
