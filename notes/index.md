@@ -5,5 +5,6 @@
 - [Big O Notation](<./01 Big O Notation.md>)
 - Linear List
   - [Array](<./02 Array.md>)
-  - [Linked List](<./03 Linked List.md>)
-  - Stack & Queue
+  - [LinkedList](<./03 Linked List.md>)
+  - [Stack](<./04 Stack.md>)
+  - [Queue](<./05 Queue.md>)
