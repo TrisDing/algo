@@ -6,7 +6,7 @@
 - The first node is called _head_. It is used to record the base address of the linked list so that we can traverse the entire linked list with it.
 - The last node is called _tail_. It does not point to the next node, but to an empty address None.
 
-## Singly linked list
+### Singly linked list
 
 ```
 --> [data][next] --> [data][next] --> [data][next] --> None
@@ -40,7 +40,7 @@ Delete Node
 | Insertion  | O(1)            |
 | Deletion   | O(1)            |
 
-## Circular linked list
+### Circular linked list
 
 Circular linked list is is convenient to traverse from tail to head. It's a good representation of a ring structure to solve problems like Round Robin or Josephus Problem.
 
@@ -50,7 +50,7 @@ Circular linked list is is convenient to traverse from tail to head. It's a good
         <------------------------------------------------------
 ```
 
-## Doubly linked list
+### Doubly linked list
 
 ```
 --> [prev][data][next] <-> [prev][data][next] <-> [prev][data][next]
@@ -71,7 +71,7 @@ Java's [LinkedList](https://github.com/openjdk/jdk/blob/master/src/java.base/sha
 | Singly Linked | Use less Memory, Simpler Implementation | Cannot easily access previously elements |
 | Doubly Linked | Can be traverse backwards               | takes 2x memory                          |
 
-## Circular Doubly linked list:
+### Circular Doubly linked list:
 ```
        -------------------------------------------------->
       /                                                   \
@@ -81,6 +81,7 @@ Java's [LinkedList](https://github.com/openjdk/jdk/blob/master/src/java.base/sha
 ```
 
 ## Algorithms
+---
 
 ### Dummy Head (Sentry)
 ```py
@@ -126,6 +127,7 @@ def reverseList(head):
 ```
 
 ## Leetcode Problems
+---
 
 - [203. Remove Linked List Elements](https://leetcode.com/problems/remove-linked-list-elements/)
 - [206. Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/)

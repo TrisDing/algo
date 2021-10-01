@@ -1,0 +1,73 @@
+# Recursion
+
+> A recursive function is defined in terms of base cases and recursive steps.
+
+- In a base case, we compute the result immediately given the inputs to the function call.
+- In a recursive step, we compute the result with the help of one or more recursive calls to this same function, but with the inputs somehow **reduced** in size or complexity, closer to a base case.
+
+### Example-1 Factorial:
+```
+n! = n x (n-1) x ... x 2 x 1
+```
+
+Iterative Implementation
+```py
+def factorial(n):
+    fact = 1
+    for i in range(n):
+        fact = fact * i
+    }
+    return fact
+```
+
+Recurrence relation
+```
+n! = {
+    1           if n = 0
+    (n-1)! x n  if n > 0
+}
+```
+
+Recursive Implementation
+```py
+def factorial(n):
+    if n = 0: return 1
+    return n * factorial(n-1)
+```
+
+### Example-2 Fibonacci:
+```
+fib(n) = fib(n-1) + fib(n-2)
+```
+
+Iterative Implementation
+```py
+def fibonacci(n):
+    if n == 0: return 0
+    if n == 1: return 1
+    pre, fib = 0, 1
+    for _ in range(2, n+1):
+        pre, fib = fib, pre + fib
+    return fib
+```
+
+Recurrence relation
+```
+fib(n) = {
+    n                    if n <= 1
+    fib(n-1) + fib(n-2)  if n  > 1
+}
+```
+
+Recursive Implementation
+```py
+def fibonacci(n):
+    if n <= 1: return n
+    return fibonacci(n-1) + fibonacci(n-2)
+```
+
+### 3 Essentials for recursion
+
+- The recursive step has to transform the problem instance into something smaller, otherwise the recursion may never end.
+- The steps to solve the larger problem has to be exactly same as smaller subproblems, so that we can call the same function recursively.
+- If every recursive step shrinks the problem, and the base case lies at the bottom, then the recursion is guaranteed to be finite.

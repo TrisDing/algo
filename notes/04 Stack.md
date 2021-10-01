@@ -3,7 +3,6 @@
 > Stack is a one-ended linear data structure which models a real world stack by having two primary operations, namely _push_ and _pop_
 
 - Stacks support last-in-first-out (LIFO) for inserts and deletes
-- Stacks are used such as "undo" in text editors, compiler checking matching brackets, keep track of previous call functions to support recursion in most programing languages (call stack)
 - Stacks can be implemented using Array or LinkedList.
 
 ```
@@ -31,7 +30,60 @@ stack.pop()      # pop
 stack[-1]        # peek (top of the stack)
 ```
 
+Stack Implementation
+```py
+class Stack:
+
+    def __init__(self):
+        self.stack = []
+
+    def push(self, item):
+        self.stack.append(item)
+
+    def pop(self):
+        if len(self.stack) < 1:
+            return None
+        return self.stack.pop()
+
+    def size(self):
+        return len(self.queue)
+```
+
+Stack Applications
+- "Undo" & "Redo" in text editors
+- "Forward" & "Backward" buttons in the browsers
+- Compiler checking matching brackets
+- Keep track of previous call functions to support recursion in most programing languages (call stack)
+
 ## Algorithms
+---
+
+### Two stacks
+
+```py
+# Arithmetic Expression Evaluation.
+
+operands = []
+operators = []
+
+for item in expression:
+    if item is number:
+        operands.push[item]
+    else: # item is operator
+        while item has lower or equal priority than operators[-1]:
+            op = operators.pop()
+            num1 = operands.pop()
+            num2 = operands.pop()
+            res = num1 op num2 # calculate result using op
+            operands.push(res)
+
+        operators.push(item)
+
+# For example, 3 + 5 x 8 - 6
+[ ][ ]  [ ][ ]  [ ][ ]  [ ][ ]  [8][ ]  [  ][ ]  [  ][ ]  [  ][ ]  [ ][ ]
+[ ][ ]  [ ][ ]  [5][ ]  [5][x]  [5][x]  [40][ ]  [  ][ ]  [ 6][ ]  [ ][ ]
+[3][ ]  [3][+]  [3][+]  [3][+]  [3][+]  [ 3][+]  [43][-]  [43][-]  [ ][ ]
+```
 
 ### Mono stack
 
@@ -101,7 +153,9 @@ for i in range(n):
     stack.append(i)
 ```
 
-Leetcode Problems
+## Leetcode Problems
+---
+
 - [20. Valid Parentheses](https://leetcode.com/problems/valid-parentheses/)
 - [155. Min Stack](https://leetcode.com/problems/min-stack/)
 - [496. Next Greater Element I](https://leetcode.com/problems/next-greater-element-i/)
