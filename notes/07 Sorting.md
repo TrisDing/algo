@@ -101,13 +101,60 @@ MergeSort(A, l, r):
     merge(A, l, m, r)
 ```
 
+```
+      [6 12 5 10 1 9]
+        /        \
+    [6 12 5]  [10 1 9]
+     /   \      |   \
+   [6] [12 5] [10] [1 9]
+    |   /  \    \   /  \
+   [6] [5][12] [10][1][9]
+    |   \  /    |    \ /
+   [6] [5 12]  [10] [1 9]
+     \   /       \    /
+    [5 6 12]    [1 9 10]
+        \          /
+      [1 5 6 9 10 12]
+```
+
+Merge Sort Time Complexity
+
+```py
+# T(a) is the time to solve the original problem
+# T(b) and T(c) are the time to solve the subproblems of A
+# K is the time to merge sub-results of B and C
+T(a) = T(b) + T(c) + K
+
+T(1) = C               # n = 1, C is constant time
+T(n) = 2 * T(n/2) + n  # n > 1
+
+T(n) = 2 * T(n/2) + n
+     = 2 * (2 * T(n/4) + n/2) + n
+     = 4 * T(n/4) + 2 * n
+     = 4 * (2 * T(n/8) + n/4) + 2 * n
+     = 8 * T(n/8) + 3 * n
+     = 8 * (2 * T(n/16) + n/8) + 3 * n
+     = 16 * T(n/16) + 4 * n
+     = ......
+     = 2^k * T(n/2^k) + k * n
+
+# n/2^k means the size of the divided subproblem and k means how many times the
+# division runs. When the algorithm is done, the subproblem size equals to 1 (we
+# cannot divide the problem anymore). So we have n/2^k = 1 and thus k = logn.
+T(n) = 2^k * T(n/2^k) + k * n
+     = 2^logn * T(1) + logn * n
+     = C * n + n * logn
+
+# Therefore, the merge sort time complexity is O(nlogn)
+```
+
 ### Quick Sort
 
 An array is divided into sub-arrays by selecting a pivot element from the array. The pivot element should be positioned in such a way that elements less than pivot are kept on the left side and elements greater than pivot are on the right side of the pivot. The left and right sub-arrays are also divided using the same approach. This process continues until each subarray contains a single element. At this point, elements are already sorted. Finally, elements are combined to form a sorted array.
 ```
 quickSort(array, leftmostIndex, rightmostIndex)
   if (leftmostIndex < rightmostIndex)
-    pivotIndex <- partition(array,leftmostIndex, rightmostIndex)
+    pivotIndex <- partition(array, leftmostIndex, rightmostIndex)
     quickSort(array, leftmostIndex, pivotIndex - 1)
     quickSort(array, pivotIndex, rightmostIndex)
 
@@ -120,6 +167,39 @@ partition(array, leftmostIndex, rightmostIndex)
     storeIndex++
   swap pivotElement and element[storeIndex+1]
 return storeIndex + 1
+```
+
+```
+      [6 12 5 10 1 9*]
+        /         \
+   [6 5 1*]   [9 12 10*]
+    /   \        /   \
+  [1] [6 5*]   [9] [10 12*]
+   |    |       |    /   \
+  [1] [5 6]    [9] [10] [12]
+   \    /       |    \   /
+  [1 5 6]      [9]  [10 12]
+     \           \     /
+   [1 5 6]      [9 10 12]
+       \           /
+      [1 5 6 9 10 12]
+```
+
+Quick Sort Time Complexity
+
+```py
+# Best case scenario: the partition function is able to divide the elements into
+# two equally half arrays every single time. We have:
+T(1) = C               # n = 1, C is constant time
+T(n) = 2 * T(n/2) + n  # n > 1
+# So this is the same as merge sort, the time complexity is O(nlogn)
+
+# Worse case scenario: the partition function always divides the elements into
+# two unequal arrays. We need to scan 2/n elements on average for each partition
+# and need to run partition n times. In this case the the time complexity of
+# Quick Sort becomes O(n^2)
+
+# Average case scenario: TODO
 ```
 
 ### Heap Sort

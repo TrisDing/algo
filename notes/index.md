@@ -5,6 +5,11 @@
 - [Big O Notation](<./01 Big O Notation.md>)
 - Linear List
   - [Array](<./02 Array.md>)
-  - [LinkedList](<./03 Linked List.md>)
+  - [Linked List](<./03 Linked List.md>)
   - [Stack](<./04 Stack.md>)
   - [Queue](<./05 Queue.md>)
+  - [Recursion](<./06 Recursion.md>)
+  - [Sorting](<./07 Sorting.md>)
+  - [Searching](<./08 Searching.md>)
+  - [Skip List](<./09 Skip List.md>)
+  - [Hash Table](<./10 Hash Table.md>)
