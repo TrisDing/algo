@@ -12,3 +12,6 @@
 - [Searching](<./08 Searching.md>)
 - [Skip List](<./09 Skip List.md>)
 - [Hash Table](<./10 Hash Table.md>)
+- [Binary Tree](<./11 Binary Tree.md>)
+- [Red Black Tree](<./12 Red Black Tree.md>)
+- [Recursion Tree](<./13 Recursion Tree.md>)
