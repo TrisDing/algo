@@ -29,6 +29,118 @@ min-heap: the value at each node is at least as small as the values at it's chil
 359     271
 ```
 
+## Heapify
+
+In order to maintain the heap property while inserting or deleting, we need to adjust the heap and that is called **heapify**.
+
+### Shift up while inserting
+```
+       ____33____                     ____33____                     ____33____
+      /          \                   /          \                   /          \  done
+    _27_        _21_               _27_        _21_               _27_        (22)
+   /    \      /    \             /    \      /    \ switch      /    \      /    \
+  16    13    15     9           16    13    15   (22)          16    13    15    21
+ /  \  /  \  /  \   / switch    /  \  /  \  /  \   /           /  \  /  \  /  \   /
+ 5  6  7  8  1  2 (22)          5  6  7  8  1  2  9            5  6  7  8  1  2  9
+```
+```py
+def insert(self, elem):
+    """
+    Inserts new element in to heap
+    Time Complexity: O(log N)
+    """
+    if self.is_full():
+        raise Exception("Heap is full, No space to insert new element")
+    # 1. append new element to the end of heap.
+    self.heap[self.heapsize] = elem
+    # 2. increase the heapsize by 1.
+    self.heapsize += 1
+    # 3. bubble up the larger child until hitting root.
+    endpos = self.heapsize - 1
+    self._siftup(endpos)
+
+def _siftup(self, i):
+    """
+    Maintains the heap property while inserting an element at position i
+    """
+    while i > 0:
+        newitem = self.heap[i]
+        parentpos = (i - 1) >> 1
+        parent = self.heap[parentpos]
+        if newitem > parent:
+            # newitem is bigger, move it up.
+            newitem, parent = parent, newitem
+            # process the next element (parentpos).
+            i = parentpos
+            continue
+        # parent is bigger, we are done.
+        break
+```
+
+### Shift down while deleting
+
+If we still shifting up, it might end up leaving a hole in the heap and thus breaks the complete binary tree rule.
+```
+       ___(33)___                  ____27____                ____27____               ____27____
+ move /          \                /          \              /          \             /          \
+    _27_        _21_            _()_        _21_          _16_        _21_         _16_        _21_
+   /    \      /    \     move /    \      /    \        /    \      /    \       /    \      /    \
+  16    13    15     19       16    13    15     19     ()    13    15     19    6     13    15     19
+ /  \  /  \  /  \   /        /  \  /  \  /  \   /      /  \  /  \  /  \   /     /  \  /  \  /  \   /
+ 5  6  7  8  1  2  12        5  6  7  8  1  2  12      5  6  7  8  1  2  12    5   () 7  8  1  2  12
+                                                         move
+```
+So we need to use the "shift down" strategy, replace the deleted item with the last element in the heap, and adjust the heap by moving the element down to it's appropriate position.
+```
+       ___(33)___                  ___(12)___                  ____27____                 ____27____
+      /          \         switch /          \                /          \               /          \
+    _27_        _21_            _27_        _21_            (12)        _21_           _16_        _21_
+   /    \      /    \          /    \      /    \   switch /    \      /    \         /    \      /    \
+  16    13    15     19       16    13    15     19       16    13    15     19     (12)    13    15   19
+ /  \  /  \  /  \   /        /  \  /  \  /  \            /  \  /  \  /  \      done /  \   /  \  /  \
+ 5  6  7  8  1  2  12        5  6  7  8  1  2            5  6  7  8  1  2           5  6   7  8  1  2
+        last elem move to top
+```
+```py
+def delete(self, i):
+    """
+    Remove an element at position i from the heap
+    Time Complexity: O(log N)
+    """
+    if self.is_empty():
+        raise Exception("Heap is empty, No element to delete")
+    delitem = self.heap[i]
+    endpos = self.heapsize - 1
+    # 1. replace the element at position i with the last element.
+    self.heap[i] = self.heap[endpos]
+    # 2. decrease heapsize by 1 (so the last item is removed).
+    self.heapsize -= 1
+    # 3. move down the new element until the end of heap.
+    self._siftdown(i)
+    return delitem
+
+def _siftdown(self, i):
+    """
+    Maintains the heap property while deleting an element.
+    """
+    leftpos = 2 * i + 1
+    while leftpos < self.heapsize:
+        delitem = self.heap[i]
+        # select the bigger one from leftchild and rightchild.
+        childpos = leftpos
+        rightpos = leftpos + 1
+        if rightpos < self.heapsize and self.heap[rightpos] > self.heap[leftpos]:
+            childpos = rightpos
+        # delitem is bigger than child, we are done.
+        if delitem >= self.heap[childpos]:
+            break
+        # delitem is smaller, move it down.
+        self.heap[i], self.heap[childpos] = self.heap[childpos], self.heap[i]
+        # process the next element (childpos).
+        i = childpos
+        leftpos = 2 * i + 1
+```
+
 | Operation  | Time Complexity |
 | ---------- | :-------------: |
 | find-min   | O(1)            |
@@ -68,3 +180,46 @@ heapSort(array)
         Swap(array[0], array[index])
         heapify(array, index, 0)
 ```
+
+Heap Sort Time Complexity
+
+**heapify**: sum of the height of each node
+```
+                         Nodes     Height
+       ____33____          1         h
+      /          \
+    _27_        _21_      2^1       h-1
+   /    \      /    \
+  16    13    15     9    2^2       h-2
+          ...
+          ...             2^k       h-k
+          ...
+          ...           2^(h-1)      1
+  no heapify on leaves
+
+S = 1 * h + 2^1 * (h-1) + 2^2 * (h-2) + ... 2^k * (h-k) + ... + 2^(h-1) * 1
+  = -h + 2 + 2^2 + ... + 2^k + ... + 2^(h-1) + 2^h
+  = -h + (2^h - 2) + 2^h
+  = 2^(h+1) - h - 2
+
+h = logn
+S = 2^(logn + 1) - h - 2
+  = O(n)
+```
+
+**heapSort**: O(n) + O(nlogn) = O(nlogn)
+
+| Sort           | Best     | Worst    | Average   | Space    | Stability |
+| :------------- | :------: | :------: | :-------: | :------: | :-------: |
+| Quick Sort     | O(nlogn) | O(n^2)   | O(nlogn)  | O(nlogn) | NO        |
+| Heap Sort      | O(nlogn) | O(nlogn) | O(nlogn)  | O(1)     | YES       |
+
+Is HeapSort better than QuickSort?
+- The way HeapSort access data in the array is skipping (1,2,4,8, ...) while QuickSort is sequential (1,2,3,4...) which is good for CPU cache.
+- For the same amount of data, the number of data exchanges of the HeapSort is more than that of the QuickSort.
+
+## Heap Applications
+
+- Priority Queue
+- The Top-K Problem
+- Use 2 heaps (a min-heap and a max-heap) to calculate the Median
