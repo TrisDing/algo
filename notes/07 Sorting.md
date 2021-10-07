@@ -187,39 +187,20 @@ return storeIndex + 1
 
 Quick Sort Time Complexity
 
+**Best case scenario**: the partition function is able to divide the elements into two equally half arrays every single time. We have:
 ```py
-# Best case scenario: the partition function is able to divide the elements into
-# two equally half arrays every single time. We have:
 T(1) = C               # n = 1, C is constant time
 T(n) = 2 * T(n/2) + n  # n > 1
 # So this is the same as merge sort, the time complexity is O(nlogn)
-
-# Worse case scenario: the partition function always divides the elements into
-# two unequal arrays. We need to scan 2/n elements on average for each partition
-# and need to run partition n times. In this case the the time complexity of
-# Quick Sort becomes O(n^2)
-
-# Average case scenario: TODO
 ```
+
+**Worse case scenario**: the partition function always divides the elements into two unequal arrays. We need to scan `2/n` elements on average for each partition and need to run partition `n` times. In this case the the time complexity of Quick Sort becomes `O(n^2)`
+
+**Average case scenario**: see [Recursion Tree](<./14 Recursion Tree.md>)
 
 ### Heap Sort
 
-Build a max-heap based on the array using `heapify`, the largest item is stored at the root node. Remove the root element and put at the end of the array (nth position) Put the last item of the tree (heap) at the vacant place. Reduce the size of the heap by 1. Heapify the root element again so that we have the highest element at root. The process is repeated until all the items of the list are sorted.
-```
-heapify(array, index)
-    Root = array[index]
-    Largest = largest(root, left child, right child)
-    if(Root != Largest)
-        Swap(Root, Largest)
-        heapify(array, Largest)
-
-heapSort(array)
-    for index <- n//2-1 to 0
-        heapify the index
-    for index <- n-1 to 0
-        Swap(array[0], array[index])
-        heapify(array, index, 0)
-```
+see [Heap](<./15 Heap.md>)
 
 | Efficient Sort | Best     | Worst    | Average   | Space    | Stability |
 | :------------- | :------: | :------: | :-------: | :------: | :-------: |

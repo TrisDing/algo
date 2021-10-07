@@ -13,6 +13,8 @@
 ```
 
 ## Merge Sort
+
+The merge operation takes `O(n)` time so the total time complexity of Merge Sort is `O(h * n)`. Since this is a full binary tree, `h = log(n)`, so the total time complexity of Merge Sort is `O(n*log(n))`
 ```py
                  __________f(n)_________                 ... n
                 /                       \
@@ -21,14 +23,13 @@
      f(n/4)        f(n/4)        f(n/4)       f(n/4)     ... n/4+n/4+n/4+n/4=n
     /     \       /     \       /     \       /     \
  f(n/8) f(n/8) f(n/8) f(n/8) f(n/8) f(n/8) f(n/8) f(n/8) ... n/8+n/8+n/8+n/8+n/8+n/8+n/8+n/8=n
-
-# The merge operation takes O(n) time so the total time complexity of Merge Sort is O(h * n). Since this is a full binary tree, h = log(n), so the total time complexity of Merge Sort is O(n * log(n))
 ```
 
-### Quick Sort
-```py
-# Unlike merge sort, quick sort does not necessarily divide data into 2 halves. Let's assume we partition ratio is 1:9 (e.g. left array gets 1 element, right array gets 9 elements).
+## Quick Sort
 
+Unlike merge sort, quick sort does not necessarily divide data into 2 halves. Let's assume we partition ratio is `1:9` (e.g. left array gets 1 element, right array gets 9 elements). The total number of traversed data is between `[n*log10(n), n*log9/10(n)]`, so the time complexity Quick Sort is still `O(n*log(n))`.
+
+```py
                        _____________________f(n)___________________
                       /                                            \
             ______f(n/10)______                          _________f(9n/10)________
@@ -40,11 +41,12 @@
 
 n,  n/10,    n/10^2,    n/10^3, ... 1 -> shortest path h = log10(n)
 n, 9n/10, 9^2n/10^2, 9^3n/10^3, ... 1 -> longest path  h = log9/10(n)
-
-# The total number of traversed data is between [n*log10(n), n*log9/10(n)], so the time complexity Quick Sort is still O(n log(n)).
 ```
 
-### Fibonacci
+## Fibonacci
+
+The total number of traversed data is between `[2^n - 1, 2^(n/2) - 1]`, so the time complexity of Fibonacci is between `O(2^n)` and `O(2^(n/2))`.
+
 ```py
                  __________f(n)_________                 ... 1
                 /                       \
@@ -56,11 +58,9 @@ n, 9n/10, 9^2n/10^2, 9^3n/10^3, ... 1 -> longest path  h = log9/10(n)
 
 shortest path: 1 + 2 + ... + 2^n-1 = 2^n - 1
 longest path:  1 + 2 + ... + 2^(n/2-1) = 2^(n/2) - 1
-
-# The total number of traversed data is between [2^n - 1, 2^(n/2) - 1], so the time complexity of Fibonacci is between O(2^n) and O(2^(n/2)).
 ```
 
-### Permutation
+## Permutation
 
 For example: Given 3 numbers `1, 2, 3`, we have the following permutation:
 ```
@@ -72,9 +72,8 @@ For example: Given 3 numbers `1, 2, 3`, we have the following permutation:
 3, 2, 1
 ```
 
+If the last bit of data is determined, the problem becomes the permutation of the remaining `n−1` data. The last bit of can be any number from 1 to n, so there are `n` cases for its value.
 ```py
-# If we determine the last bit of data, it becomes the problem of solving the permutation of the remaining n−1 data. The last bit of can be any number from n, so there are n cases for its value. Therefore, the problem of n permutation can be decomposed into n sub-problems of n-1 permutations.
-
           f(n)
            |
         n * f(n-1)
@@ -84,8 +83,10 @@ For example: Given 3 numbers `1, 2, 3`, we have the following permutation:
 n * (n-1) * (n-2) * f(n-3)
            |
           ...
-
-n + n*(n-1) + n*(n-1)*(n-2) + ... + n*(n-1)*(n-2)*...*2*1
-
-# The time complexity of Permutation is between O(n!) and O(n * n!).
 ```
+
+Therefore, the problem of `n` permutation can be decomposed into `n` sub-problems of `n-1` permutations:
+```
+T(n) = n + n * (n-1) + n * (n-1) * (n-2) + ... + n * (n-1) * (n-2) * ... * 2 * 1
+```
+The time complexity of Permutation is between `O(n!)` and `O(n * n!)`.
