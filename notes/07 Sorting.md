@@ -33,41 +33,51 @@ Types of sorting algorithms
 ### Bubble Sort
 
 Compares two adjacent elements and swaps them if they are not in the intended order.
-```
-bubbleSort(array)
-  for i <- 1 to indexOfLastUnsortedElement-1
-    if leftElement > rightElement
-      swap leftElement and rightElement
-end bubbleSort
+```py
+def BubbleSort(nums):
+    n = len(nums)
+
+    for i in range(n-1):
+        for j in range(n-1-i):
+            if nums[j] > nums[j+1]:
+                nums[j], nums[j+1] = nums[j+1], nums[j]
+
+    return nums
 ```
 
 ### Insertion Sort
 
 Places an unsorted element at its suitable place in each iteration.
-```
-insertionSort(array)
-  mark first element as sorted
-  for each unsorted element X
-    'extract' the element X
-    for j <- lastSortedIndex down to 0
-      if current element j > X
-        move sorted element to the right by 1
-    break loop and insert X here
-end insertionSort
+```py
+def InsertionSort(nums):
+    n = len(nums)
+
+    for i in range(1, n):
+        key = nums[i]
+        j = i - 1
+        while j >= 0 and nums[j] > key:
+            nums[j+1] = nums[j]
+            j -= 1
+        nums[j+1] = key
+
+    return nums
 ```
 
 ### Selection Sort
 
 Selects the smallest element from an unsorted list in each iteration and places that element at the beginning of the unsorted list.
-```
-selectionSort(array, size)
-  repeat (size - 1) times
-  set the first unsorted element as the minimum
-  for each of the unsorted elements
-    if element < currentMinimum
-      set element as new minimum
-  swap minimum with first unsorted position
-end selectionSort
+```py
+def SelectionSort(nums):
+    n = len(nums)
+
+    for i in range(n-1):
+        min_j = i
+        for j in range(i+1, n):
+            if nums[j] < nums[min_j]:
+                min_j = j
+        nums[i], nums[min_j] = nums[min_j], nums[i]
+
+    return nums
 ```
 
 ### Shell Sort
@@ -92,16 +102,6 @@ end shellSort
 
 The `MergeSort` function repeatedly divides the array into two halves until we reach a stage where we try to perform `MergeSort` on a subarray of size 1 (i.e. left == right). After that, the merge function comes into play and combines the sorted arrays into larger arrays until the whole array is merged.
 ```
-MergeSort(A, l, r):
-    if l > r
-        return
-    m = (l+r)/2
-    mergeSort(A, l, m)
-    mergeSort(A, m+1, r)
-    merge(A, l, m, r)
-```
-
-```
       [6 12 5 10 1 9]
         /        \
     [6 12 5]  [10 1 9]
@@ -115,6 +115,27 @@ MergeSort(A, l, r):
     [5 6 12]    [1 9 10]
         \          /
       [1 5 6 9 10 12]
+```
+
+```py
+def MergeSort(nums):
+    n = len(nums)
+
+    def merge(left, right):
+        res = []
+        while left and right:
+            if left[0] <= right[0]:
+                res.append(left.pop(0))
+            else:
+                res.append(right.pop(0))
+        while left: res.append(left.pop(0))
+        while right: res.append(right.pop(0))
+        return res
+
+    mid = n // 2
+    leftSorted = self.MergeSort(nums[:mid])
+    rightSorted = self.MergeSort(nums[mid:])
+    return merge(leftSorted, rightSorted)
 ```
 
 Merge Sort Time Complexity
@@ -152,24 +173,6 @@ T(n) = 2^k * T(n/2^k) + k * n
 
 An array is divided into sub-arrays by selecting a pivot element from the array. The pivot element should be positioned in such a way that elements less than pivot are kept on the left side and elements greater than pivot are on the right side of the pivot. The left and right sub-arrays are also divided using the same approach. This process continues until each subarray contains a single element. At this point, elements are already sorted. Finally, elements are combined to form a sorted array.
 ```
-quickSort(array, leftmostIndex, rightmostIndex)
-  if (leftmostIndex < rightmostIndex)
-    pivotIndex <- partition(array, leftmostIndex, rightmostIndex)
-    quickSort(array, leftmostIndex, pivotIndex - 1)
-    quickSort(array, pivotIndex, rightmostIndex)
-
-partition(array, leftmostIndex, rightmostIndex)
-  set rightmostIndex as pivotIndex
-  storeIndex <- leftmostIndex - 1
-  for i <- leftmostIndex + 1 to rightmostIndex
-  if element[i] < pivotElement
-    swap element[i] and element[storeIndex]
-    storeIndex++
-  swap pivotElement and element[storeIndex+1]
-return storeIndex + 1
-```
-
-```
       [6 12 5 10 1 9*]
         /         \
    [6 5 1*]   [9 12 10*]
@@ -183,6 +186,31 @@ return storeIndex + 1
    [1 5 6]      [9 10 12]
        \           /
       [1 5 6 9 10 12]
+```
+
+```py
+def QuickSort(nums):
+    n = len(nums)
+
+    def partition(left, right):
+        pivot = nums[left]
+        i, j = left + 1, right
+        while i <= j:
+            while i <= j and nums[i] <= pivot: i += 1
+            while i <= j and nums[j] >= pivot: j -= 1
+            if i <= j:
+                nums[i], nums[j] = nums[j], nums[i]
+        nums[left], nums[j] = nums[j], nums[left]
+        return j
+
+    def quickSort(left, right):
+        if left < right:
+            p = partition(left, right)
+            quickSort(right, p-1)
+            quickSort(p+1, right)
+
+    quickSort(0, n-1)
+    return nums
 ```
 
 Quick Sort Time Complexity
@@ -211,45 +239,81 @@ see [Heap](<./15 Heap.md>)
 ### Counting Sort
 
 Counting sort is a sorting algorithm that sorts the elements of an array by counting the number of occurrences of each unique element in the array. The count is stored in an auxiliary array and the sorting is done by mapping the count as an index of the auxiliary array.
-```
-countingSort(array, size)
-  max <- find largest element in array
-  initialize count array with all zeros
-  for j <- 0 to size
-    find the total count of each unique element and
-    store the count at jth index in count array
-  for i <- 1 to max
-    find the cumulative sum and store it in count array itself
-  for j <- size down to 1
-    restore the elements to array
-    decrease count of each element restored by 1
+```py
+def CountingSort(nums):
+    n = len(nums)
+    res = [0] * n
+
+    # Store the count of each elements in count array
+    max_elem = max(nums)
+    count = [0] * (max_elem + 1)
+    for i in range(n):
+        count[nums[i]] += 1
+
+    # Store the cumulative count
+    for i in range(1, max_elem + 1):
+        count[i] += count[i-1]
+
+    # Find the index of each element of the original array in count array
+    # place the elements in output array
+    i = n - 1
+    while i >= 0:
+        res[count[nums[i]] - 1] = nums[i]
+        count[nums[i]] -= 1
+        i -= 1
+
+    # Copy the sorted elements into original aay
+    nums[:] = res[:]
+
+    return nums
 ```
 
 ### Radix Sort
 
 Radix sort is a sorting algorithm that sorts the elements by first grouping the individual digits of the same place value. Then, sort the elements according to their increasing/decreasing order.
-```
-radixSort(array)
-  d <- maximum number of digits in the largest element
-  create d buckets of size 0-9
-  for i <- 0 to d
-    sort the elements according to ith place digits using countingSort
+```py
+def RadixSort(nums):
+    n = len(nums)
+
+    # Get maximum element
+    max_elem = max(nums)
+
+    # Apply counting sort to sort elements based on place value.
+    place = 1
+    while max_elem // place > 0:
+        countSort(place)
+        place *= 10
+
+    return nums
 ```
 
 ### Bucket Sort
 
 Bucket Sort is a sorting algorithm that divides the unsorted array elements into several groups called buckets. Each bucket is then sorted by using any of the suitable sorting algorithms or recursively applying the same bucket algorithm. Finally, the sorted buckets are combined to form a final sorted array.
-```
-bucketSort()
-  create N buckets each of which can hold a range of values
-  for all the buckets
-    initialize each bucket with 0 values
-  for all the buckets
-    put elements into buckets matching the range
-  for all the buckets
-    sort elements in each bucket
-  gather elements from each bucket
-end bucketSort
+```py
+def BucketSort(self, nums):
+    n = len(nums)
+
+    # Create empty buckets
+    bucket = [[] for i in range(n)]
+
+    # Insert elements into their respective buckets
+    for x in nums:
+        index = int(10 * x)
+        bucket[index].append(x)
+
+    # Sort the elements of each bucket
+    for i in range(n):
+        bucket[i] = sorted(bucket[i])
+
+    # Get the sorted elements
+    k = 0
+    for i in range(n):
+        for j in range(len(bucket[i])):
+            nums[k] = bucket[i][j]
+            k += 1
+
+    return nums
 ```
 
 | Distribution Sorts | Best     | Worst    | Average  | Space    | Stability |

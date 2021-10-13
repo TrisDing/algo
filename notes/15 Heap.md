@@ -165,20 +165,32 @@ heapq.nsmallest(n, L)   # Find the n smallest elements in a dataset.
 ## Heap Sort
 
 Build a max-heap based on the array using `heapify`, the largest item is stored at the root node. Remove the root element and put at the end of the array (nth position) Put the last item of the tree (heap) at the vacant place. Reduce the size of the heap by 1. Heapify the root element again so that we have the highest element at root. The process is repeated until all the items of the list are sorted.
-```
-heapify(array, index)
-    Root = array[index]
-    Largest = largest(root, left child, right child)
-    if(Root != Largest)
-        Swap(Root, Largest)
-        heapify(array, Largest)
+```py
+def HeapSort(nums):
+    n = len(nums)
 
-heapSort(array)
-    for index <- n//2-1 to 0
-        heapify the index
-    for index <- n-1 to 0
-        Swap(array[0], array[index])
-        heapify(array, index, 0)
+    def heapify(n, i):
+        largest = i
+        left = 2 * i + 1
+        right = 2 * i + 2
+
+        if left < n and nums[left] > nums[largest]:
+            largest = left
+        if right < n and nums[right] > nums[largest]:
+            largest = right
+
+        if largest != i:
+            nums[largest], nums[i] = nums[i], nums[largest]
+            heapify(n, largest)
+
+    for i in range(n//2 - 1, -1, -1):
+        heapify(n, i)
+
+    for i in range(n-1, 0, -1):
+        nums[i], nums[0] = nums[0], nums[i]
+        heapify(i, 0)
+
+    return nums
 ```
 
 Heap Sort Time Complexity
