@@ -1,0 +1,67 @@
+# Primitives
+
+## Twos Complement
+```py
+-8 4 2 1
+[1 0 0 0]  -8
+[1 0 0 1]  -7
+[1 0 1 0]  -6
+[1 0 1 1]  -5
+[1 1 0 0]  -4
+[1 1 0 1]  -3
+[1 1 1 0]  -2
+[1 1 1 1]  -1
+[0 0 0 0]   0
+[0 0 0 1]   1
+[0 0 1 0]   2
+[0 0 1 1]   3
+[0 1 0 0]   4
+[0 1 0 1]   5
+[0 1 1 0]   6
+[0 1 1 1]   7
+```
+
+## How to Convert Negative Number
+```py
+        [0 1 0 1]  5
+Invert  [1 0 1 0]
+Plus 1  [1 0 1 0] -5
+
+        [0 0 0 1 0 0 0 0]  16
+Invert  [1 1 1 0 1 1 1 1]
+Plus 1  [1 1 1 1 0 0 0 0] -16
+```
+
+## Bit-wise operators
+```py
+6 & 4       # 0110 & 0100 = 0100 (4)                     AND
+1 | 2       # 0001 | 0010 = 0011 (3)                     OR
+15 ^ 1      # 00001111 ^ 00000001 = 00001110 (14)        XOR
+8 >> 1      # 00001000 >> 1 = 00000100 (4)               x >> y = x // 2^y
+1 << 10     # 000000000001 << 10 = 010000000000 (1024)   x << y = x * 2^y
+-16 >> 2    # 11110000 >> 2 = 11111100 (-4)              negative right shifting
+-16 << 2    # 11110000 << 2 = 11000000 (-64)             negative left shifting
+~0          # ~0000 = 1111 (-1)                          ~x = -x - 1
+```
+
+## Bit Operation Tricks
+```py
+x & 1 == 1        # Odd number, same as x % 2 == 1
+x & 1 == 0        # Even number, same as x % 2 == 0
+x >> 1            # Same as x / 2
+x & 1             # Extract the last bit
+(x >> k) & 1      # Extract the Kth bit
+x |= 1            # Set the last bit
+x |= (1 << k)     # Set the Kth bit
+x ^= 1            # Flip the last bit
+x ^= (1 << k)     # Flip the Kth bit
+x & (x - 1)       # Drop the lowest set bit of x
+x & ~(x - 1)      # Extract the lowest set bit of x
+x & (-x)          # Keep the lowest set bit and sets all the other bits to 0
+```
+
+## Leetcode Problems
+- [191. Number of 1 Bits](https://leetcode.com/problems/number-of-1-bits/)
+- [231. Power of Two](https://leetcode.com/problems/power-of-two/)
+- [190. Reverse Bits](https://leetcode.com/problems/reverse-bits/)
+- [338. Counting Bits](https://leetcode.com/problems/counting-bits/)

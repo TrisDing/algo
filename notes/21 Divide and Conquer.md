@@ -6,6 +6,20 @@
 - **Conquer**: the subproblems by solving them recursively. If they are small enough, solve the subproblems as base cases.
 - **Combine**: the solutions to the subproblems into the solution for the original problem.
 
+```
+DivideConquer(problem)
+    if problem cannot be divide:
+        result = conquer(problem)
+        return result
+
+    subproblems = divide(problem)
+    res1 = DivideConquer(subproblems[0])
+    res2 = DivideConquer(subproblems[1])
+    ...
+
+    return combine(res1, res2, ...)
+```
+
 Example: Merge Sort
 ```
       [7 6 1 5 4 3]        divide
@@ -34,34 +48,6 @@ a = number of subproblems in the recursion
 n/b = size of each subproblem. All subproblems are assumed to have the same size.
 f(n) = cost of the work done outside the recursive call, which includes the cost of dividing the problem and cost of merging the solutions
 ```
-
-## Coding Template
-
-```py
-def divide_conquer(problem, param1, param2, ...):
-    # recursion terminator
-    if problem is None:
-        process_result
-        return
-
-    # prepare data (key is to how to split the problem)
-    data = prepare_data(problem)
-    subproblems = split_problem(problem, data)
-
-    # conquer subproblems
-    subresult1 = self.divide_conquer(subproblems[0], p1, ...)
-    subresult2 = self.divide_conquer(subproblems[1], p1, ...)
-    subresult3 = self.divide_conquer(subproblems[2], p1, ...)
-    ...
-
-    # process and generate the final result
-    result = process_result(subresult1, subresult2, subresult3, ...)
-
-    # revert the current level states
-```
-
-- Sometimes we need to return multiple results (tuple)
-- Sometimes we need global variables to easily update the final result
 
 ## Divide and Conquer Applications
 
