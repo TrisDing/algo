@@ -124,3 +124,6 @@ Buy and Sell Stocks
 - [188. Best Time to Buy and Sell Stock IV](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/)
 - [309. Best Time to Buy and Sell Stock with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/)
 - [714. Best Time to Buy and Sell Stock with Transaction Fee](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/)
+
+Uncategorized
+- [874. Walking Robot Simulation](https://leetcode.com/problems/walking-robot-simulation)

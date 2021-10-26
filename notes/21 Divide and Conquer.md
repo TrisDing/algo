@@ -22,21 +22,22 @@ DivideConquer(problem)
 
 Example: Merge Sort
 ```
-      [7 6 1 5 4 3]        divide
+      [7 6 1 5 4 3]        DIVIDE
         /       \
-    [7 6 1]   [5 4 3]      divide
+    [7 6 1]   [5 4 3]      DIVIDE
      /   \     /   \
-   [7 6] [1] [5 4] [3]     divide
+   [7 6] [1] [5 4] [3]     DIVIDE
     / \   |   / \   |
-   [7][6][1] [5][4][3]     can't divide any more
+   [7][6][1] [5][4][3]     can't DIVIDE any more
    --------------------
-   --------------------    conquer (single element is sorted)
+    [7][6][1][5][4][3]     CONQUER (single element is sorted)
+   --------------------
     \ /   |   \ /   |
-   [6 7] [1] [5 4] [3]     combine
+   [6 7] [1] [5 4] [3]     COMBINE
      \   /      \  /
-    [1 6 7]   [3 4 5]      combine
+    [1 6 7]   [3 4 5]      COMBINE
         \        /
-      [1 3 4 5 6 7]        combine
+      [1 3 4 5 6 7]        COMBINE
 ```
 
 ## Time Complexity

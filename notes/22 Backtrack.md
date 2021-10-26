@@ -23,13 +23,13 @@ Constraint: Girl should not be on the middle bench.
 Solution: There are a total of 3! = 6 possibilities. We will try all the possibilities and get the possible solutions. We recursively try all the possibilities.
 
 
-         ________START_______
-     b1 /       b2 |         \ g
-     _(A)_       _(B)_      _(C)_
- b2 /   g \  b1 /   g \    / b1  \ b2
-   (D)     x   (E)     x  (F)    (G)
-  g |         g |          | b2   | b1
-    #           #          #      #
+        ________START_________
+       /         |            \
+     [b1]       [b2]        __[g]__
+    /    \     /    \      /       \
+ [b1 b2]  x [b2 b1]  x  [g b1]   [g b2]
+    |          |          |         |
+[b1 b2 g]  [b2 b1 g]  [g b1 b2] [g b2 b1]
 
 Possibilities: [b1 b2 g] [b2 b1 g] [g b1 b2] [g b2 b1]
 ```
@@ -39,35 +39,55 @@ Possibilities: [b1 b2 g] [b2 b1 g] [g b1 b2] [g b2 b1]
 ```py
 result = []
 
-def backtrack(path):
+def backtrack(path, choices):
     if end condition:
         result.add(path[:]) # param pass by reference
         return
 
-    if some condition: # Pruning if necessary
-        return
-
     # Get the choice list
     for choice in choices:
-        # get rid of the illegal choices
+        # get rid of the illegal choices (Pruning)
         if exclusive condition:
             continue
 
         path.append(choice) # Make the choice
-        backtrack(path, choices) # enter the next decision tree
+        backtrack(path, new_choices) # enter the next decision tree
         path.pop() # Remove the choice (since it's already made)
 ```
 
 - Time complexity for backtrack algorithm is at least O(N!)
 - Backtrack is a decision tree, updating the result is actually a preorder and/or postorder recursion (DFS)
-- Sometimes we don't need to explicitly maintain the choice list, we **derive** it using other parameters (e.g. index)
+- Sometimes we don't need to explicitly maintain the choice list, we **derive** it using other parameters (e.g. start index)
 - Sometimes path can be a string instead of an array, and we use `path += 'choice'` and `path = path[:-1]` to make and remove choice
+
+```
+ ---------------------- FOR LOOP ------------------>
+ | R
+ | E          _____________[ ]_____________
+ | C         /              |              \
+ | U     __[1]__         __[2]__         __[3]__
+ | R    /       \       /       \       /       \
+ | S  [1 2]      X    [2 1]   [2 3]   [3 1]      X  PRUNING
+ | I    |               |       |       |
+ | O [1 2 3]         [2 1 3] [2 3 1] [3 1 2]
+ | N                     \      |       /
+\_/                   COLLECT RESULTS (LEAF)
+```
 
 ## Leetcode Problems
 - [22. Generate Parentheses](https://leetcode.com/problems/generate-parentheses/)
 - [78. Subsets](https://leetcode.com/problems/subsets/)
+- [90. Subsets II](https://leetcode.com/problems/subsets-ii/)
 - [46. Permutations](https://leetcode.com/problems/permutations/)
 - [47. Permutations II](https://leetcode.com/problems/permutations-ii/)
 - [77. Combinations](https://leetcode.com/problems/combinations/)
+- [216. Combination Sum III](https://leetcode.com/problems/combination-sum-iii/)
+- [39. Combination Sum](https://leetcode.com/problems/combination-sum/)
+- [40. Combination Sum II](https://leetcode.com/problems/combination-sum-ii/)
 - [17. Letter Combinations of a Phone Number](https://leetcode.com/problems/letter-combinations-of-a-phone-number/)
+- [131. Palindrome Partitioning](https://leetcode.com/problems/palindrome-partitioning/)
+- [93. Restore IP Addresses](https://leetcode.com/problems/restore-ip-addresses/)
+- [491. Increasing Subsequences](https://leetcode.com/problems/increasing-subsequences/submissions/)
+- [332. Reconstruct Itinerary](https://leetcode.com/problems/reconstruct-itinerary/)
 - [51. N-Queens](https://leetcode.com/problems/n-queens/)
+- [37. Sudoku Solver](https://leetcode.com/problems/sudoku-solver/)
