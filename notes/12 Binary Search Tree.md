@@ -137,8 +137,17 @@ Why do we need the `Binary Search Tree` when the `Hash Table` provides O(log n) 
 - The implementation of a HashTable is more complicated than a BST. There are many things to consider such as the hash function, conflict resolution, expansion, shrinking, etc. The balanced BST only needs to consider how to balance the tree and the solution to this problem is already very mature.
 
 ## Leetcode Problems
-- [100. Same Tree](https://leetcode.com/problems/same-tree/)
+
+BST Attributes
 - [700. Search in a Binary Search Tree](https://leetcode.com/problems/search-in-a-binary-search-tree/)
+- [98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/)
+- [538. Convert BST to Greater Tree](https://leetcode.com/problems/minimum-absolute-difference-in-bst/)
+- [501. Find Mode in Binary Search Tree](https://leetcode.com/problems/find-mode-in-binary-search-tree/)
+- [538. Convert BST to Greater Tree](https://leetcode.com/problems/convert-bst-to-greater-tree/)
+- [235. Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/)
+
+Construct BST
 - [701. Insert into a Binary Search Tree](https://leetcode.com/problems/insert-into-a-binary-search-tree/)
 - [450. Delete Node in a BST](https://leetcode.com/problems/delete-node-in-a-bst/)
-- [98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/)
+- [108. Convert Sorted Array to Binary Search Tree](https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/)
+- [669. Trim a Binary Search Tree](https://leetcode.com/problems/trim-a-binary-search-tree/)

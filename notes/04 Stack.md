@@ -154,7 +154,6 @@ for i in range(n):
 ```
 
 ## Leetcode Problems
----
 
 - [20. Valid Parentheses](https://leetcode.com/problems/valid-parentheses/)
 - [155. Min Stack](https://leetcode.com/problems/min-stack/)

@@ -140,7 +140,6 @@ print(res) # [5,6,7,1,2,3,4]
 ```
 
 ## Leetcode Problems
----
 
 - [283. Move Zeroes](https://leetcode.com/problems/move-zeroes/)
 - [26. Remove Duplicates from Sorted Array ](https://leetcode.com/problems/remove-duplicates-from-sorted-array/)

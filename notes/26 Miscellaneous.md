@@ -19,7 +19,7 @@ SEARCH W {1, 5, 6}
 1 (0) 1 1 1 (0) (0) 1 0 0 <== Definitely NOT Present
 ```
 
-Properties
+## Properties
 - Unlike a standard hash table, a Bloom filter of a fixed size can represent a set with an arbitrarily large number of elements.
 - Bloom filters never generate false negative result
 - Adding an element never fails. However, the false positive rate increases steadily as elements are added until all bits in the filter are set to 1, at which point all queries yield a positive result.
@@ -42,7 +42,8 @@ ds.union(3, 4)
     (2) (4)
 ```
 
-Leetcode Problems
+## Leetcode Problems
+
 - [547. Friend Circles](https://leetcode.com/problems/friend-circles/)
 - [130. Surrounded Regions](https://leetcode.com/problems/surrounded-regions/)
 - [200. Number of Islands](https://leetcode.com/problems/number-of-islands/)
@@ -63,11 +64,11 @@ Leetcode Problems
                               [A]       [B]
 ```
 
-Properties
+## Properties
 - Native Implementation: Hash Table + Doubly LinkedList
 - Python API Implementation: `collections.OrderedDict()`
 - O(1) lookup
 - O(1) update
 
-Leetcode Problems
+## Leetcode Problems
 - [146. LRU Cache](https://leetcode.com/problems/lru-cache/)

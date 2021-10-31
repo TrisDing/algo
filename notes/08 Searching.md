@@ -149,6 +149,7 @@ def binary_search(l, r):
 | Binary Search  | O(1)     | O(log n) | O(log n) | O(1)      |
 
 ## Leetcode Problems
+
 - [704. Binary Search](https://leetcode.com/problems/binary-search/)
 - [167. Two Sum II - Input array is sorted](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/)
 - [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/)
