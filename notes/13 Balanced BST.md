@@ -77,6 +77,10 @@ With Subtree
      T1 T2  T1 T2                    |                   T3 T4  T2 T3
 ```
 
+### Implementation
+
+_skip..._
+
 ## Red-Black Tree
 
 > In a red–black tree, each node stores an extra bit representing color, used to ensure that the tree remains approximately balanced during insertions and deletions.
@@ -123,3 +127,8 @@ Red-Black repair procedure Operations:
 | -------------- | :-------------------------------------: | :------------------------------------------------: |
 | AVL Tree       | strictly balanced, efficient search     | need to re-balance on every insert and delete      |
 | Red-Black Tree | low maintenance for insert and delete   | not strictly balanced, double the height (2*log2n) |
+
+
+### Implementation
+
+_skip..._
