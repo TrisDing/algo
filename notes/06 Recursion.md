@@ -5,7 +5,7 @@
 - In a base case, we compute the result immediately given the inputs to the function call.
 - In a recursive step, we compute the result with the help of one or more recursive calls to this same function, but with the inputs somehow **reduced** in size or complexity, closer to a base case.
 
-### Example-1 Factorial:
+## Factorial
 ```
 n! = n x (n-1) x ... x 2 x 1
 ```
@@ -35,7 +35,7 @@ def factorial(n):
     return n * factorial(n-1)
 ```
 
-### Example-2 Fibonacci:
+## Fibonacci
 ```
 fib(n) = fib(n-1) + fib(n-2)
 ```
@@ -66,7 +66,7 @@ def fibonacci(n):
     return fibonacci(n-1) + fibonacci(n-2)
 ```
 
-### 3 Essentials for recursion
+## 3 Essentials for recursion
 
 - The recursive step has to transform the problem instance into something smaller, otherwise the recursion may never end.
 - The steps to solve the larger problem has to be exactly same as smaller subproblems, so that we can call the same function recursively.

@@ -30,7 +30,20 @@ Types of sorting algorithms
         - Bucket Sort
         - Radix Sort
 
-### Bubble Sort
+| Simple Sort    | Best      | Worst    | Average  | Space     | Stability |
+| :------------- | :-------: | :------: | :------: | :-------: | :-------: |
+| Bubble Sort    | O(n)      | O(n^2)   | O(n^2)   | O(1)      | YES       |
+| Insertion Sort | O(n)      | O(n^2)   | O(n^2)   | O(1)      | YES       |
+| Selection Sort | O(n^2)    | O(n^2)   | O(n^2)   | O(1)      | NO        |
+| Shell Sort     | O(nlogn)  | O(n^2)   | O(nlogn) | O(1)      | NO        |
+| Merge Sort     | O(nlogn) | O(nlogn)  | O(nlogn) | O(n)      | YES       |
+| Quick Sort     | O(nlogn) | O(n^2)    | O(nlogn) | O(nlogn)  | NO        |
+| Heap Sort      | O(nlogn) | O(nlogn)  | O(nlogn) | O(1)      | YES       |
+| Counting Sort  | O(n+k)   | O(n+k)    | O(n+k)   | O(n+k)    | YES       |
+| Bucket Sort    | O(n)     | O(n^2)    | O(n+k)   | O(n+k)    | YES       |
+| Radix Sort     | O(n*k)   | O(n*k)    | O(n*k)   | O(n+k)    | YES       |
+
+## Bubble Sort
 
 Compares two adjacent elements and swaps them if they are not in the intended order.
 ```py
@@ -45,7 +58,7 @@ def BubbleSort(nums):
     return nums
 ```
 
-### Insertion Sort
+## Insertion Sort
 
 Places an unsorted element at its suitable place in each iteration.
 ```py
@@ -63,7 +76,7 @@ def InsertionSort(nums):
     return nums
 ```
 
-### Selection Sort
+## Selection Sort
 
 Selects the smallest element from an unsorted list in each iteration and places that element at the beginning of the unsorted list.
 ```py
@@ -80,7 +93,7 @@ def SelectionSort(nums):
     return nums
 ```
 
-### Shell Sort
+## Shell Sort
 
 Shell sort is a generalized version of the insertion sort algorithm. It first sorts elements that are far apart from each other and successively reduces the interval between the elements to be sorted. The interval between the elements is reduced based on the sequence used, for example: `n/2, n/4, n/8, ..., 1`
 ```
@@ -91,14 +104,7 @@ shellSort(array, size)
 end shellSort
 ```
 
-| Simple Sort    | Best      | Worst    | Average  | Space     | Stability |
-| :------------- | :-------: | :------: | :------: | :-------: | :-------: |
-| Bubble Sort    | O(n)      | O(n^2)   | O(n^2)   | O(1)      | YES       |
-| Insertion Sort | O(n)      | O(n^2)   | O(n^2)   | O(1)      | YES       |
-| Selection Sort | O(n^2)    | O(n^2)   | O(n^2)   | O(1)      | NO        |
-| Shell Sort     | O(nlogn)  | O(n^2)   | O(nlogn) | O(1)      | NO        |
-
-### Merge Sort
+## Merge Sort
 
 The `MergeSort` function repeatedly divides the array into two halves until we reach a stage where we try to perform `MergeSort` on a subarray of size 1 (i.e. left == right). After that, the merge function comes into play and combines the sorted arrays into larger arrays until the whole array is merged.
 ```
@@ -169,7 +175,7 @@ T(n) = 2^k * T(n/2^k) + k * n
 # Therefore, the merge sort time complexity is O(nlogn)
 ```
 
-### Quick Sort
+## Quick Sort
 
 An array is divided into sub-arrays by selecting a pivot element from the array. The pivot element should be positioned in such a way that elements less than pivot are kept on the left side and elements greater than pivot are on the right side of the pivot. The left and right sub-arrays are also divided using the same approach. This process continues until each subarray contains a single element. At this point, elements are already sorted. Finally, elements are combined to form a sorted array.
 ```
@@ -226,17 +232,11 @@ T(n) = 2 * T(n/2) + n  # n > 1
 
 **Average case scenario**: see [Recursion Tree](<./14 Recursion Tree.md>)
 
-### Heap Sort
+## Heap Sort
 
 see [Heap](<./15 Heap.md>)
 
-| Efficient Sort | Best     | Worst    | Average   | Space    | Stability |
-| :------------- | :------: | :------: | :-------: | :------: | :-------: |
-| Merge Sort     | O(nlogn) | O(nlogn) | O(nlogn)  | O(n)     | YES       |
-| Quick Sort     | O(nlogn) | O(n^2)   | O(nlogn)  | O(nlogn) | NO        |
-| Heap Sort      | O(nlogn) | O(nlogn) | O(nlogn)  | O(1)     | YES       |
-
-### Counting Sort
+## Counting Sort
 
 Counting sort is a sorting algorithm that sorts the elements of an array by counting the number of occurrences of each unique element in the array. The count is stored in an auxiliary array and the sorting is done by mapping the count as an index of the auxiliary array.
 ```py
@@ -268,7 +268,7 @@ def CountingSort(nums):
     return nums
 ```
 
-### Radix Sort
+## Radix Sort
 
 Radix sort is a sorting algorithm that sorts the elements by first grouping the individual digits of the same place value. Then, sort the elements according to their increasing/decreasing order.
 ```py
@@ -287,7 +287,7 @@ def RadixSort(nums):
     return nums
 ```
 
-### Bucket Sort
+## Bucket Sort
 
 Bucket Sort is a sorting algorithm that divides the unsorted array elements into several groups called buckets. Each bucket is then sorted by using any of the suitable sorting algorithms or recursively applying the same bucket algorithm. Finally, the sorted buckets are combined to form a final sorted array.
 ```py
@@ -315,9 +315,3 @@ def BucketSort(self, nums):
 
     return nums
 ```
-
-| Distribution Sorts | Best     | Worst    | Average  | Space    | Stability |
-| :----------------- | :------: | :------: | :------: | :------: | :-------: |
-| Counting Sort      | O(n+k)   | O(n+k)   | O(n+k)   | O(n+k)   | YES       |
-| Bucket Sort        | O(n)     | O(n^2)   | O(n+k)   | O(n+k)   | YES       |
-| Radix Sort         | O(n*k)   | O(n*k)   | O(n*k)   | O(n+k)   | YES       |

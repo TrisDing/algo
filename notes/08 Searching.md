@@ -148,12 +148,22 @@ def binary_search(l, r):
 | Linear Search  | O(n)     | O(n)     | O(n)     | O(1)      |
 | Binary Search  | O(1)     | O(log n) | O(log n) | O(1)      |
 
-## Leetcode Problems
+### Leetcode Problems
+
+Basics
 
 - [704. Binary Search](https://leetcode.com/problems/binary-search/)
-- [167. Two Sum II - Input array is sorted](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/)
-- [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/)
-- [34. Find First and Last Position of Element in Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
 - [69. Sqrt(x)](https://leetcode.com/problems/sqrtx/)
-- [74. Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/)
+- [374. Guess Number Higher or Lower](https://leetcode.com/problems/guess-number-higher-or-lower/)
+- [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/)
+- [167. Two Sum II - Input array is sorted](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/)
 - [367. Valid Perfect Square](https://leetcode.com/problems/valid-perfect-square/)
+
+Variations
+
+- [278. First Bad Version](https://leetcode.com/problems/first-bad-version/)
+- [162. Find Peak Element](https://leetcode.com/problems/find-peak-element/)
+- [Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/)
+- [34. Find First and Last Position of Element in Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
+- [658. Find K Closest Elements](https://leetcode.com/problems/find-k-closest-elements/)
+- [74. Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/)

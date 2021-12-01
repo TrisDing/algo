@@ -24,7 +24,7 @@ _Dynamic Array_
 
 Dynamic Array or containers such as Java’s [ArrayList](https://github.com/openjdk/jdk/blob/master/src/java.base/share/classes/java/util/ArrayList.java) or Python’s List are dynamically resized, when the array is full, it will try to allocate a new x1.5 or x2 size memory and copy all the values from the existing array to the new one.
 
-### Sequence Operations
+## Sequence Operations
 
 Python sequence includes list, tuple, range, etc. Arrays are lists, lists are **mutable** sequences, tuples are **immutable** sequences.
 
@@ -43,7 +43,7 @@ reversed(s)        # return a reverse iterator
 sorted(s)          # return a new sorted list from the items in iterable
 ```
 
-### List Operations
+## List Operations
 
 ```py
 a.append(x)        # appends x to the end of the sequence (same as s[len(s):len(s)] = [x])
@@ -59,7 +59,7 @@ a.index(x[, start[, end]])      # index of the first occurrence of x in s
 a.sort(key=None, reverse=False) # Sort the items of the list in place
 ```
 
-### Coding Techniques
+## Coding Techniques
 
 ```py
 # List comprehension
@@ -89,7 +89,6 @@ functools.reduce(lambda x, y: x+y, [1, 2, 3, 4, 5]) # calculates ((((1+2)+3)+4)+
 ```
 
 ## Algorithms
----
 
 ### Print Pairs
 ```py

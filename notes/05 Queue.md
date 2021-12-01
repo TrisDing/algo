@@ -52,7 +52,7 @@ class Queue:
         return len(self.stack)
 ```
 
-### Circular Queue
+## Circular Queue
 
 A circular queue is the extended version of a regular queue where the last element is connected to the first element. Thus forming a circle-like structure. The circular queue solves the major limitation of the normal queue: after a bit of insertion and deletion, there will be non-usable empty space.
 
@@ -78,7 +78,7 @@ class CircularQueue():
         return item
 ```
 
-### Double Ended Queue (Deque)
+## Double Ended Queue (Deque)
 
 Deque is a type of queue in which insertion and removal of elements can either be performed from the front or the rear. Thus, it does not follow FIFO rule (First In First Out).
 
@@ -109,13 +109,13 @@ class Deque:
         return len(self.queue)
 ```
 
-### Priority Queue
+## Priority Queue
 
 A priority queue is a special type of queue in which each element is associated with a priority value. And, elements are served on the basis of their **priority**. That is, higher priority elements are served first. However, if elements with the same priority occur, they are served according to their order in the queue.
 
 Priority queue can be implemented using an array, a linked list, a heap data structure, or a binary search tree. Among these data structures, heap data structure provides an efficient implementation of priority queues.
 
-### Blocking Queue
+## Blocking Queue
 
 The blocking queue adds blocking operations on the basic queue. When the queue is empty, fetching data from the head of the queue will be blocked until there is some data in the queue. Likewise, if the queue is full, the operation of inserting data will be blocked until there is a free space in the queue.
 
@@ -128,12 +128,11 @@ We can easily implement the `producer-consumer` model with help of the blocking 
 <Consumer 3>  take
 ```
 
-### Concurrent Queue
+## Concurrent Queue
 
 Thread-safe queues are called concurrent queues. The simplest way to achieve this is to add **locks** to the enqueue() and dequeue() methods. But the concurrency of the lock granularity will be relatively low, and only one **put** or **take** operation is allowed at the a time.
 
 ## Algorithms
----
 
 ### Mono Queue
 

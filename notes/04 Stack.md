@@ -56,7 +56,6 @@ Stack Applications
 - Keep track of previous call functions to support recursion in most programing languages (call stack)
 
 ## Algorithms
----
 
 ### Two stacks
 
