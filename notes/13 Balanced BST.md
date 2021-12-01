@@ -79,7 +79,7 @@ With Subtree
 
 ### Implementation
 
-_skip..._
+_TODO_
 
 ## Red-Black Tree
 
@@ -131,4 +131,4 @@ Red-Black repair procedure Operations:
 
 ### Implementation
 
-_skip..._
+_TODO_

@@ -64,7 +64,6 @@ def island(self, grid: List[List[int]]):
         for c in range(n):
             # start dfs for each element in grid
             dfs(r, c)
-
 ```
 
 ### Leetcode Problems

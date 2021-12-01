@@ -128,7 +128,7 @@ def biBfs(source, target):
     return 0 # not found
 ```
 
-## Leetcode Problems
+### Leetcode Problems
 
 - [111. Minimum Depth of Binary Tree](https://leetcode.com/problems/minimum-depth-of-binary-tree/)
 - [515. Find Largest Value in Each Tree Row](https://leetcode.com/problems/find-largest-value-in-each-tree-row/)
@@ -138,3 +138,66 @@ def biBfs(source, target):
 - [433. Minimum Genetic Mutation](https://leetcode.com/problems/minimum-genetic-mutation/)
 - [529. Minesweeper](https://leetcode.com/problems/minesweeper/)
 - [773. Sliding Puzzle](https://leetcode.com/problems/sliding-puzzle/)
+
+## Graph Traversal
+
+Given edges, construct graph
+```py
+edges: List[List[int]] = [[0,1],[1,2],[2,0]]
+
+graph = collections.defaultdict(list)
+for u, v in edges:
+    graph[u].append(v)
+    graph[v].append(u) # undirected (bi-directional) add this line
+```
+
+Given a directed acyclic graph (DAG) of n nodes labeled from `0` to `n-1`, find all possible paths from node `start` to node `end` and return them in any order.
+```py
+def allPathsSourceTarget(self, graph: List[List[int]], start: int, end: int) -> List[List[int]]:
+    n = len(graph)
+    res = []
+
+    path = [start]
+    queue = collections.deque([path])
+
+    while queue:
+        p = queue.popleft()
+        u = p[-1]
+        for v in graph[u]:
+            tp = p[:]
+            tp.append(v)
+            if v == end:
+                res.append(tp)
+            else:
+                queue.append(tp)
+
+    return res
+```
+
+Given a **undirected graph** (or bi-directional graph) with n vertices labeled from `0` to `n-1`. Determine if there is a valid path that exists from vertex `start` to vertex `end`.
+```py
+def validPath(self, n: int, graph: List[List[int]], start: int, end: int) -> bool:
+    visited = set()
+    queue = collections.deque([start])
+
+    while queue:
+        u = queue.popleft()
+        if u == end:
+            return True
+        visited.add(u)
+        for v in graph[u]:
+            if v not in visited:
+                queue.append(v)
+
+    return False
+```
+
+### Leetcode Problems
+
+- [1971. Find if Path Exists in Graph](https://leetcode.com/problems/find-if-path-exists-in-graph/)
+- [797. All Paths From Source to Target](https://leetcode.com/problems/all-paths-from-source-to-target/)
+- [1059. All Paths from Source Lead to Destination](https://leetcode.com/problems/all-paths-from-source-lead-to-destination/)
+- [116. Populating Next Right Pointers in Each Node](https://leetcode.com/problems/populating-next-right-pointers-in-each-node/)
+- [1091. Shortest Path in Binary Matrix](https://leetcode.com/problems/shortest-path-in-binary-matrix/)
+- [429. N-ary Tree Level Order Traversal](https://leetcode.com/problems/n-ary-tree-level-order-traversal/)
+- [994. Rotting Oranges](https://leetcode.com/problems/rotting-oranges/)

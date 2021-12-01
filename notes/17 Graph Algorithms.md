@@ -208,11 +208,11 @@ There are two “single source shortest path” algorithms:
 
 ### Dijkstra's algorithm
 
-_skip..._
+_TODO_
 
 ### Bellman-Ford Algorithm
 
-_skip..._
+_TODO_
 
 ## Topological Sort
 

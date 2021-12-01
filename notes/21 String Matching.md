@@ -196,7 +196,7 @@ a  b [b  c] a              "bc" is the good suffix
 
 > The KMP algorithm searches for occurrences of a "word" W within a main "text string" S by employing the observation that when a mismatch occurs, the word itself embodies sufficient information to determine where the next match could begin, thus bypassing re-examination of previously matched characters.
 
-_skip..._
+_TODO_
 
 ## Trie
 
@@ -274,4 +274,4 @@ Trie is not suitable for **exact** matching (hash table or red-black tree does a
 
 > The AC algorithm constructs a finite-state machine that resembles a _trie_ with additional links between the various internal nodes. These extra internal links allow fast transitions between failed string matches (e.g. a search for `cat` in a trie that does not contain `cat`, but contains `cart`, and thus would fail at the node prefixed by `ca`), to other branches of the trie that share a common prefix (e.g., in the previous case, a branch for attribute might be the best lateral transition). This allows the automaton to transition between string matches without the need for backtracking.
 
-_skip..._
+_TODO_
