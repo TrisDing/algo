@@ -20,7 +20,7 @@
     - [Binary Tree](<./4.1 Binary Tree.md>)
     - [Recursion Tree](<./4.2 Recursion Tree.md>)
     - [Binary Search Tree](<./4.3 Binary Search Tree.md>)
-    - [Balanced BST](<./4.4 Balanced BST.md>)
+    - [Self-Balancing BST](<./4.4 Self-Balancing BST.md>)
     - [Heap](<./4.5 Heap.md>)
     - [Backtrack](<./4.6 Backtrack.md>)
 5. Graph
