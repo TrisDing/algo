@@ -33,7 +33,9 @@
     - [Topological Sort](<./5.7 Topological Sort.md>)
 6. Dynamic Programming
     - [Greedy](<./6.1 Greedy.md>)
-    - [Dynamic Programming](<./6.2 Dynamic Programming.md>)
+    - [Dynamic Programming I](<./6.2 Dynamic Programming I.md>)
+    - [Dynamic Programming II](<./6.3 Dynamic Programming II.md>)
+    - [Dynamic Programming III](<./6.4 Dynamic Programming III.md>)
 7. Miscellaneous
     - [Primitives](<./7.1 Primitives.md>)
     - [Skip List](<./7.2 Skip List.md>)
