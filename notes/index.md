@@ -41,5 +41,6 @@
     - [Skip List](<./7.2 Skip List.md>)
     - [String](<./7.3 String.md>)
     - [String Matching](<./7.4 String Matching.md>)
-    - [Sorting III](<./7.5 Sorting III.md>)
-    - [Miscellaneous](<./7.6 Miscellaneous.md>)
+    - [Trie](<./7.5 String Matching.md>)
+    - [Sorting III](<./7.6 Sorting III.md>)
+    - [Miscellaneous](<./7.7 Miscellaneous.md>)
