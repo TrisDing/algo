@@ -61,8 +61,19 @@ while fast and fast.next:
 return slow
 ```
 
-**Linked List [Recursion](<./3.1 Recursion.md>)**
+**Reverse LinkedList**
 ```py
+# Iterative
+def reverseList(head):
+    prev, curr = None, head
+    while curr:
+        temp = curr.next
+        curr.next = prev
+        prev = curr
+        curr = temp
+    return prev
+
+# Recursive
 def reverseList(head):
     # base case
     if not head or not head.next:
@@ -216,7 +227,6 @@ def mergeSort(nums):
     n = len(nums)
     if n <= 1:
         return nums
-
     mid = n // 2
     leftSorted = mergeSort(nums[:mid])  # 0 ~ mid-1
     rightSorted = mergeSort(nums[mid:]) # mid ~ n-1
