@@ -375,3 +375,338 @@ def binary_search4(nums, target):
                 left = mid + 1 # keep searching
     return -1
 ```
+
+## Binary Tree
+
+**Pre-order Traversal**
+```py
+# root -> left -> right
+def preorder(root):
+    if root:
+        res.append(root.val)
+        preorder(root.left)
+        preorder(root.right)
+
+def preorderTraversal(root):
+    res = []
+    stack = [root]
+    while stack:
+        node = stack.pop()
+        if node:
+            res.append(node.val)
+            stack.append(node.right)
+            stack.append(node.left)
+    return res
+```
+
+**In-order Traversal**
+```py
+# left -> root -> right
+def inorder(root):
+    if root:
+        inorder(root.left)
+        res.append(root.val)
+        inorder(root.right)
+
+def inorderTraversal(root):
+    res = []
+    stack = []
+    while True:
+        while root:
+            stack.append(root)
+            root = root.left
+        if not stack:
+            return res
+        node = stack.pop()
+        res.append(node.val)
+        root = node.right
+    return res
+```
+
+**Post-order Traversal**
+```py
+# left -> right -> root
+def postorder(root):
+    if root:
+        postorder(root.left)
+        postorder(root.right)
+        res.append(root.val)
+
+def postorderTraversal(root):
+    res = []
+    stack = [root]
+    while stack:
+        node = stack.pop()
+        if node:
+            res.append(node.val)
+            stack.append(node.left)
+            stack.append(node.right)
+    return res[::-1]
+```
+
+**Level Order Traversal**
+```py
+# top -> bottom, left -> right
+def levelorder(root):
+    res = []
+    queue = collections.deque([root])
+    while queue:
+        level = []
+        for _ in range(len(queue)):
+            node = queue.popleft()
+            level.append(node.val)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        res.append(level)
+    return res
+```
+
+## Binary Search Tree
+
+**In-Order Traversal**
+```py
+def inOrder(self, root):
+    prev = None
+    def helper(root):
+        nonlocal prev
+        if not root:
+            return
+        # in-order traversal (left -> root -> right)
+        helper(root.left)
+        if prev is not None:
+            # do something with prev.val and root.val
+        prev = root
+        helper(root.right)
+
+def inOrderReversed(self, root):
+    prev = None
+    def helper(root):
+        nonlocal prev
+        if not root:
+            return
+        # reversed in-order traversal (right -> root -> left)
+        helper(root.right)
+        if prev is not None:
+            # do something with prev.val and root.val
+        prev = root
+        helper(root.right)
+```
+
+## Heap
+
+**Heap Sort**
+```py
+def HeapSort(nums):
+    n = len(nums)
+
+    def heapify(n, i):
+        largest = i
+        left = 2*i+1
+        right = 2*i+2
+
+        if left < n and nums[left] > nums[largest]:
+            largest = left
+        if right < n and nums[right] > nums[largest]:
+            largest = right
+
+        if largest != i:
+            nums[largest], nums[i] = nums[i], nums[largest]
+            heapify(n, largest)
+
+    for i in range(n//2-1, -1, -1):
+        heapify(n, i)
+
+    for i in range(n-1, 0, -1):
+        nums[i], nums[0] = nums[0], nums[i]
+        heapify(i, 0)
+
+    return nums
+```
+
+## Backtrack
+
+```py
+result = []
+
+def backtrack(path, choices):
+    if end condition:
+        result.add(path[:]) # param pass by reference
+        return
+
+    # Get the choice list
+    for choice in choices:
+        # get rid of the illegal choices (Pruning)
+        if exclusive condition:
+            continue
+
+        path.append(choice) # Make the choice
+        backtrack(path, new_choices) # enter the next decision tree
+        path.pop() # Remove the choice (since it's already made)
+```
+
+**Subsets**
+```py
+def backtrack(path = '', start = 0):
+    res.append(path[:])
+    for i in range(start, n):
+        # skip duplicates if needed, array needs to be sorted
+        # if i > start and nums[i] == nums[i-1]:
+            # continue
+        backtrack(path+[nums[i]], i+1)
+```
+
+**Permutations**
+```py
+visited = [False] * n
+def backtrack(path = []):
+    if len(path) == n:
+        res.append(path[:])
+        return
+    for i in range(n):
+        if visited[i]:
+            continue
+        # skip duplicates if needed, array needs to be sorted
+        # if i > 0 and nums[i] == nums[i-1] and not visited[i-1]:
+            # continue
+        visited[i] = True
+        backtrack(path+[nums[i]])
+        visited[i] = False
+```
+
+**Combinations**
+```py
+def backtrack(path = [], start = 0, total = 0):
+    if total > target:
+        return
+    if total == target:
+        res.append(path[:])
+        return
+    for i in range(start, n):
+        if total + candidates[i] > target:
+            break
+        # skip duplicates if needed, array needs to be sorted
+        # if i > start and candidates[i] == candidates[i-1]:
+            # continue
+        backtrack(path+[candidates[i]], i+1, total+candidates[i])
+```
+
+**Partition**
+```py
+def backtrack(path = [], start = 0):
+    if start == n:
+        res.append(path[:])
+        return
+    for i in range(start, n):
+        t = s[start:i+1]
+        if not is_valid(t):
+            continue
+        backtrack(i+1, path+[t])
+```
+
+Disjoint Set (Union Find)
+
+```py
+class UnionFind:
+    def __init__(self, n):
+        self.root = [i for i in range(n)]
+        self.rank = [1] * n
+        self.group = n # optional, record how many connected vertexes
+
+    def find(self, x):
+        while x != self.root[x]:
+            x = self.root[x]
+        return x
+
+    def union(self, x, y):
+        rootX = self.find(x)
+        rootY = self.find(y)
+        if rootX != rootY:
+            if self.rank[rootX] > self.rank[rootY]:
+                self.root[rootY] = rootX
+            elif self.rank[rootX] < self.rank[rootY]:
+                self.root[rootX] = rootY
+            else:
+                self.root[rootY] = rootX
+                self.rank[rootX] += 1
+            self.group -= 1
+            return True
+        return False # optional, x and y are already connected
+
+    def connected(self, x, y):
+        return self.find(x) == self.find(y)
+```
+
+## Minimum Spanning Tree (MST)
+
+**Kruskal’s Algorithm**
+```py
+def minCostConnectEdges(edges):
+    n = len(edges)
+    heapq.heapify(edges) # sort edges by cost
+    uf = UnionFind(n) # use UnionFind to connect nodes
+    res = 0
+    count = n - 1 # Need to find exactly n-1 edges
+    while edges and count > 0:
+        edge = heapq.heappop(edges)
+        if not uf.connected(edge.x, edge.y):
+            uf.union(edge.x, edge.y)
+            res += edge.cost
+            count -= 1
+    return res
+```
+
+**Prim's Algorithm**
+```py
+def minCostConnectEdges(edges):
+    n = len(edges)
+    heapq.heapify(edges)
+    visited = [False] * n
+    visited[0] = True
+    res = 0
+    count = n - 1 # Need to process exactly N-1 nodes
+    while edges and count > 0:
+        edge = heapq.heappop(edges)
+        x, y, cost = edge.x, edge.y, edge.cost
+        if not visited[y]:
+            visited[y] = True
+            res += cost
+            for i in range(n):
+                if not visited[i]:
+                    cost = abs(points[y][0] - points[i][0]) + abs(points[y][1] - points[i][1])
+                    heapq.heappush(edges, Edge(y, i, cost))
+            count -= 1
+    return res
+```
+
+## Topological Sort
+
+```py
+# Given edges, construct the graph and in-degree array
+edges = [[0,1],[1,2],[2,0]]
+inDegrees = [0] * len(edges)
+graph = collections.defaultdict(list)
+for u, v in edges:
+    graph[u].append(v)
+    inDegrees[u] += 1
+
+# Find Topological Ordering
+def findTopologicalOrdering(graph):
+    n = len(graph)
+    inDegrees = [0] * n
+
+    res = []
+    queue = collections.deque([u for u in range(n) if inDegrees[u] == 0])
+    while queue:
+        u = queue.popleft()
+        res.append(u)
+        for v in graph[u]:
+            inDegrees[v] -= 1
+            if inDegrees[v] == 0:
+                queue.append(v)
+
+    if len(res) != n:
+        return []
+    return res
+```
