@@ -605,8 +605,282 @@ def backtrack(path = [], start = 0):
         backtrack(i+1, path+[t])
 ```
 
-Disjoint Set (Union Find)
+## Depth First Search (DFS)
 
+**DFS in 2D Array**
+```py
+def island(self, grid: List[List[int]]):
+    # length of row and column
+    m, n = len(grid), len(grid[0])
+
+    # grid[r][c] = 0 => ocean
+    # grid[r][c] = 1 => island
+    # grid[r][c] = 2 => visited
+    def dfs(r, c):
+        # base case: grid[r][c] is out of bound
+        if not inArea(r, c):
+            return
+
+        # current node is ocean, or it's already visited
+        if grid[r][c] == 0 or grid[r][c] == 2:
+            return
+
+        # mark as visited
+        grid[r][c] = 2
+
+        # optional: area of the current island
+        # area += 1
+
+        # visit neighbor nodes
+        dfs(r+1, c) # UP
+        dfs(r-1, c) # DOWN
+        dfs(r, c-1) # LEFT
+        dfs(r, c+1) # RIGHT
+
+    def inArea(r, c):
+        return 0 <= r < m and 0 <= c < n
+
+    for r in range(m):
+        for c in range(n):
+            if grid[r][c] == 1:
+                # start dfs for each element in grid
+                dfs(r, c)
+                # optional: count number of islands
+                # count += 1
+```
+
+**DFS in Graph**
+```py
+# Given edges, construct graph
+edge = [[0,1],[1,2],[2,0]] # [u,v]
+graph = collections.defaultdict(list)
+for u, v in edges:
+    graph[u].append(v) # u -> v
+    graph[v].append(u) # v -> u, undirected (bi-directional) add this line
+
+# Directed Acyclic Graph (DAG)
+def allPathsSourceTarget(graph, start, end):
+    n = len(graph)
+    res = []
+    def dfs(u, path):
+        if u == end:
+            res.append(path[:])
+            return
+        for v in graph[u]:
+            # no need to track visited node because of acyclic
+            dfs(v, path + [v]) # backtrack
+    dfs(start, [start])
+    return res
+
+# Undirected Graph (or Bi-Directional Graph)
+def validPath(graph, start, end):
+    visited = set()
+    def dfs(u):
+        if u == end:
+            return True
+        for v in graph[u]:
+            if v not in visited:
+                visited.add(v)
+                if dfs(v):
+                    return True
+        return False
+    return dfs(start)
+
+# Directed Graph
+def leadsToDestination(graph, start, end):
+    # 0: unvisited
+    # 1: visiting (visited in the current ongoing path)
+    # 2: visited
+    visited = defaultdict(int)
+    def dfs(u):
+        if visited[u] == 2: # visited
+            return True
+        if visited[u] == 1: # Graph has circle
+            return False
+        if len(graph[u]) == 0:
+            return u == end
+        visited[u] = 1
+        for v in graph[u]:
+            if not dfs(v):
+                return False
+        visited[u] = 2
+        return True
+    return dfs(start)
+```
+
+## Breath First Search (BFS)
+
+**Level Order**
+```py
+def levelOrder(root):
+    queue = collections.deque([root])
+    visited = set([root])
+    res = []
+    while queue:
+        # process all nodes from the current level
+        level_nodes = []
+        for _ in range(len(queue)):
+            # get current node from queue
+            node = queue.popleft()
+            # process current node
+            level_nodes.append(node.val)
+            # process children if not visited
+            if node.children:
+                for child in node.children:
+                    if child not in visited:
+                        visited.add(child)
+                        queue.append(child)
+        res.append(level_nodes)
+    return res
+```
+
+**Shortest Path**
+```py
+def shortestPath(source, target):
+    queue = collections.deque([source])
+    visited = set([source])
+    step = 0
+    # Loop until queue is empty
+    while queue:
+        # spread the search from the current level
+        for _ in range(len(queue)):
+            # get current node from queue
+            node = queue.popleft()
+            # see if we reach the target
+            if node is target:
+                return step
+            # process children
+            if node.children:
+                for child in node.children:
+                    if child not in visited:
+                        queue.append(child)
+                        visited.add(child)
+        step += 1
+    return 0 # not found
+```
+
+**Bidirectional BFS**
+```py
+def biBfs(source, target):
+    sourceQueue = collections.deque([source])
+    targetQueue = collections.deque([target])
+    visited = set([source])
+    step = 0
+    while sourceQueue and targetQueue:
+        # choose the smaller queue to spread
+        if len(sourceQueue) > len(targetQueue):
+            sourceQueue, targetQueue = targetQueue, sourceQueue
+        # spread the search
+        for _ in range(len(sourceQueue)):
+            node = sourceQueue.popleft()
+            # source and target meet
+            if node in targetQueue:
+                return step
+            for child in node.children:
+                if child not in visited:
+                    visited.add(child)
+                    sourceQueue.append(child)
+        step += 1
+    return 0 # not found
+```
+
+**BFS in Graph**
+```py
+# Given edges, construct graph
+edge = [[0,1],[1,2],[2,0]] # [u,v]
+graph = collections.defaultdict(list)
+for u, v in edges:
+    graph[u].append(v) # u -> v
+    graph[v].append(u) # v -> u, undirected (bi-directional) add this line
+
+# Directed Acyclic Graph (DAG)
+def allPathsSourceTarget(graph, start, end):
+    n = len(graph)
+    res = []
+    startPath = [start]
+    queue = collections.deque([startPath])
+    while queue:
+        path = queue.popleft()
+        u = path[-1]
+        for v in graph[u]:
+            currentPath = path[:]
+            currentPath.append(v)
+            if v == end:
+                res.append(currentPath)
+            else:
+                queue.append(currentPath)
+    return res
+
+# Undirected Graph (or Bi-Directional Graph)
+def validPath(graph, start, end):
+    visited = set()
+    queue = collections.deque([start])
+    while queue:
+        u = queue.popleft()
+        if u == end:
+            return True
+        visited.add(u)
+        for v in graph[u]:
+            if v not in visited:
+                queue.append(v)
+    return False
+```
+
+## Disjoint Set (Union Find)
+
+**Quick Find**
+```py
+class UnionFind:
+    def __init__(self, size):
+        # the root array stores the root node of each vertex.
+        self.root = [i for i in range(size)]
+
+    # O(1) The find function locates the root node of a given vertex.
+    def find(self, x):
+        return self.root[x]
+
+    # O(N) The union function connects two previously unconnected vertices by giving
+    # them the same root node.
+    def union(self, x, y):
+        rootX = self.find(x)
+        rootY = self.find(y)
+        if rootX != rootY:
+            for i in range(len(self.root)):
+                if self.root[i] == rootY:
+                    self.root[i] = rootX
+
+    # O(1) The connected function checks the connectivity of two vertices.
+    def connected(self, x, y):
+        return self.find(x) == self.find(y)
+```
+
+**Quick Union**
+```py
+class UnionFind:
+    def __init__(self, size):
+        # the root array stores the parent node of each vertex.
+        self.root = [i for i in range(size)]
+
+    # O(N) The find function locates the root node of a given vertex.
+    def find(self, x):
+        while x != self.root[x]:
+            x = self.root[x]
+        return x
+
+    # O(N) The union function connects two previously unconnected vertices by giving
+    # them the same root node.
+    def union(self, x, y):
+        rootX = self.find(x)
+        rootY = self.find(y)
+        if rootX != rootY:
+            self.root[rootY] = rootX
+
+    # O(N) The connected function checks the connectivity of two vertices.
+    def connected(self, x, y):
+        return self.find(x) == self.find(y)
+```
+
+**Optimization**
 ```py
 class UnionFind:
     def __init__(self, n):
@@ -614,11 +888,13 @@ class UnionFind:
         self.rank = [1] * n
         self.group = n # optional, record how many connected vertexes
 
+    # O(log N)
     def find(self, x):
         while x != self.root[x]:
             x = self.root[x]
         return x
 
+    # O(log N)
     def union(self, x, y):
         rootX = self.find(x)
         rootY = self.find(y)
@@ -631,9 +907,10 @@ class UnionFind:
                 self.root[rootY] = rootX
                 self.rank[rootX] += 1
             self.group -= 1
-            return True
+            return True # successful connection
         return False # optional, x and y are already connected
 
+    # O(log N)
     def connected(self, x, y):
         return self.find(x) == self.find(y)
 ```
@@ -684,11 +961,11 @@ def minCostConnectEdges(edges):
 
 ```py
 # Given edges, construct the graph and in-degree array
-edges = [[0,1],[1,2],[2,0]]
+edges = [[0,1],[1,2],[2,0]] # [u,v]
 inDegrees = [0] * len(edges)
 graph = collections.defaultdict(list)
 for u, v in edges:
-    graph[u].append(v)
+    graph[u].append(v) # u -> v
     inDegrees[u] += 1
 
 # Find Topological Ordering
@@ -706,7 +983,5 @@ def findTopologicalOrdering(graph):
             if inDegrees[v] == 0:
                 queue.append(v)
 
-    if len(res) != n:
-        return []
-    return res
+    return res if len(res) == n else []
 ```
