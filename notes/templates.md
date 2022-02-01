@@ -1245,3 +1245,85 @@ def lengthOfLIS(self, nums: List[int]) -> int:
         res = max(res, dp[i])
     return res
 ```
+
+## String
+
+**Reverse String**
+```py
+def reverse(s):
+    if not s: return s
+    s = list(s)
+    # Classic Two Pointers
+    i, j = 0, len(s)-1
+    while i < j:
+        s[i], s[j] = s[j], s[i]
+        i += 1
+        j -= 1
+    return "".join(s)
+```
+
+**Sliding Window**
+```py
+from collections import Counter
+
+def slidingWindow(s, t):
+    window = Counter()
+    target = Counter(t)
+    valid = 0
+    left = right = 0
+    while right < len(s):
+        # c is the element to be inserted into the window
+        c = s[right]
+        # if we insert it, is the window still valid?
+        if c in target:
+            window[c] += 1
+            if window[c] == target[c]:
+                valid += 1
+        # expand the current window
+        right += 1
+
+        # when we found a valid window
+        while right - left >= len(t):
+            # check the answer or update the result
+            if valid == len(target):
+                ...
+            # d is the element to be removed from the window
+            d = s[left]
+            # if we remove it, is the window still valid?
+            if d in target:
+                if window[d] == target[d]:
+                    valid -= 1
+                window[d] -= 1
+            # shrink the current window
+            left += 1
+```
+
+## Trie
+
+```py
+class Trie:
+    def __init__(self):
+        self.root = {}
+
+    def insert(self, word: str) -> None:
+        root = self.root
+        for letter in word:
+            root = root.setdefault(letter, {})
+        root['#'] = True
+
+    def search(self, word: str) -> bool:
+        root = self.root
+        for letter in word:
+            root = root.get(letter)
+            if root is None:
+                return False
+        return '#' in root
+
+    def find_prefix(self, prefix: str) -> bool:
+        root = self.root
+        for letter in prefix:
+            root = root.get(letter)
+            if root is None:
+                return False
+        return True
+```
