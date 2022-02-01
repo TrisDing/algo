@@ -985,3 +985,263 @@ def findTopologicalOrdering(graph):
 
     return res if len(res) == n else []
 ```
+
+## Dynamic Programming
+
+**0/1 Knapsack (Maximum Weight)**
+```py
+def knapsack(W, weight, value):
+    """
+    dp[i][j] means when we put item i (or not put) into a knapsack of capacity j,
+    the maximum total value currently in the knapsack.
+
+    dp[i][j] = {
+        0       , j == 0 (no space available)
+        0       , i == 0 and j <  weight[0] (not enough space to put first item)
+        value[0], i == 0 and j >= weight[0] (has enough space to put first item)
+
+        dp[i-1][j], i > 0 and j < weight[i] (not enough space to put item i)
+        max(
+            dp[i-1][j], (choose not to put item i)
+            dp[i-1][j - weight[i]] + value[i] (choose to put item i)
+        ),          i > 0 and j >= weight[i] (has enough space to put item i)
+    }
+    """
+    N = len(weight)
+
+    dp = [[0] * (W+1) for _ in range(N)]
+
+    # Initialize DP
+    for i in range(N):
+        dp[i][0] = 0 # no space available
+
+    for j in range(1, W+1):
+        if j < weight[0]: # not enough space to put first item
+            dp[0][j] = 0
+        else: # has enough space to put first item
+            dp[0][j] = value[0]
+
+    print(dp)
+    """
+       0  1  2  3  4
+    1  0 15 15 15 15
+    2  0  .  .  .  .
+    3  0  .  .  .  .
+    """
+
+    for i in range(1, N):
+        for j in range(1, W+1):
+            if j < weight[i]: # not enough space to put item i
+                dp[i][j] = dp[i-1][j] # total value is not changed
+            else: # has enough space to put item i
+                # make a choose: "put item i" or "not put item i", choose the max value
+                dp[i][j] = max(dp[i-1][j], dp[i-1][j - weight[i]] + value[i])
+
+    print(dp)
+    """
+       0  1  2  3  4
+    1  0 15 15 15 15
+    2  0 15 15 20 35
+    3  0 15 15 20 35
+    """
+
+    return dp[N-1][W]
+
+ans = knapsack(4, [1,3,4], [15,20,30])
+print(ans) # 35
+
+# Status Compression
+def knapsack(W, weight, value):
+    N = len(weight)
+    dp = [0] * (W+1)
+    dp[0] = 0 # no space available
+    for i in range(N):
+        for j in range(W, weight[i] - 1, -1): # W ... weight[i]
+            dp[j] = max(dp[j], dp[j - weight[i]] + value[i])
+    return dp[W]
+```
+
+**0/1 Knapsack (Different Ways)**
+```py
+def knapsack(W, weight, value):
+    N = len(weight)
+
+    dp = [[0] * (W+1) for _ in range(N)]
+
+    for i in range(N):
+        dp[i][0] = 0 # no space available, 0 way
+
+    for j in range(1, W+1):
+        if j < weight[0]: # not enough space to put first item, 0 way
+            dp[0][j] = 0
+        else: # has enough space to put first item, 1 way
+            dp[0][j] = 1
+
+    for i in range(1, N):
+        for j in range(1, W+1):
+            if j < weight[i]: # not enough space to put item i
+                dp[i][j] = dp[i-1][j] # total ways is not changed
+            else: # has enough space to put item i
+                # make a choose: "put item i" or "not put item i", add the num of ways
+                dp[i][j] = dp[i-1][j] + dp[i-1][j - weight[i]]
+
+# Status Compression
+dp = [0] * (W+1)
+dp[0] = 1 # no space available, 1 way
+for i in range(N):
+    for j in range(W, weight[i] - 1, -1):
+        dp[j] += dp[j - weight[i]]
+```
+
+**Complete Knapsack (Maximum Weight)**
+```py
+# maximum value
+def coinChange(amount, coins):
+    n = len(coins)
+    dp = [0] * (amount+1)
+    dp[0] = 0 # no space available
+    for i in range(n):
+        for j in range(coins[i], amount+1): # coins[i] ... amount
+            dp[j] = max(dp[j], dp[j - coins[i]] + coins[i])
+    return dp[amount]
+
+# different ways
+def coinChange(amount, coins):
+    n = len(coins)
+    dp = [0] * (amount+1)
+    dp[0] = 1 # no space available, 1 way
+    for i in range(n):
+        for j in range(coins[i], amount+1): # coins[i] ... amount
+            dp[j] += dp[j - coins[i]]
+    return dp[amount]
+
+# minimum number of coins
+def coinChange(amount, coins):
+    n = len(coins)
+    dp = [math.inf] * (amount+1)
+    dp[0] = 0 # no space available, 0 items
+    for i in range(n):
+        for j in range(coins[i], amount+1): # coins[i] ... amount
+            if dp[j - coins[i]] != math.inf:
+                dp[j] = min(dp[j], dp[j - coins[i]] + 1)
+    return dp[amount] if dp[amount] != math.inf else -1
+```
+
+**House Robber**
+```py
+def rob(nums: List[int]) -> int:
+    """
+    dp[i] = {
+        dp[0] = nums[0],               n = 0
+        dp[1] = max(nums[0], nums[1]), n = 1
+        dp[i] = max(
+            dp[i-1],           # not rob nums[i], so have to rob nums[i-1]
+            dp[i-2] + nums[i]  # rob nums[i], so have to rob nums[i-2]
+        ), n >= 2
+    }
+    """
+    n = len(nums)
+    if n == 0: return 0
+    if n == 1: return nums[0]
+
+    dp = [0 for _ in range(n)]
+    dp[0] = nums[0]
+    dp[1] = max(nums[0], nums[1])
+
+    for i in range(2, n):
+        dp[i] = max(dp[i-1], dp[i-2] + nums[i])
+
+    return dp[-1]
+```
+
+**Buy and Sell Stocks**
+```py
+def maxProfit(self, prices: List[int]) -> int:
+    """
+    dp[i][0] = max(
+        dp[i-1][0],            # rest
+        dp[i-1][1] + prices[i] # sell, profit increase
+    )
+    dp[i][1] = max(
+        dp[i-1][1],            # rest
+        0 - prices[i]          # buy, profit decrease
+    )
+    """
+    n = len(prices)
+    if n == 0: return 0
+
+    dp = [[0 for _ in range(2)] for _ in range(n)]
+    dp[0][0] = 0
+    dp[0][1] = -prices[0]
+
+    for i in range(1, n):
+        dp[i][0] = max(dp[i-1][0], dp[i-1][1] + prices[i])
+        dp[i][1] = max(dp[i-1][1], -prices[i])
+    return dp[n-1][0]
+```
+
+**Sub Subsequence**
+```py
+# Longest Common Subsequence
+def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+    """
+    dp[i][j] = the longest common subsequence of text1[0:i+1] and text2:[0:j+1]
+
+    dp[i][j] = {
+        dp[i-1][j-1] + 1           , text1[i-1] == text2[j-1]
+        max(dp[i-1][j], dp[i][j-1]), text1[i-1] != text2[j-1]
+    }
+
+    dp[0][j] = 0
+    dp[i][0] = 0
+
+    text1 = "abcde", text2 = "ace"
+
+    i/j     a  c  e
+            0  0  0
+    a    0  1  1  1
+    b    0  1  1  1
+    c    0  1  2  2
+    d    0  1  2  2
+    e    0  1  2  3
+    """
+    m, n = len(text1), len(text2)
+    dp = [[0 for _ in range(n+1)] for _ in range(m+1)]
+    for i in range(1, m+1):
+        for j in range(1, n+1):
+            if text1[i-1] == text2[j-1]:
+                dp[i][j] = dp[i-1][j-1] + 1
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+    return dp[m][n]
+
+# Longest Increasing Subsequence
+def lengthOfLIS(self, nums: List[int]) -> int:
+    """
+    dp[i] = longest increasing sequence of nums[0:i+1]
+
+    dp[i] = {
+        max(dp[i], dp[j] + 1) j = 0...i, nums[i] > nums[j]
+        dp[i], nums[i] <= nums[j]
+    }
+
+    input [0,1,0,3,2,3]
+
+    i/i  0  1  2  3  4  5 res
+    i=1  1  2* 1  1  1  1  2
+    i=2  1  2  1* 1  1  1  2
+    i=3  1  2  1  3* 1  1  3
+    i=4  1  2  1  3  3* 1  3
+    i=5  1  2  1  3  3  4* 4
+    """
+    n = len(nums)
+    if n <= 1: return n
+    dp = [1] * n
+    res = 0
+    for i in range(1,n):
+        for j in range(i):
+            if nums[i] > nums[j]:
+                dp[i] = max(dp[i], dp[j] + 1)
+        res = max(res, dp[i])
+    return res
+```
