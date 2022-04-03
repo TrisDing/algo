@@ -1,0 +1,53 @@
+# Data Structure and Algorithms
+
+- Chapter 1 Introduction
+    - [Big O Notation](<./Chapter 1 Introduction/1.1 Big O Notation.md>)
+    - [Python Basics](<./Chapter 1 Introduction/1.2 Python Basics.md>)
+- Chapter 2 Linear Data Structures
+    - [Array](<./Chapter 2 Linear Data Structures/2.1 Array.md>)
+    - [Linked List](<./Chapter 2 Linear Data Structures/2.2 Linked List.md>)
+    - [Stack](<./Chapter 2 Linear Data Structures/2.3 Stack.md>)
+    - [Queue](<./Chapter 2 Linear Data Structures/2.4 Queue.md>)
+    - [Sorting I](<./Chapter 2 Linear Data Structures/2.5 Sorting I.md>)
+    - [Hash Table](<./Chapter 2 Linear Data Structures/2.6 Hash Table.md>)
+- Chapter 3 Recursion
+    - [Recursion](<./Chapter 3 Recursion/3.1 Recursion.md>)
+    - [Divide and Conquer](<./Chapter 3 Recursion/3.2 Divide and Conquer.md>)
+    - [Sorting II](<./Chapter 3 Recursion/3.3 Sorting II.md>)
+    - [Binary Search](<./Chapter 3 Recursion/3.4 Binary Search.md>)
+- Chapter 4 Binary Trees
+    - [Binary Tree](<./Chapter 4 Binary Trees/4.1 Binary Tree.md>)
+    - [Recursion Tree](<./Chapter 4 Binary Trees/4.2 Recursion Tree.md>)
+    - [Binary Search Tree](<./Chapter 4 Binary Trees/4.3 Binary Search Tree.md>)
+    - [Self-Balancing BST](<./Chapter 4 Binary Trees/4.4 Self-Balancing BST.md>)
+    - [Heap](<./Chapter 4 Binary Trees/4.5 Heap.md>)
+    - [Backtrack](<./Chapter 4 Binary Trees/4.6 Backtrack.md>)
+- Chapter 5 Graph Theory
+    - [Graph](<./Chapter 5 Graph Theory/5.1 Graph.md>)
+    - [Disjoint Set](<./Chapter 5 Graph Theory/5.2 Disjoint Set.md>)
+    - [Depth-first Search](<./Chapter 5 Graph Theory/5.3 Depth-first Search.md>)
+    - [Breadth-first Search](<./Chapter 5 Graph Theory/5.4 Breadth-first Search.md>)
+    - [Minimum Spanning Tree](<./Chapter 5 Graph Theory/5.5 Minimum Spanning Tree.md>)
+    - [Shortest Path](<./Chapter 5 Graph Theory/5.6 Shortest Path.md>)
+    - [Topological Sort](<./Chapter 5 Graph Theory/5.7 Topological Sort.md>)
+- Chapter 6 Dynamic Programming
+    - [Greedy](<./Chapter 6 Dynamic Programming/6.1 Greedy.md>)
+    - [Dynamic Programming I](<./Chapter 6 Dynamic Programming/6.2 Dynamic Programming I.md>)
+    - [Dynamic Programming II](<./Chapter 6 Dynamic Programming/6.3 Dynamic Programming II.md>)
+    - [Dynamic Programming III](<./Chapter 6 Dynamic Programming/6.4 Dynamic Programming III.md>)
+- Chapter 7 Advanced Data Structures
+    - [Primitives](<./Chapter 7 Advanced Data Structures/7.1 Primitives.md>)
+    - [Skip List](<./Chapter 7 Advanced Data Structures/7.2 Skip List.md>)
+    - [String](<./Chapter 7 Advanced Data Structures/7.3 String.md>)
+    - [String Matching](<./Chapter 7 Advanced Data Structures/7.4 String Matching.md>)
+    - [Sorting III](<./Chapter 7 Advanced Data Structures/7.5 Sorting III.md>)
+    - [Trie](<./Chapter 7 Advanced Data Structures/7.6 String Matching.md>)
+    - [Bloom Filter](<./Chapter 7 Advanced Data Structures/7.7 Bloom Filter.md>)
+    - [LRU Cache](<./Chapter 7 Advanced Data Structures/7.8 LRU Cache.md>)
+    - [Top-K Problem](<./Chapter 7 Advanced Data Structures/7.9 Top-K Problem.md>)
+- Chapter 8 System Design
+    - [System Design I](<./Chapter 8 System Design/8.1 System Design I.md>)
+    - [System Design II](<./Chapter 8 System Design/8.2 System Design II.md>)
+    - [System Design III](<./Chapter 8 System Design/8.3 System Design III.md>)
+
+## [Mind Map](https://whimsical.com/data-structure-algorithms-FvSVx7M8bPEzAECdUsBDGi)
