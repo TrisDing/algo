@@ -30,24 +30,25 @@
     - [Minimum Spanning Tree](<./Chapter 5 Graph Theory/5.5 Minimum Spanning Tree.md>)
     - [Shortest Path](<./Chapter 5 Graph Theory/5.6 Shortest Path.md>)
     - [Topological Sort](<./Chapter 5 Graph Theory/5.7 Topological Sort.md>)
-- Chapter 6 Dynamic Programming
-    - [Greedy](<./Chapter 6 Dynamic Programming/6.1 Greedy.md>)
-    - [Dynamic Programming I](<./Chapter 6 Dynamic Programming/6.2 Dynamic Programming I.md>)
-    - [Dynamic Programming II](<./Chapter 6 Dynamic Programming/6.3 Dynamic Programming II.md>)
-    - [Dynamic Programming III](<./Chapter 6 Dynamic Programming/6.4 Dynamic Programming III.md>)
-- Chapter 7 Advanced Data Structures
-    - [Primitives](<./Chapter 7 Advanced Data Structures/7.1 Primitives.md>)
-    - [Skip List](<./Chapter 7 Advanced Data Structures/7.2 Skip List.md>)
-    - [String](<./Chapter 7 Advanced Data Structures/7.3 String.md>)
-    - [String Matching](<./Chapter 7 Advanced Data Structures/7.4 String Matching.md>)
-    - [Sorting III](<./Chapter 7 Advanced Data Structures/7.5 Sorting III.md>)
-    - [Trie](<./Chapter 7 Advanced Data Structures/7.6 String Matching.md>)
-    - [Bloom Filter](<./Chapter 7 Advanced Data Structures/7.7 Bloom Filter.md>)
-    - [LRU Cache](<./Chapter 7 Advanced Data Structures/7.8 LRU Cache.md>)
-    - [Top-K Problem](<./Chapter 7 Advanced Data Structures/7.9 Top-K Problem.md>)
-- Chapter 8 System Design
-    - [System Design I](<./Chapter 8 System Design/8.1 System Design I.md>)
-    - [System Design II](<./Chapter 8 System Design/8.2 System Design II.md>)
-    - [System Design III](<./Chapter 8 System Design/8.3 System Design III.md>)
+- Chapter 6 String Matching
+    - [String](<./Chapter 6 String Matching/6.1 String.md>)
+    - [Matching Algorithms](<./Chapter 6 String Matching/6.2 Matching Algorithms.md>)
+    - [Trie](<./Chapter 6 String Matching/6.3 Trie.md>)
+- Chapter 7 Dynamic Programming
+    - [Greedy](<./Chapter 7 Dynamic Programming/7.1 Greedy.md>)
+    - [Dynamic Programming I](<./Chapter 7 Dynamic Programming/7.2 Dynamic Programming I.md>)
+    - [Dynamic Programming II](<./Chapter 7 Dynamic Programming/7.3 Dynamic Programming II.md>)
+    - [Dynamic Programming III](<./Chapter 7 Dynamic Programming/7.4 Dynamic Programming III.md>)
+- Chapter 8 Miscellaneous
+    - [Primitives](<./Chapter 8 Miscellaneous/8.1 Primitives.md>)
+    - [Skip List](<./Chapter 8 Miscellaneous/8.2 Skip List.md>)
+    - [Sorting III](<./Chapter 8 Miscellaneous/8.3 Sorting III.md>)
+    - [Bloom Filter](<./Chapter 8 Miscellaneous/8.4 Bloom Filter.md>)
+    - [LRU Cache](<./Chapter 8 Miscellaneous/8.5 LRU Cache.md>)
+    - [Top-K Problem](<./Chapter 8 Miscellaneous/8.6 Top-K Problem.md>)
+- Chapter 9 System Design
+    - [System Design I](<./Chapter 9 System Design/9.1 System Design I.md>)
+    - [System Design II](<./Chapter 9 System Design/9.2 System Design II.md>)
+    - [System Design III](<./Chapter 9 System Design/9.3 System Design III.md>)
 
 ## [Mind Map](https://whimsical.com/data-structure-algorithms-FvSVx7M8bPEzAECdUsBDGi)
