@@ -32,8 +32,9 @@
     - [Topological Sort](<./Chapter 5 Graph Theory/5.7 Topological Sort.md>)
 - Chapter 6 String Matching
     - [String](<./Chapter 6 String Matching/6.1 String.md>)
-    - [Matching Algorithms](<./Chapter 6 String Matching/6.2 Matching Algorithms.md>)
-    - [Trie](<./Chapter 6 String Matching/6.3 Trie.md>)
+    - [Sliding Window](<./Chapter 6 String Matching/6.2 Sliding Window.md>)
+    - [String Matching](<./Chapter 6 String Matching/6.3 String Matching.md>)
+    - [Trie](<./Chapter 6 String Matching/6.4 Trie.md>)
 - Chapter 7 Dynamic Programming
     - [Greedy](<./Chapter 7 Dynamic Programming/7.1 Greedy.md>)
     - [Dynamic Programming I](<./Chapter 7 Dynamic Programming/7.2 Dynamic Programming I.md>)
